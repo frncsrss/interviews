@@ -18,10 +18,12 @@ public class Substring {
    * @return the index of first match if it exists.
    */
   public static int strstrBruteForce(char[] s, char[] p) {
-    for(int i=0; i<s.length - p.length + 1; i++) {  // up to n-m times
-      int k = i;
-      int j = 0;
-      while(s[k++] == p[j++]) {  // up to m times
+    int i = 0;  // position in text
+    int j = 0;  // position in pattern
+
+    for(; i < s.length - p.length + 1; i++) {  // up to n-m+1 times
+      j = 0;
+      while(s[i+j] == p[j++]) {  // up to m times
         if(j == p.length) {
           return i;
         }
