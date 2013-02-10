@@ -89,4 +89,9 @@ public class TrieTest {
 
     Assert.assertEquals(false, trie.remove("0039"));
   }
+
+  @Test
+  public void test_toString() {
+    Assert.assertEquals("00349475865678", trie.toString());
+  }
 }
