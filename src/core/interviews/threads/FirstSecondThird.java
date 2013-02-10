@@ -3,8 +3,8 @@ package interviews.threads;
 import java.util.concurrent.Semaphore;
 
 /**
- * 3 threads. The second one needs to wait for the first one. The third one needs to wait for the
- * second one.
+ * 3 threads. Design a mechanism to ensure that the first thread is called before the second one
+ * and that the second one is called before the third one.
  * @author Francois Rousseau
  */
 public class FirstSecondThird {
