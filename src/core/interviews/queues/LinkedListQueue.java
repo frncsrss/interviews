@@ -5,31 +5,31 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * FIFO class.
+ * LinkedListQueue class (FIFO).
  * @author Francois Rousseau
  */
-public class FIFO<E> {
+public class LinkedListQueue<E> {
   private LinkedListNode<E> head;
   private LinkedListNode<E> tail;
   private int size;
   private Lock lock;
 
-  public FIFO() {
+  public LinkedListQueue() {
     head = tail = null;
     size = 0;
     lock = new ReentrantLock();
   }
   
-  public FIFO<E> add(Collection<E> collection) throws InterruptedException {
+  public LinkedListQueue<E> add(Collection<E> collection) throws InterruptedException {
     for(E e : collection) {
       add(e);
     }
     return this;
   }
 
-  public FIFO<E> add(E e) throws InterruptedException {
+  public LinkedListQueue<E> add(E e) throws InterruptedException {
     lock.lock();
-    if(tail == null) {
+    if(isEmpty()) {
       head = tail = new LinkedListNode<E>(e);
     } else {
       tail.setNext(new LinkedListNode<E>(e));
@@ -41,18 +41,18 @@ public class FIFO<E> {
   }
 
   public boolean isEmpty() {
-    return size == 0;
+    return head == null;
   }
   
-  public E remove() throws InterruptedException {
+  public E dequeue() throws InterruptedException {
     lock.lock();
-    if(head == null) {
+    if(isEmpty()) {
       lock.unlock();
       return null;
     }
     E e = head.getValue();
     head = head.next();
-    if(head == null) {
+    if(isEmpty()) {
       tail = null;
     }
     size--;
@@ -72,11 +72,11 @@ public class FIFO<E> {
   }
 }
 
-class FIFOModifier<E> extends Thread {
-  private FIFO<E> fifo;
+class LinkedListQueueModifier<E> extends Thread {
+  private LinkedListQueue<E> fifo;
   private final E e;
 
-  public FIFOModifier(FIFO<E> fifo, E e) {
+  public LinkedListQueueModifier(LinkedListQueue<E> fifo, E e) {
     this.fifo = fifo;
     this.e = e;
   }
@@ -90,7 +90,7 @@ class FIFOModifier<E> extends Thread {
         System.out.println(e+" added "+fifo);
       } else {
         System.out.println(e+ " removing "+fifo);
-        fifo.remove();
+        fifo.dequeue();
         System.out.println(e+ " removed "+fifo);
       }
     } catch (InterruptedException e) {

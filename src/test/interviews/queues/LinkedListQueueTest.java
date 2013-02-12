@@ -9,10 +9,10 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class FIFOTest {
+public class LinkedListQueueTest {
   @Test
-  public void test_singlethreaded() throws InterruptedException {
-    FIFO<Integer> fifo = new FIFO<Integer>();
+  public void test() throws InterruptedException {
+    LinkedListQueue<Integer> fifo = new LinkedListQueue<Integer>();
     Assert.assertEquals("", fifo.toString());
     Assert.assertEquals(0, fifo.size());
     Assert.assertEquals(true, fifo.isEmpty());
@@ -22,7 +22,7 @@ public class FIFOTest {
     Assert.assertEquals(5, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
 
-    Assert.assertEquals(new Integer(1), fifo.remove());
+    Assert.assertEquals(new Integer(1), fifo.dequeue());
     Assert.assertEquals("2->3->4->5", fifo.toString());
     Assert.assertEquals(4, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
@@ -32,19 +32,19 @@ public class FIFOTest {
     Assert.assertEquals(5, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
 
-    Assert.assertEquals(new Integer(2), fifo.remove());
-    Assert.assertEquals(new Integer(3), fifo.remove());
-    Assert.assertEquals(new Integer(4), fifo.remove());
+    Assert.assertEquals(new Integer(2), fifo.dequeue());
+    Assert.assertEquals(new Integer(3), fifo.dequeue());
+    Assert.assertEquals(new Integer(4), fifo.dequeue());
     Assert.assertEquals("5->6", fifo.toString());
     Assert.assertEquals(2, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
 
-    Assert.assertEquals(new Integer(5), fifo.remove());
+    Assert.assertEquals(new Integer(5), fifo.dequeue());
     Assert.assertEquals("6", fifo.toString());
     Assert.assertEquals(1, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
 
-    Assert.assertEquals(new Integer(6), fifo.remove());
+    Assert.assertEquals(new Integer(6), fifo.dequeue());
     Assert.assertEquals("", fifo.toString());
     Assert.assertEquals(0, fifo.size());
     Assert.assertEquals(true, fifo.isEmpty());
@@ -58,14 +58,5 @@ public class FIFOTest {
     Assert.assertEquals("7->8", fifo.toString());
     Assert.assertEquals(2, fifo.size());
     Assert.assertEquals(false, fifo.isEmpty());
-  }
-
-  @Test
-  public void test_multithreaded() throws InterruptedException {
-    FIFO<Integer> fifo = new FIFO<Integer>();
-    for(int i=1;i<100;i++) {
-      (new FIFOModifier<Integer>(fifo, i)).start();
-    }
-    Thread.sleep(5000);
   }
 }
