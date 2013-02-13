@@ -12,11 +12,11 @@ import java.util.List;
 public class Sorts {
 
   public static <E> void bstTraversal(List<E> list, Comparator<E> comparator) {
-    BSTTraversalsort.f(list, comparator);
+    BSTTraversalSort.f(list, comparator);
   }
 
   public static <E> void bucketsort(List<E> list, Selector<E> selector) {
-    Bucketsort.f(list, selector);
+    BucketSort.f(list, selector);
   }
   
   public static <E> void heapsort(List<E> list, Comparator<E> comparator) {
@@ -31,6 +31,10 @@ public class Sorts {
   public static <E> void quicksort(
       List<E> list, Comparator<E> comparator, int type) {
     Quicksort.f(list, comparator, type);
+  }
+
+  public static <E> void selectionsort(List<E> list, Comparator<E> comparator) {
+    SelectionSort.f(list, comparator);
   }
 
   public static <E> void benchmark(

@@ -12,13 +12,11 @@ import java.util.Queue;
  */
 public class Mergesort {
 
-  public static <E> void f(
-      List<E> list, Comparator<E> comparator, int type) {
+  public static <E> void f(List<E> list, Comparator<E> comparator, int type) {
     f(list, comparator, 0, list.size()-1, type);
   }
 
-  private static <E> void f(
-      List<E> list, Comparator<E> comparator, int start, int end, int type) {
+  private static <E> void f(List<E> list, Comparator<E> comparator, int start, int end, int type) {
     if (start < end) {
       final int middle = (start + end) >>> 1;  // prevent possible overflow
       f(list, comparator, start, middle, type);

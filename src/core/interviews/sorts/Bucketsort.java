@@ -9,7 +9,7 @@ import java.util.List;
  * Bucketsort.
  * @author Francois Rousseau
  */
-public class Bucketsort {
+public class BucketSort {
   public static <E> void f(List<E> list, Selector<E> selector) {
     final int nb_passes = selector.size(list);
     final int nb_buckets = selector.base();

@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static interviews.sorts.Bucketsort.f;
-import static interviews.sorts.Bucketsort.selectorOfASCIIString;
-import static interviews.sorts.Bucketsort.selectorOfIntegers;
+import static interviews.sorts.BucketSort.f;
+import static interviews.sorts.BucketSort.selectorOfASCIIString;
+import static interviews.sorts.BucketSort.selectorOfIntegers;
 
 /**
  * Test class.

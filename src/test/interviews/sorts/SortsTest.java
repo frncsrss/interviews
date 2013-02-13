@@ -14,13 +14,14 @@ import static interviews.sorts.Sorts.bucketsort;
 import static interviews.sorts.Sorts.heapsort;
 import static interviews.sorts.Sorts.mergesort;
 import static interviews.sorts.Sorts.quicksort;
+import static interviews.sorts.Sorts.selectionsort;
 
 /**
  * Test class.
  * @author Francois Rousseau
  */
 public class SortsTest {
-  private List<Integer> listOfIntegers(int max_value) {
+  private List<Integer> getListOfIntegers(int max_value) {
     List<Integer> list = new ArrayList<Integer>(max_value);
     for (int i = 0; i < max_value; i++) {
       list.add(new Integer(i));
@@ -29,7 +30,7 @@ public class SortsTest {
     return list;
   }
 
-  private Comparator<Integer> comparatorOfIntegers() {
+  private Comparator<Integer> getComparatorOfIntegers() {
     return new Comparator<Integer>() {
       public int compare(Integer o1, Integer o2) {
         return o1.compareTo(o2);
@@ -39,10 +40,10 @@ public class SortsTest {
 
   @Test
   public void test_basic()  {
-    List<Integer> golden = listOfIntegers(10000);
+    List<Integer> golden = getListOfIntegers(10000);
     List<Integer> list = new ArrayList<Integer>(golden);
-    Comparator<Integer> comparator = comparatorOfIntegers();
-    Selector<Integer> selector = Bucketsort.selectorOfIntegers();
+    Comparator<Integer> comparator = getComparatorOfIntegers();
+    Selector<Integer> selector = BucketSort.selectorOfIntegers();
     Collections.sort(golden, comparator);
     
     List<Integer> test;
@@ -64,13 +65,15 @@ public class SortsTest {
     Assert.assertEquals(golden, test);
     heapsort(test = new ArrayList<Integer>(list), comparator);
     Assert.assertEquals(golden, test);
+    selectionsort(test = new ArrayList<Integer>(list), comparator);
+    Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_benchmark()  {
-    List<Integer> list = listOfIntegers(1000000);
-    Comparator<Integer> comparator = comparatorOfIntegers();
-    Selector<Integer> selector = Bucketsort.selectorOfIntegers();
+    List<Integer> list = getListOfIntegers(1000000);
+    Comparator<Integer> comparator = getComparatorOfIntegers();
+    Selector<Integer> selector = BucketSort.selectorOfIntegers();
     benchmark(list, comparator, selector);
   }
 }
