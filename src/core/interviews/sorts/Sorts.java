@@ -41,6 +41,10 @@ public class Sorts {
     SelectionSort.f(list, comparator);
   }
 
+  public static <E> void shellsort(List<E> list, Comparator<E> comparator) {
+    Shellsort.f(list, comparator);
+  }
+
   public static <E> void benchmark(
       List<E> list, Comparator<E> comparator, Selector<E> selector) {
     final double factor = 1000000000.0;
@@ -69,6 +73,9 @@ public class Sorts {
     start = System.nanoTime();
     bucketsort(new ArrayList<E>(list), selector);
     System.out.println("Bucketsort\t"+(System.nanoTime() - start)/factor);
+    start = System.nanoTime();
+    shellsort(new ArrayList<E>(list), comparator);
+    System.out.println("Shellsort\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
     Collections.sort(new ArrayList<E>(list), comparator);
     System.out.println("Javasort\t"+(System.nanoTime() - start)/factor);

@@ -8,15 +8,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static interviews.sorts.Sorts.benchmark;
-import static interviews.sorts.Sorts.bstTraversalSort;
-import static interviews.sorts.Sorts.bucketsort;
-import static interviews.sorts.Sorts.heapsort;
-import static interviews.sorts.Sorts.insertionSort;
-import static interviews.sorts.Sorts.mergesort;
-import static interviews.sorts.Sorts.quicksort;
-import static interviews.sorts.Sorts.selectionSort;
-
 /**
  * Test class.
  * @author Francois Rousseau
@@ -24,7 +15,7 @@ import static interviews.sorts.Sorts.selectionSort;
 public class SortsTest {
   private static final Comparator<Integer> comparator = getComparatorOfIntegers();
   private static final Selector<Integer> selector = BucketSort.selectorOfIntegers();
-  private static final List<Integer> list = getShuffledListOfIntegers(10000);
+  private static final List<Integer> list = getShuffledListOfIntegers(20000);
   private static final List<Integer> golden = getSortedListOfIntegers(list, comparator);
 
   private static List<Integer> getShuffledListOfIntegers(int max_value) {
@@ -54,83 +45,97 @@ public class SortsTest {
   @Test
   public void test_quicksort1()  {
     List<Integer> test;
-    quicksort(test = new ArrayList<Integer>(list), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(list), comparator, 1);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_quicksort2()  {
     List<Integer> test;
-    quicksort(test = new ArrayList<Integer>(list), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(list), comparator, 2);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_quicksort3()  {
     List<Integer> test;
-    quicksort(test = new ArrayList<Integer>(list), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(list), comparator, 3);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_quicksort4()  {
     List<Integer> test;
-    quicksort(test = new ArrayList<Integer>(list), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(list), comparator, 4);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_mergesort1()  {
     List<Integer> test;
-    mergesort(test = new ArrayList<Integer>(list), comparator, 1);
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, 1);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_mergesort2()  {
     List<Integer> test;
-    mergesort(test = new ArrayList<Integer>(list), comparator, 2);
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, 2);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_bstTraversalSort()  {
     List<Integer> test;
-    bstTraversalSort(test = new ArrayList<Integer>(list), comparator);
+    Sorts.bstTraversalSort(test = new ArrayList<Integer>(list), comparator);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_buckesort()  {
     List<Integer> test;
-    bucketsort(test = new ArrayList<Integer>(list), selector);
+    Sorts.bucketsort(test = new ArrayList<Integer>(list), selector);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_heapsort()  {
     List<Integer> test;
-    heapsort(test = new ArrayList<Integer>(list), comparator);
+    Sorts.heapsort(test = new ArrayList<Integer>(list), comparator);
     Assert.assertEquals(golden, test);
   }
 
   @Test
-  public void test_selectionSort()  {
+  public void test_shellsort()  {
     List<Integer> test;
-    selectionSort(test = new ArrayList<Integer>(list), comparator);
+    Sorts.shellsort(test = new ArrayList<Integer>(list), comparator);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_insertionSort()  {
     List<Integer> test;
-    insertionSort(test = new ArrayList<Integer>(list), comparator);
+    Sorts.insertionSort(test = new ArrayList<Integer>(list), comparator);
     Assert.assertEquals(golden, test);
   }
 
   @Test
-  public void test_benchmark()  {
+  public void test_selectionSort()  {
+    List<Integer> test;
+    Sorts.selectionSort(test = new ArrayList<Integer>(list), comparator);
+    Assert.assertEquals(golden, test);
+  }
+
+  @Test
+  public void test_JavaSort()  {
+    List<Integer> test;
+    Collections.sort(test = new ArrayList<Integer>(list), comparator);
+    Assert.assertEquals(golden, test);
+  }
+
+  @Test
+  public void test_becnhmark()  {
     List<Integer> list = getShuffledListOfIntegers(1000000);
-    benchmark(list, comparator, selector);
+    Sorts.benchmark(list, comparator, selector);
   }
 }
