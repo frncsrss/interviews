@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Sorts {
 
-  public static <E> void bstTraversal(List<E> list, Comparator<E> comparator) {
+  public static <E> void bstTraversalSort(List<E> list, Comparator<E> comparator) {
     BSTTraversalSort.f(list, comparator);
   }
 
@@ -21,6 +21,10 @@ public class Sorts {
   
   public static <E> void heapsort(List<E> list, Comparator<E> comparator) {
     Heapsort.f(list, comparator);
+  }
+
+  public static <E> void insertionSort(List<E> list, Comparator<E> comparator) {
+    InsertionSort.f(list, comparator);
   }
 
   public static <E> void mergesort(
@@ -33,14 +37,14 @@ public class Sorts {
     Quicksort.f(list, comparator, type);
   }
 
-  public static <E> void selectionsort(List<E> list, Comparator<E> comparator) {
+  public static <E> void selectionSort(List<E> list, Comparator<E> comparator) {
     SelectionSort.f(list, comparator);
   }
 
   public static <E> void benchmark(
       List<E> list, Comparator<E> comparator, Selector<E> selector) {
     final double factor = 1000000000.0;
-    System.out.println("Benchmarking...");
+    System.out.println("Benchmarking on "+ list.size() +" elements...");
     long start = System.nanoTime();
     quicksort(new ArrayList<E>(list), comparator, 1);
     System.out.println("Quicksort1\t"+(System.nanoTime() - start)/factor);
@@ -60,7 +64,7 @@ public class Sorts {
     mergesort(new ArrayList<E>(list), comparator, 2);
     System.out.println("Mergesort2\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
-    bstTraversal(new ArrayList<E>(list), comparator);
+    bstTraversalSort(new ArrayList<E>(list), comparator);
     System.out.println("BST traversal\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
     bucketsort(new ArrayList<E>(list), selector);

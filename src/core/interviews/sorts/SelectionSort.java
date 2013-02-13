@@ -13,19 +13,13 @@ public class SelectionSort {
 
   public static <E> void f(List<E> list, Comparator<E> comparator) {
     for(int i=0; i < list.size() - 1; i++) {
-      Swap.f(list, i, minIndex(list, comparator, i));
-    }
-  }
-
-  private static <E> int minIndex(List<E> list, Comparator<E> comparator, int start) {
-    int index = start;
-    E min = list.get(start);
-    for(int i = start+1; i < list.size(); i++) {
-      if(comparator.compare(min, list.get(i)) > 0) {
-        index = i;
-        min = list.get(i);
+      int index = i;
+      for(int j = i+1; j < list.size(); j++) {
+        if(comparator.compare(list.get(index), list.get(j)) > 0) {
+          index = j;
+        }
       }
-    }  
-    return index;
+      Swap.f(list, i, index);
+    }
   }
 }
