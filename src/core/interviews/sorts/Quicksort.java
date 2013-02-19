@@ -37,23 +37,23 @@ public class Quicksort {
 
 
   private static <E> void quicksort1(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    if (start < end) {
-      final int p = partition1(list, comparator, start, end);
-      if(start < p-1) {
-        quicksort1(list, comparator, start, p-1);
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int p = partition1(list, comparator, lo, hi);
+      if(lo < p-1) {
+        quicksort1(list, comparator, lo, p-1);
       }
-      if(p+1 < end) {
-        quicksort1(list, comparator, p+1, end);
+      if(p+1 < hi) {
+        quicksort1(list, comparator, p+1, hi);
       }
     }
   }
 
   private static <E> int partition1(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    int low = start;
-    int high = end-1;
-    int p = end;
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    int low = lo;
+    int high = hi-1;
+    int p = hi;
 
     while(low < high) {
       while(comparator.compare(list.get(low), list.get(p)) < 0
@@ -77,91 +77,91 @@ public class Quicksort {
 
 
   private static <E> void quicksort2(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    if (start < end) {
-      final int p = partition2(list, comparator, start, end);
-      if(start < p-1) {
-        quicksort2(list, comparator, start, p-1);
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int p = partition2(list, comparator, lo, hi);
+      if(lo < p-1) {
+        quicksort2(list, comparator, lo, p-1);
       }
-      if(p < end){
-        quicksort2(list, comparator, p, end);
+      if(p < hi){
+        quicksort2(list, comparator, p, hi);
       }
     }
   }
 
   private static <E> int partition2(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    E pivot = list.get((start + end) >>> 1);  // prevent possible overflow
-    while(start <= end) {
-      while(comparator.compare(list.get(start), pivot) < 0) {
-        start++;
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    E pivot = list.get((lo + hi) >>> 1);  // prevent possible overflow
+    while(lo <= hi) {
+      while(comparator.compare(list.get(lo), pivot) < 0) {
+        lo++;
       }
-      while(comparator.compare(list.get(end), pivot) > 0) {
-        end--;
+      while(comparator.compare(list.get(hi), pivot) > 0) {
+        hi--;
       }
-      if(start <= end) {
-        Collections.swap(list, start, end);
-        start++;
-        end--;
+      if(lo <= hi) {
+        Collections.swap(list, lo, hi);
+        lo++;
+        hi--;
       }
     }
-    return start;
+    return lo;
   }
 
 
   private static <E> void quicksort3(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    if (start < end) {
-      final int p = partition3(list, comparator, start, end);
-      if(start < p-1) {
-        quicksort3(list, comparator, start, p-1);
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int p = partition3(list, comparator, lo, hi);
+      if(lo < p-1) {
+        quicksort3(list, comparator, lo, p-1);
       }
-      if(p+1 < end) {
-        quicksort3(list, comparator, p+1, end);
+      if(p+1 < hi) {
+        quicksort3(list, comparator, p+1, hi);
       }
     }
   }
 
   private static <E> int partition3(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    int firsthigh = start;
-    for(int i=start; i<end; i++) {
-      if(comparator.compare(list.get(i), list.get(end)) < 0) {
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    int firsthigh = lo;
+    for(int i=lo; i<hi; i++) {
+      if(comparator.compare(list.get(i), list.get(hi)) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;
       }
     }
-    Collections.swap(list, firsthigh, end);
+    Collections.swap(list, firsthigh, hi);
     return firsthigh;
   } 
 
 
   private static <E> void quicksort4(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    if (start < end) {
-      final int p = partition4(list, comparator, start, end);
-      if(start < p-1) {
-        quicksort4(list, comparator, start, p-1);
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int p = partition4(list, comparator, lo, hi);
+      if(lo < p-1) {
+        quicksort4(list, comparator, lo, p-1);
       }
-      if(p+1 < end) {
-        quicksort4(list, comparator, p+1, end);
+      if(p+1 < hi) {
+        quicksort4(list, comparator, p+1, hi);
       }
     }
   }
 
   private static <E> int partition4(
-      List<E> list, Comparator<E> comparator, int start, int end) {
-    int p = (start + end) >>> 1;  // prevent possible overflow
-    if(comparator.compare(list.get(p), list.get(start)) < 0) {
-      p = start;
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    int p = (lo + hi) >>> 1;  // prevent possible overflow
+    if(comparator.compare(list.get(p), list.get(lo)) < 0) {
+      p = lo;
     }
-    if(comparator.compare(list.get(end), list.get(p)) < 0) {
-      p = end;
+    if(comparator.compare(list.get(hi), list.get(p)) < 0) {
+      p = hi;
     }
-    Collections.swap(list, p, end);
-    p = end;
+    Collections.swap(list, p, hi);
+    p = hi;
 
-    int firsthigh=start;
+    int firsthigh=lo;
     for(int i=firsthigh;i<p;i++) {
       if(comparator.compare(list.get(i), list.get(p)) < 0) {
         Collections.swap(list, firsthigh, i);

@@ -73,14 +73,28 @@ public class SortsTest {
   @Test
   public void test_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, 1);
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.AUX_ARRAY);
     Assert.assertEquals(golden, test);
   }
 
   @Test
   public void test_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, 2);
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Assert.assertEquals(golden, test);
+  }
+
+  @Test
+  public void test_mergesort3()  {
+    List<Integer> test;
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.AUX_ONCE);
+    Assert.assertEquals(golden, test);
+  }
+
+  @Test
+  public void test_mergesort4()  {
+    List<Integer> test;
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.BOTTOM_UP);
     Assert.assertEquals(golden, test);
   }
 
@@ -134,7 +148,7 @@ public class SortsTest {
   }
 
   @Test
-  public void test_becnhmark()  {
+  public void test_benchmark()  {
     List<Integer> list = getShuffledListOfIntegers(1000000);
     Sorts.benchmark(list, comparator, selector);
   }

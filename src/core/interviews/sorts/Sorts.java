@@ -28,7 +28,7 @@ public class Sorts {
   }
 
   public static <E> void mergesort(
-      List<E> list, Comparator<E> comparator, int type) {
+      List<E> list, Comparator<E> comparator, Mergesort.TYPE type) {
     Mergesort.f(list, comparator, type);
   }
 
@@ -62,11 +62,17 @@ public class Sorts {
     quicksort(new ArrayList<E>(list), comparator, 4);
     System.out.println("Quicksort4\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, 1);
+    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_ARRAY);
     System.out.println("Mergesort1\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, 2);
+    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_QUEUE);
     System.out.println("Mergesort2\t"+(System.nanoTime() - start)/factor);
+    start = System.nanoTime();
+    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_ONCE);
+    System.out.println("Mergesort3\t"+(System.nanoTime() - start)/factor);
+    start = System.nanoTime();
+    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.BOTTOM_UP);
+    System.out.println("Mergesort4\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
     bstTraversalSort(new ArrayList<E>(list), comparator);
     System.out.println("BST traversal\t"+(System.nanoTime() - start)/factor);
@@ -81,4 +87,21 @@ public class Sorts {
     System.out.println("Javasort\t"+(System.nanoTime() - start)/factor);
   }
 
+  public static <E> boolean isSorted(List<E> list, Comparator<E> comparator) {
+    for(int i=0; i < list.size()-1; i++) {
+      if(comparator.compare(list.get(i), list.get(i+1)) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static <E> boolean isSorted(List<E> list, Comparator<E> comparator, int lo, int hi) {
+    for(int i=lo; i < hi-1; i++) {
+      if(comparator.compare(list.get(i), list.get(i+1)) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

@@ -11,82 +11,167 @@ import java.util.Queue;
  * @author Francois Rousseau
  */
 public class Mergesort {
+  public static enum TYPE {AUX_ARRAY, AUX_QUEUE, AUX_ONCE, BOTTOM_UP};
 
-  public static <E> void f(List<E> list, Comparator<E> comparator, int type) {
-    f(list, comparator, 0, list.size()-1, type);
+  public static <E> void f(List<E> list, Comparator<E> comparator, TYPE type) {
+    switch(type) {
+      case AUX_ARRAY:
+        sort1(list, comparator, 0, list.size()-1);
+        break;
+      case AUX_QUEUE:
+        sort2(list, comparator, 0, list.size()-1);
+        break;
+      case AUX_ONCE:
+        sort3(list, comparator, new ArrayList<E>(list), 0, list.size()-1);
+        break;
+      case BOTTOM_UP:
+        sort4(list, comparator);
+        break;
+      default:
+        break;
+    }
   }
 
-  private static <E> void f(List<E> list, Comparator<E> comparator, int start, int end, int type) {
-    if (start < end) {
-      final int middle = (start + end) >>> 1;  // prevent possible overflow
-      f(list, comparator, start, middle, type);
-      f(list, comparator, middle + 1, end, type);
+  private static <E> void sort1(List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      sort1(list, comparator, lo, mid);
+      sort1(list, comparator, mid + 1, hi);
 
-      if(comparator.compare(list.get(middle), list.get(middle + 1)) <= 0) {
+      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
         return;
       }  // no need to merge the two lists
 
-      switch(type) {
-        case 1:
-          merge1(list, comparator, start, end, middle);
-          break;
-        case 2:
-          merge2(list, comparator, start, end, middle);
-          break;
-        default:
-          break;
+      merge1(list, comparator, lo, hi, mid);
+    }
+  }
+
+  private static <E> void sort2(List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      sort2(list, comparator, lo, mid);
+      sort2(list, comparator, mid + 1, hi);
+
+      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
+        return;
+      }  // no need to merge the two lists
+
+      merge2(list, comparator, lo, hi, mid);
+    }
+  }
+
+  private static <E> void sort3(
+      List<E> list, Comparator<E> comparator, List<E> aux, int lo, int hi) {
+    if (lo < hi) {
+      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      sort3(list, comparator, aux, lo, mid);
+      sort3(list, comparator, aux, mid + 1, hi);
+
+      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
+        return;
+      }  // no need to merge the two lists
+
+      merge3(list, comparator, aux, lo, hi, mid);
+    }
+  }
+
+  private static <E> void sort4(List<E> list, Comparator<E> comparator) {
+    final int N = list.size();
+    final List<E> aux = new ArrayList<E>(list);
+    for(int sz = 1; sz < N; sz <<= 1) {  // log(N) sizes of subarrays considered
+      for(int lo = 0; lo < N-sz; lo += sz+sz) {  // each subarray is of size sz+sz
+        merge3(list, comparator, aux, lo, Math.min(lo+sz+sz-1, N-1), lo+sz-1);
       }
     }
   }
-  
+
   private static <E> void merge1(
-      List<E> list, Comparator<E> comparator, int start, int end, int middle) {
-    final List<E> buffer = new ArrayList<E>(list.subList(start, end+1));
+      List<E> list, Comparator<E> comparator, int lo, int hi, int mid) {
+    assert Sorts.isSorted(list, comparator, lo, mid);
+    assert Sorts.isSorted(list, comparator, mid+1, hi);
+
+    final List<E> aux = new ArrayList<E>(list.subList(lo, hi+1));
     
-    int left = start;
-    int right = middle + 1;
-    int current = start;
+    int left = lo;
+    int right = mid + 1;
+    int current = lo;
     
-    while (left <= middle && right <= end) {
-      if(comparator.compare(buffer.get(left - start), buffer.get(right - start)) <= 0) {
-        list.set(current++, buffer.get(left - start));
+    while (left <= mid && right <= hi) {
+      if(comparator.compare(aux.get(left - lo), aux.get(right - lo)) <= 0) {
+        list.set(current++, aux.get(left - lo));
         left++;
       } else {
-        list.set(current++, buffer.get(right - start));  
+        list.set(current++, aux.get(right - lo));  
         right++;
       }
     }
 
-    for(;left <= middle;) {
-      list.set(current++, buffer.get(left - start));
+    for(;left <= mid;) {
+      list.set(current++, aux.get(left - lo));
       left++;
-    } // no need to do the same for the remaining elements of the right
-    // since they are already in place.
+    }  // no need to do the same for the right since they are already in place.
+
+    assert Sorts.isSorted(list, comparator, lo, hi);
   }
   
   private static <E> void merge2(
-      List<E> list, Comparator<E> comparator, int start, int end, int middle) {
-    final Queue<E> buffer1 = new LinkedList<E>();
-    final Queue<E> buffer2 = new LinkedList<E>();
+      List<E> list, Comparator<E> comparator, int lo, int hi, int mid) {
+    assert Sorts.isSorted(list, comparator, lo, mid);
+    assert Sorts.isSorted(list, comparator, mid+1, hi);
 
-    for(int i=start; i<=middle; i++) {
-      buffer1.add(list.get(i));
+    final Queue<E> aux1 = new LinkedList<E>();
+    final Queue<E> aux2 = new LinkedList<E>();
+
+    for(int i=lo; i<=mid; i++) {
+      aux1.add(list.get(i));
     }
-    for(int i=middle+1; i<=end; i++) {
-      buffer2.add(list.get(i));
+    for(int i=mid+1; i<=hi; i++) {
+      aux2.add(list.get(i));
     }
 
-    while (!buffer1.isEmpty() && !buffer2.isEmpty()) {
-      if(comparator.compare(buffer1.peek(), buffer2.peek()) <= 0) {
-        list.set(start++, buffer1.poll());
+    while (!aux1.isEmpty() && !aux2.isEmpty()) {
+      if(comparator.compare(aux1.peek(), aux2.peek()) <= 0) {
+        list.set(lo++, aux1.poll());
       } else {
-        list.set(start++, buffer2.poll());        
+        list.set(lo++, aux2.poll());        
       }
     }
 
-    while (!buffer1.isEmpty()) {
-      list.set(start++, buffer1.poll());
-    } // no need to do the same for the remaining elements of the right
-    // since they are already in place.
+    while (!aux1.isEmpty()) {
+      list.set(lo++, aux1.poll());
+    }  // no need to do the same for the right since they are already in place.
+
+    assert Sorts.isSorted(list, comparator, lo, hi);
+  }
+
+  private static <E> void merge3(
+      List<E> list, Comparator<E> comparator, List<E> aux, int lo, int hi, int mid) {
+    assert Sorts.isSorted(list, comparator, lo, mid);
+    assert Sorts.isSorted(list, comparator, mid+1, hi);
+
+    for(int i=lo; i <= hi; i++) {
+      aux.set(i, list.get(i));
+    }
+
+    int left = lo;
+    int right = mid + 1;
+    int current = lo;
+    
+    while (left <= mid && right <= hi) {
+      if(comparator.compare(aux.get(left), aux.get(right)) <= 0) {
+        list.set(current++, aux.get(left));
+        left++;
+      } else {
+        list.set(current++, aux.get(right));  
+        right++;
+      }
+    }
+
+    for(;left <= mid;) {
+      list.set(current++, aux.get(left));
+      left++;
+    }  // no need to do the same for the right since they are already in place.
+
+    assert Sorts.isSorted(list, comparator, lo, hi);
   }
 }
