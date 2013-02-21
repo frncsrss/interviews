@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class SortsTest {
-  private static final Comparator<Integer> comparator = getComparatorOfIntegers();
+  private static final Comparator<Integer> comparator = Sorts.getComparatorOfIntegers();
   private static final Selector<Integer> selector = BucketSort.selectorOfIntegers();
   private static final List<Integer> list = getShuffledListOfIntegers(20000);
   private static final List<Integer> golden = getSortedListOfIntegers(list, comparator);
@@ -32,14 +32,6 @@ public class SortsTest {
     List<Integer> sorted = new ArrayList<Integer>(list);
     Collections.sort(sorted, comparator);
     return sorted;
-  }
-
-  private static Comparator<Integer> getComparatorOfIntegers() {
-    return new Comparator<Integer>() {
-      public int compare(Integer o1, Integer o2) {
-        return o1.compareTo(o2);
-      }
-    };
   }
 
   @Test
@@ -87,7 +79,7 @@ public class SortsTest {
   @Test
   public void test_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.AUX_ONCE);
+    Sorts.mergesort(test = new ArrayList<Integer>(list), comparator, Mergesort.TYPE.TOP_DOWN);
     Assert.assertEquals(golden, test);
   }
 

@@ -11,7 +11,7 @@ import java.util.Queue;
  * @author Francois Rousseau
  */
 public class Mergesort {
-  public static enum TYPE {AUX_ARRAY, AUX_QUEUE, AUX_ONCE, BOTTOM_UP};
+  public static enum TYPE {AUX_ARRAY, AUX_QUEUE, TOP_DOWN, BOTTOM_UP};
 
   public static <E> void f(List<E> list, Comparator<E> comparator, TYPE type) {
     switch(type) {
@@ -21,7 +21,7 @@ public class Mergesort {
       case AUX_QUEUE:
         sort2(list, comparator, 0, list.size()-1);
         break;
-      case AUX_ONCE:
+      case TOP_DOWN:
         sort3(list, comparator, new ArrayList<E>(list), 0, list.size()-1);
         break;
       case BOTTOM_UP:

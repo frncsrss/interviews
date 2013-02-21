@@ -11,6 +11,14 @@ import java.util.List;
  */
 public class Sorts {
 
+  public static Comparator<Integer> getComparatorOfIntegers() {
+    return new Comparator<Integer>() {
+      public int compare(Integer o1, Integer o2) {
+        return o1.compareTo(o2);
+      }
+    };
+  }
+
   public static <E> void bstTraversalSort(List<E> list, Comparator<E> comparator) {
     BSTTraversalSort.f(list, comparator);
   }
@@ -68,7 +76,7 @@ public class Sorts {
     mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_QUEUE);
     System.out.println("Mergesort2\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_ONCE);
+    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.TOP_DOWN);
     System.out.println("Mergesort3\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
     mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.BOTTOM_UP);
@@ -84,7 +92,7 @@ public class Sorts {
     System.out.println("Shellsort\t"+(System.nanoTime() - start)/factor);
     start = System.nanoTime();
     Collections.sort(new ArrayList<E>(list), comparator);
-    System.out.println("Javasort\t"+(System.nanoTime() - start)/factor);
+    System.out.println("Collections.sort\t"+(System.nanoTime() - start)/factor);
   }
 
   public static <E> boolean isSorted(List<E> list, Comparator<E> comparator) {
