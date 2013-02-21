@@ -1,5 +1,6 @@
 package interviews.sorts;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +28,9 @@ public class Quicksort {
         break;
       case 5:
         sort5(list, comparator, 0, list.size()-1);
+        break;
+      case 6:
+        sort6(list, comparator, 0, list.size()-1);
         break;
       default:
         break;
@@ -58,12 +62,8 @@ public class Quicksort {
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition1(list, comparator, lo, hi);
-      if(lo < p-1) {
-        sort1(list, comparator, lo, p-1);
-      }
-      if(p+1 < hi) {
-        sort1(list, comparator, p+1, hi);
-      }
+      sort1(list, comparator, lo, p-1);
+      sort1(list, comparator, p+1, hi);
     }
   }
 
@@ -100,12 +100,8 @@ public class Quicksort {
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition2(list, comparator, lo, hi);
-      if(lo < p-1) {
-        sort2(list, comparator, lo, p-1);
-      }
-      if(p < hi){
-        sort2(list, comparator, p, hi);
-      }
+      sort2(list, comparator, lo, p-1);
+      sort2(list, comparator, p, hi);
     }
   }
 
@@ -133,12 +129,8 @@ public class Quicksort {
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition3(list, comparator, lo, hi);
-      if(lo < p-1) {
-        sort3(list, comparator, lo, p-1);
-      }
-      if(p+1 < hi) {
-        sort3(list, comparator, p+1, hi);
-      }
+      sort3(list, comparator, lo, p-1);
+      sort3(list, comparator, p+1, hi);
     }
   }
 
@@ -160,12 +152,8 @@ public class Quicksort {
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition4(list, comparator, lo, hi);
-      if(lo < p-1) {
-        sort4(list, comparator, lo, p-1);
-      }
-      if(p+1 < hi) {
-        sort4(list, comparator, p+1, hi);
-      }
+      sort4(list, comparator, lo, p-1);
+      sort4(list, comparator, p+1, hi);
     }
   }
 
@@ -197,12 +185,8 @@ public class Quicksort {
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition5(list, comparator, lo, hi);
-      if(lo < p-1) {
-        sort5(list, comparator, lo, p-1);
-      }
-      if(p+1 < hi) {
-        sort5(list, comparator, p+1, hi);
-      }
+      sort5(list, comparator, lo, p-1);
+      sort5(list, comparator, p+1, hi);
     }
   }
 
@@ -230,5 +214,31 @@ public class Quicksort {
     }
     Collections.swap(list, lo, j);  // put the pivot in its final place
     return j;
+  }
+
+
+  /**
+   * 3-way Dijkstra quicksort.
+   */
+  private static <E> void sort6(
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      int lt = lo;
+      int gt = hi;
+      final E pivot = list.get(lo); 
+      int i = lo;
+      while(i <= gt) {  // while pointers don't cross
+        final int cmp = comparator.compare(list.get(i), pivot);
+        if(cmp < 0) {
+          Collections.swap(list, lt++, i++);
+        } else if (cmp > 0) {
+          Collections.swap(list, i, gt--);          
+        } else {
+          i++;
+        }
+      }
+      sort6(list, comparator, lo, lt-1);
+      sort6(list, comparator, gt+1, hi);
+    }
   }
 }
