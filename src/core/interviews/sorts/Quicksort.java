@@ -33,6 +33,27 @@ public class Quicksort {
     }
   }
 
+  public static <E> E select(List<E> list, Comparator<E> comparator, int k) {
+    if(k < 0 || k > list.size() - 1) {
+      throw new IndexOutOfBoundsException();
+    }
+    Collections.shuffle(list);
+    int lo = 0;
+    int hi = list.size() - 1;
+    while(lo < hi) {
+      final int p = partition5(list, comparator, lo, hi);
+      if(k < p) {
+        hi = p - 1;
+      } else if (k > p) {
+        lo = p + 1;
+      } else {
+        break;
+      }
+    }
+    return list.get(k);
+  }
+
+
   private static <E> void sort1(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
