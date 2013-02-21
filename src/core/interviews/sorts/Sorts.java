@@ -1,7 +1,5 @@
 package interviews.sorts;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -35,13 +33,11 @@ public class Sorts {
     InsertionSort.f(list, comparator);
   }
 
-  public static <E> void mergesort(
-      List<E> list, Comparator<E> comparator, Mergesort.TYPE type) {
+  public static <E> void mergesort(List<E> list, Comparator<E> comparator, Mergesort.TYPE type) {
     Mergesort.f(list, comparator, type);
   }
 
-  public static <E> void quicksort(
-      List<E> list, Comparator<E> comparator, int type) {
+  public static <E> void quicksort(List<E> list, Comparator<E> comparator, int type) {
     Quicksort.f(list, comparator, type);
   }
 
@@ -51,48 +47,6 @@ public class Sorts {
 
   public static <E> void shellsort(List<E> list, Comparator<E> comparator) {
     Shellsort.f(list, comparator);
-  }
-
-  public static <E> void benchmark(
-      List<E> list, Comparator<E> comparator, Selector<E> selector) {
-    final double factor = 1000000000.0;
-    System.out.println("Benchmarking on "+ list.size() +" elements...");
-    long start = System.nanoTime();
-    quicksort(new ArrayList<E>(list), comparator, 1);
-    System.out.println("Quicksort1\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    quicksort(new ArrayList<E>(list), comparator, 2);
-    System.out.println("Quicksort2\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    quicksort(new ArrayList<E>(list), comparator, 3);
-    System.out.println("Quicksort3\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    quicksort(new ArrayList<E>(list), comparator, 4);
-    System.out.println("Quicksort4\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_ARRAY);
-    System.out.println("Mergesort1\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.AUX_QUEUE);
-    System.out.println("Mergesort2\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.TOP_DOWN);
-    System.out.println("Mergesort3\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    mergesort(new ArrayList<E>(list), comparator, Mergesort.TYPE.BOTTOM_UP);
-    System.out.println("Mergesort4\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    bstTraversalSort(new ArrayList<E>(list), comparator);
-    System.out.println("BST traversal\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    bucketsort(new ArrayList<E>(list), selector);
-    System.out.println("Bucketsort\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    shellsort(new ArrayList<E>(list), comparator);
-    System.out.println("Shellsort\t"+(System.nanoTime() - start)/factor);
-    start = System.nanoTime();
-    Collections.sort(new ArrayList<E>(list), comparator);
-    System.out.println("Collections.sort\t"+(System.nanoTime() - start)/factor);
   }
 
   public static <E> boolean isSorted(List<E> list, Comparator<E> comparator) {

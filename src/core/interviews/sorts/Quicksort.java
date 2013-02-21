@@ -10,88 +10,87 @@ import java.util.List;
  */
 public class Quicksort {
 
-  public static <E> void f(List<E> list, Comparator<E> comparator) {
-    quicksort3(list, comparator, 0, list.size()-1);
-  }
-
   public static <E> void f(List<E> list, Comparator<E> comparator, int type) {
     Collections.shuffle(list);
     switch(type) {
       case 1:
-        quicksort1(list, comparator, 0, list.size()-1);
+        sort1(list, comparator, 0, list.size()-1);
         break;
       case 2:
-        quicksort2(list, comparator, 0, list.size()-1);
+        sort2(list, comparator, 0, list.size()-1);
         break;
       case 3:
-        quicksort3(list, comparator, 0, list.size()-1);
+        sort3(list, comparator, 0, list.size()-1);
         break;
       case 4:
-        quicksort4(list, comparator, 0, list.size()-1);
+        sort4(list, comparator, 0, list.size()-1);
+        break;
+      case 5:
+        sort5(list, comparator, 0, list.size()-1);
         break;
       default:
-        quicksort3(list, comparator, 0, list.size()-1);
         break;
     }
   }
 
-
-  private static <E> void quicksort1(
+  private static <E> void sort1(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition1(list, comparator, lo, hi);
       if(lo < p-1) {
-        quicksort1(list, comparator, lo, p-1);
+        sort1(list, comparator, lo, p-1);
       }
       if(p+1 < hi) {
-        quicksort1(list, comparator, p+1, hi);
+        sort1(list, comparator, p+1, hi);
       }
     }
   }
 
   private static <E> int partition1(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
-    int low = lo;
-    int high = hi-1;
-    int p = hi;
+    final E pivot = list.get(hi);
+    int i = lo;
+    int j = hi-1;
 
-    while(low < high) {
-      while(comparator.compare(list.get(low), list.get(p)) < 0
-            && low < high) low++;
-      while(comparator.compare(list.get(high), list.get(p)) > 0
-          && low < high) high--;
-      if(low < high) {
-        Collections.swap(list, low, high);
-        low++;
-        high--;
+    while(i < j) {
+      while(comparator.compare(list.get(i), pivot) < 0 && i < j) {
+        i++;
+      }
+      while(comparator.compare(list.get(j), pivot) > 0 && i < j) {
+        j--;
+      }
+      if(i < j) {
+        Collections.swap(list, i, j);
+        i++;
+        j--;
       }
     }
-    if(comparator.compare(list.get(low), list.get(p)) > 0) {
-      Collections.swap(list, low, p);
-      return low;
+    if(comparator.compare(list.get(i), pivot) > 0) {
+      Collections.swap(list, i, hi);  // put the pivot in its final place
+      return i;
     } else {
-      Collections.swap(list, ++low, p);
-      return low;
+      Collections.swap(list, ++i, hi);  // put the pivot in its final place
+      return i;
     }
   }
 
 
-  private static <E> void quicksort2(
+  private static <E> void sort2(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition2(list, comparator, lo, hi);
       if(lo < p-1) {
-        quicksort2(list, comparator, lo, p-1);
+        sort2(list, comparator, lo, p-1);
       }
       if(p < hi){
-        quicksort2(list, comparator, p, hi);
+        sort2(list, comparator, p, hi);
       }
     }
   }
 
   private static <E> int partition2(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
-    E pivot = list.get((lo + hi) >>> 1);  // prevent possible overflow
+    final E pivot = list.get((lo + hi) >>> 1);  // prevent possible overflow
     while(lo <= hi) {
       while(comparator.compare(list.get(lo), pivot) < 0) {
         lo++;
@@ -109,15 +108,15 @@ public class Quicksort {
   }
 
 
-  private static <E> void quicksort3(
+  private static <E> void sort3(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition3(list, comparator, lo, hi);
       if(lo < p-1) {
-        quicksort3(list, comparator, lo, p-1);
+        sort3(list, comparator, lo, p-1);
       }
       if(p+1 < hi) {
-        quicksort3(list, comparator, p+1, hi);
+        sort3(list, comparator, p+1, hi);
       }
     }
   }
@@ -125,7 +124,7 @@ public class Quicksort {
   private static <E> int partition3(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     int firsthigh = lo;
-    for(int i=lo; i<hi; i++) {
+    for(int i=lo; i < hi; i++) {
       if(comparator.compare(list.get(i), list.get(hi)) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;
@@ -136,15 +135,15 @@ public class Quicksort {
   } 
 
 
-  private static <E> void quicksort4(
+  private static <E> void sort4(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
       final int p = partition4(list, comparator, lo, hi);
       if(lo < p-1) {
-        quicksort4(list, comparator, lo, p-1);
+        sort4(list, comparator, lo, p-1);
       }
       if(p+1 < hi) {
-        quicksort4(list, comparator, p+1, hi);
+        sort4(list, comparator, p+1, hi);
       }
     }
   }
@@ -171,4 +170,44 @@ public class Quicksort {
     Collections.swap(list, firsthigh, p);
     return firsthigh;
   } 
+
+
+  private static <E> void sort5(
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    if (lo < hi) {
+      final int p = partition5(list, comparator, lo, hi);
+      if(lo < p-1) {
+        sort5(list, comparator, lo, p-1);
+      }
+      if(p+1 < hi) {
+        sort5(list, comparator, p+1, hi);
+      }
+    }
+  }
+
+  private static <E> int partition5(
+      List<E> list, Comparator<E> comparator, int lo, int hi) {
+    final E pivot = list.get(lo);
+    int i = lo;
+    int j = hi + 1;
+
+    while(true) {
+      while(comparator.compare(list.get(++i), pivot) < 0) {  // find leftmost item to swap
+        if(i == hi) {  // all the elements are lesser than the pivot
+          break;
+        }
+      }
+      while(comparator.compare(list.get(--j), pivot) > 0) {  // find rightmost item to swap
+        if(j == lo) {  // all the elements are greater than the pivot, redundant since pivot in lo
+          break;
+        }
+      }
+      if(i >= j) {  // break if pointers cross
+        break;
+      }
+      Collections.swap(list, i, j);
+    }
+    Collections.swap(list, lo, j);  // put the pivot in its final place
+    return j;
+  }
 }
