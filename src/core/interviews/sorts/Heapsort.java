@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class Heapsort {
   public static <E> void f(List<E> list, Comparator<E> comparator) {
-    Heap<E> heap = new HeapMax<E>(list, comparator);
+    Heap<E> heap = new HeapMax<E>(list, comparator);  // heapify takes linear time (bottom-up)
     for (int i = list.size()-1; i >= 0 ; i--) {
-      list.set(i, heap.remove());
+      list.set(i, heap.remove());  // maintaining the heap order takes logarithmic time
     }
   }
 }

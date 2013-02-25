@@ -19,12 +19,15 @@ public abstract class Heap<E> implements Iterable<E> {
   
   public Heap(Comparator<E> comparator) {
     this.comparator = comparator;
-    heapify(null);
+    heap = new ArrayList<E>();
   }
   
 	public Heap(Collection<E> collection, Comparator<E> comparator) {
 	  this.comparator = comparator;
-	  heapify(collection);
+    heap = new ArrayList<E>();
+    for(E e: collection) {
+      heap.add(e);
+    }
 	}
 
 	/**
@@ -212,19 +215,37 @@ public abstract class Heap<E> implements Iterable<E> {
 	  return 2*index + 1;
 	}
 
-	private void heapify(Collection<E> collection) {
-    heap = new ArrayList<E>();
-	  if(collection == null || collection.isEmpty()) {
-	    return;
-	  }
-    for(E e: collection) {
-      heap.add(e);
-    }
-    for(int i=(size()-1)/2; i>=0; i--) {
+	/**
+	 * Make the heap in linear time.
+	 * Bottom-up leads to linear time (O(N)) when top-down leads to linearitmic (O(NlogN)) time.
+	 * Thus we use this.bubbleDown(i) instead of this.add(e) in the inner loop.
+	 *
+	 * Linear time complexity comes from the number of bubbleDown necessary.
+	 * The last N/2 elements are leaves so 0 x N/2
+	 * The next N/4 elements are nodes with remaining depth 1 so 1 x N/4
+	 * The next N/8 elements are nodes with remaining depth 2 so 2 x N/8
+	 * ...
+	 * The root is a node with remaining depth logN so log(N) x 1
+	 * Overall it's 0 x N/2 + 1 x N/4 + 2 x N/8 + ... + log(N) x 1
+	 *
+	 * = N * sum_{i = 1}^{log(N)} (i-1)/2^i
+	 * = N * sum_{i = 1}^{log(N)} (i-1)*x^i           (x=1/2) variable x
+   * = N * sum_{i = 0}^{log(N)-1} i*x^(i+1)         (x=1/2) index shifting
+   * = N * x^2 x sum_{i = 0}^{log(N)-1} i*x^(i-1)   (x=1/2) index shifting
+   * = N * x^2 x sum_{i = 0}^{log(N)-1} d(x^i)/dx   (x=1/2) derivation formula
+   * = N * x^2 x d(sum_{i = 0}^{log(N)-1} x^i)/dx   (x=1/2) linearity of derivation
+   * = N * x^2 x d([x^log(N) - 1]/[x - 1])/dx       (x=1/2) sum of geometric series
+   * = N * x^2 x (log(N)*x^{log(N)-1}*[x - 1] - [x^log(N) - 1])/(x - 1)^2  (x=1/2) derivation
+   * = N * (log(N)*1/N - 1/N + 1)
+	 * = N - log(N) - 1
+	 * = O(N)
+	 */
+	private void heapify() {
+    for(int i = (size()-1)/2; i >= 0; i--) {  // the last N/2 elements are leaves
       bubbleDown(i);
-    }  // doing that instead of this.add(e) in the previous loop guarantees a construction in O(n) instead of O(nlogn)
+    }
   }
-  
+
   protected int parent(int index) throws NoSuchElementException {
     if(index == 0) {  // the root has no parent
       throw new NoSuchElementException();
@@ -234,8 +255,9 @@ public abstract class Heap<E> implements Iterable<E> {
 
   private boolean remove(E e, int index) {
     if(comparator.compare(e, get(index)) == 0) {
-      heap.remove(index);
-      heapify(heap);  // much easier
+      swap(index, size()-1);  // swap the element at the end
+      heap.remove(size()-1);  // remove it
+      heapify();  // much easier and guaranteed linear time 
       return true;
     }
     try {

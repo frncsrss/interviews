@@ -44,7 +44,7 @@ public class HeapMaxTest {
     Assert.assertEquals(10, heap.size());
     Assert.assertEquals(true, heap.remove(10));  // the heap will be re-heapify
     Assert.assertEquals(9, heap.size());
-    Assert.assertArrayEquals(new Integer[] {9, 8, 7, 6, 2, 5, 1, 4, 3}, heap.toArray());
+    Assert.assertArrayEquals(new Integer[] {9, 8, 6, 7, 3, 2, 5, 1, 4}, heap.toArray());
   }
 
   @Test
