@@ -9,9 +9,6 @@ public class Power {
     if(b == 0) {
       return 1;
     }
-    if (b == 1) {
-      return a;
-    }
     if(b%2 == 0) {
       return f(a*a, b >> 1);
     }
