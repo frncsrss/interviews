@@ -20,7 +20,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Inserts the specified element under this BSTNode.
+   * Inserts the specified element under this BSTNode.
    */
   protected void add(E e) {
     if(value == null) {
@@ -39,7 +39,7 @@ public class BSTNode<E> {
         } else {
           right.add(e);          
         }
-      } else if (result < 0){
+      } else {  // (result < 0)
         if(left == null) {
           left = new BSTNode<E>(e, comparator);
         } else {
@@ -50,7 +50,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Returns the minimal element under this BSTNode.
+   * Returns the minimal element under this BSTNode.
    */
   protected E min() {
     if(left == null) {
@@ -60,7 +60,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Returns the maximal element under this BSTNode.
+   * Returns the maximal element under this BSTNode.
    */
   protected E max() {
     if(right == null) {
@@ -70,8 +70,8 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Search a given element under this BSTNode.
-   *  Returns a boolean value accordingly.
+   * Search a given element under this BSTNode.
+   * Returns a boolean value accordingly.
    */
   protected boolean search(E e) throws NullPointerException {
     final int result = comparator.compare(e, value);
@@ -85,14 +85,14 @@ public class BSTNode<E> {
   }
 
   /**
-   *  In-order traversal of the subtree under this BSTNode.
-   *  Append the value to a given collection sorted at the end.
+   * In-order traversal of the subtree under this BSTNode.
+   * Append the value to a given collection sorted at the end.
    */
   protected void traversal(Collection<E> collection) {
     if(left != null) {
       left.traversal(collection);
     }
-    for(int i=0; i<frequency; i++) {
+    for(int i = 0; i < frequency; i++) {
       collection.add(value);
     }
     if(right != null) {

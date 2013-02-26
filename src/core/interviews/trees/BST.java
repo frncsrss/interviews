@@ -36,7 +36,7 @@ public class BST<E> {
   }
 
   /**
-   *  Inserts the specified element into this BST.
+   * Inserts the specified element into this BST.
    */
   public boolean add(E e) throws NullPointerException {
     if(e == null) {
@@ -51,14 +51,14 @@ public class BST<E> {
   }
 
   /**
-   *  Returns the comparator used to order the elements in this BST.
+   * Returns the comparator used to order the elements in this BST.
    */
   public Comparator<E> comparator() {
     return comparator;
   }
 
   /**
-   *  Returns the minimal element of this BST.
+   * Returns the minimal element of this BST.
    */
   public E min() {
     if(root == null) {
@@ -68,7 +68,7 @@ public class BST<E> {
   }
 
   /**
-   *  Returns the maximal element of this BST.
+   * Returns the maximal element of this BST.
    */
   public E max() {
     if(root == null) {
@@ -114,8 +114,8 @@ public class BST<E> {
   }
 
   /**
-   *  Search a given element in this BST.
-   *  Returns a boolean value accordingly.
+   * Search a given element in this BST.
+   * Returns a boolean value accordingly.
    */
   public boolean search(E e) throws NullPointerException {
     if(root == null) {
@@ -125,8 +125,8 @@ public class BST<E> {
   }
 
   /**
-   *  In-order traversal of this BST.
-   *  Append the values to a given collection sorted at the end.
+   * In-order traversal of this BST.
+   * Append the values to a given collection sorted at the end.
    */
   public void traversal(Collection<E> collection) {
     if(root == null) {
@@ -136,8 +136,8 @@ public class BST<E> {
   }
 
   /**
-   *  In-order traversal of this BST.
-   *  Return a sorted collection of the values in the BST.
+   * In-order traversal of this BST.
+   * Return a sorted collection of the values in the BST.
    */
   public Collection<E> traversal() {
     if(root == null) {
@@ -149,7 +149,7 @@ public class BST<E> {
   }
 
   /**
-   *  Breadth-first traversal of this BST.
+   * Breadth-first traversal of this BST.
    */
   @Override
   public String toString() {
