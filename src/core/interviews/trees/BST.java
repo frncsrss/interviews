@@ -79,6 +79,7 @@ public class BST<E> {
 
   /**
    * Removes a single instance of the specified element from this BST, if it is present.
+   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   public boolean remove(E e) {
     if(e == null) {

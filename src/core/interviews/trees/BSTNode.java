@@ -21,6 +21,7 @@ public class BSTNode<E> {
 
   /**
    * Inserts the specified element under this BSTNode.
+   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   protected void add(E e) {
     if(value == null) {
