@@ -28,6 +28,7 @@ public abstract class Heap<E> implements Iterable<E> {
     for(E e: collection) {
       heap.add(e);
     }
+    heapify();
 	}
 
 	/**
@@ -231,11 +232,11 @@ public abstract class Heap<E> implements Iterable<E> {
 	 * = N * sum_{i = 1}^{log(N)} (i-1)/2^i
 	 * = N * sum_{i = 1}^{log(N)} (i-1)*x^i           (x=1/2) variable x
    * = N * sum_{i = 0}^{log(N)-1} i*x^(i+1)         (x=1/2) index shifting
-   * = N * x^2 x sum_{i = 0}^{log(N)-1} i*x^(i-1)   (x=1/2) index shifting
-   * = N * x^2 x sum_{i = 0}^{log(N)-1} d(x^i)/dx   (x=1/2) derivation formula
-   * = N * x^2 x d(sum_{i = 0}^{log(N)-1} x^i)/dx   (x=1/2) linearity of derivation
-   * = N * x^2 x d([x^log(N) - 1]/[x - 1])/dx       (x=1/2) sum of geometric series
-   * = N * x^2 x (log(N)*x^{log(N)-1}*[x - 1] - [x^log(N) - 1])/(x - 1)^2  (x=1/2) derivation
+   * = N * x^2 * sum_{i = 0}^{log(N)-1} i*x^(i-1)   (x=1/2) index shifting
+   * = N * x^2 * sum_{i = 0}^{log(N)-1} d(x^i)/dx   (x=1/2) derivation formula
+   * = N * x^2 * d(sum_{i = 0}^{log(N)-1} x^i)/dx   (x=1/2) linearity of derivation
+   * = N * x^2 * d([x^log(N) - 1]/[x - 1])/dx       (x=1/2) sum of geometric series
+   * = N * x^2 * (log(N)*x^{log(N)-1}*[x - 1] - [x^log(N) - 1])/(x - 1)^2  (x=1/2) derivation
    * = N * (log(N)*1/N - 1/N + 1)
 	 * = N - log(N) - 1
 	 * = O(N)
