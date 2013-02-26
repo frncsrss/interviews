@@ -1,29 +1,31 @@
 package interviews.trees;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Binary Search Tree.
  * @author Francois Rousseau
  */
 public class BST<E> {
-  private E value;
-  private BST<E> left;
-  private BST<E> right;
-  private int frequency;
-  private Comparator<E> comparator;
-  
+  private BSTNode<E> root;
+  private final Comparator<E> comparator;
+
   public BST(E e, Comparator<E> comparator) {
     this.comparator = comparator;
-    insert(e);
+    root = new BSTNode<E>(e, comparator);
   }
+
   public BST(Collection<E> collection, Comparator<E> comparator) {
     this.comparator = comparator;
-    for(E e : collection) {
-      insert(e);
+   for(E e : collection) {
+      if(root == null) {
+        root = new BSTNode<E>(e, comparator);
+      } else {
+        root.add(e);
+      }
     }
   }
 
@@ -31,13 +33,15 @@ public class BST<E> {
    *  Inserts the specified element into this BST.
    */
   public boolean add(E e) throws NullPointerException {
-    if(e == null) throw new NullPointerException();
-    insert(e);
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    root.add(e);
     return true;
   }
 
   /**
-   *  Returns the comparator used to order the elements in this heap.
+   *  Returns the comparator used to order the elements in this BST.
    */
   public Comparator<E> comparator() {
     return comparator;
@@ -47,20 +51,14 @@ public class BST<E> {
    *  Returns the minimal element of this BST.
    */
   public E min() {
-    if(left == null) {
-      return value;
-    }
-    return left.min();
+   return root.min();
   }
 
   /**
    *  Returns the maximal element of this BST.
    */
   public E max() {
-    if(right == null) {
-      return value;
-    }
-    return right.max();
+    return root.max();
   }
 
   /**
@@ -68,32 +66,31 @@ public class BST<E> {
    * TODO: some work to do when a parent gets removed
    */
   public boolean remove(E e) {
-    int result = comparator.compare(e, value);
-    if(result == 0) {
-      if(left == null && right == null) {
-        //TODO
-      } else if(left == null) {
-        value = right.value;
-        right = null;
-      } else if(right == null) {
-        value = left.value;
-        left = null;
-      } else {
-        //TODO        
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    final int result = comparator.compare(e, root.value);
+    if(result == 0) {  // we found the node
+      if(root.left == null && root.right == null) {  // no children, the parent should point to null
+      } else if(root.left == null) {  // no left child, the root should become the right child
+        root = root.right;
+      } else if(root.right == null) {  // no right child, the root should become the left child
+        root = root.left;
+      } else {  // two children, this is the tricky part
+        root.value = root.right.min();
+        root.right.remove(root.value, root);
       }
       return true;
-    }
-    if(result > 0) {
-      if(right == null) {
+    } else if(result > 0) {  // move to the right
+      if(root.right == null) {  // no right child, nothing to remove
         return false;
       }
-      return right.remove(e);
-    }
-    else {
-      if(left == null) {
+      return root.right.remove(e, root);
+    } else {  // move to the left
+      if(root.left == null) {  // no left child, nothing to remove
         return false;
       }
-      return left.remove(e);
+      return root.left.remove(e, root);
     }
   }
 
@@ -102,16 +99,7 @@ public class BST<E> {
    *  Returns a boolean value accordingly.
    */
   public boolean search(E e) throws NullPointerException {
-    int result = comparator.compare(e, value);
-    if(result == 0) {
-      return true;
-    }
-    if(result > 0) {
-      return (right == null) ? false : right.search(e);
-    }
-    else {
-      return (left == null) ? false : left.search(e);
-    }
+    return root.search(e);
   }
 
   /**
@@ -119,56 +107,27 @@ public class BST<E> {
    *  Append the value to a given collection sorted at the end.
    */
   public void traversal(Collection<E> collection) {
-    if(left != null) {
-      left.traversal(collection);
-    }
-    for(int i=0; i<frequency; i++) {
-      collection.add(value);
-    }
-    if(right != null) {
-      right.traversal(collection);
-    }
+    root.traversal(collection);
   }
 
+  /**
+   *  Breadth-first traversal of this BST.
+   */
+  @Override
   public String toString() {
-    StringBuilder buffer = new StringBuilder();
-    List<E> list = new ArrayList<E>();
-    buffer.append("[");
-    traversal(list);
-    for(E e : list) {
-      buffer.append(e+", ");
-    }
-    buffer.append("]");
-    return buffer.toString();
-  }
-
-  private void insert(E e) {
-    if(value == null) {
-      value = e;
-      frequency++;
-    }
-    else {
-      int result = comparator.compare(e, value);
-      // we consider our BST as a Set
-      // Hence, we don't insert an element already in the BST (i.e. result == 0)
-      // we just increment is frequency
-      if(result == 0) {
-        frequency++;
+    final StringBuilder buffer = new StringBuilder();
+    final Queue<BSTNode<E>> queue = new LinkedList<BSTNode<E>>();
+    queue.add(root);
+    while(!queue.isEmpty()) {
+      BSTNode<E> current = queue.poll();
+      buffer.append(current.value + " ");
+      if(current.left != null) {
+        queue.add(current.left);
       }
-      else if(result > 0) {
-        if(right == null) {
-          right = new BST<E>(e, comparator);
-        } else {
-          right.insert(e);          
-        }
-      }
-      else if (result < 0){
-        if(left == null) {
-          left = new BST<E>(e, comparator);
-        } else {
-          left.insert(e);
-        }
+      if(current.right != null) {
+        queue.add(current.right);
       }
     }
+    return buffer.deleteCharAt(buffer.length() - 1).toString();
   }
 }

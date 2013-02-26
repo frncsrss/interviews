@@ -166,7 +166,7 @@ public abstract class Heap<E> implements Iterable<E> {
   }
   
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuffer buffer = new StringBuffer();
     int power = 1;
     for (E e : heap) {
       buffer.append(e + " ");
