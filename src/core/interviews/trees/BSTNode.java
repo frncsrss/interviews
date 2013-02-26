@@ -20,7 +20,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Inserts the specified element into this BST.
+   *  Inserts the specified element under this BSTNode.
    */
   protected void add(E e) {
     if(value == null) {
@@ -50,7 +50,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Returns the minimal element of this BST.
+   *  Returns the minimal element under this BSTNode.
    */
   protected E min() {
     if(left == null) {
@@ -60,7 +60,7 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Returns the maximal element of this BST.
+   *  Returns the maximal element under this BSTNode.
    */
   protected E max() {
     if(right == null) {
@@ -70,24 +70,22 @@ public class BSTNode<E> {
   }
 
   /**
-   *  Search a given element in this BST.
+   *  Search a given element under this BSTNode.
    *  Returns a boolean value accordingly.
    */
   protected boolean search(E e) throws NullPointerException {
     final int result = comparator.compare(e, value);
-    if(result == 0) {
+    if(result == 0) {  // search hit
       return true;
     }
     if(result > 0) {
       return (right == null) ? false : right.search(e);
     }
-    else {
-      return (left == null) ? false : left.search(e);
-    }
+    return (left == null) ? false : left.search(e);
   }
 
   /**
-   *  In-order traversal of this BST.
+   *  In-order traversal of the subtree under this BSTNode.
    *  Append the value to a given collection sorted at the end.
    */
   protected void traversal(Collection<E> collection) {
@@ -102,6 +100,9 @@ public class BSTNode<E> {
     }
   }
 
+  /**
+   * Removes a single instance of the specified element from under this BSTNode, if it is present.
+   */
   protected boolean remove(E e, BSTNode<E> parent) {
     final int result = comparator.compare(e, value);
     if(result == 0) {  // we found the node
