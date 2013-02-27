@@ -22,5 +22,15 @@ public class MaximumConsecutiveSubsequenceTest {
         Arrays.asList(5, -2, 9), f(Arrays.asList(1, -3, 5, -2, 9, -8, 6, 1)));
     Assert.assertEquals(
         Arrays.asList(5, -2, 9, -8, 6, 4), f(Arrays.asList(1, -3, 5, -2, 9, -8, 6, 4)));
+    Assert.assertEquals(
+        Arrays.asList(2), f(Arrays.asList(-3, 2)));
+    Assert.assertEquals(
+        Arrays.asList(2, 5), f(Arrays.asList(-3, 2, 5)));
+    Assert.assertEquals(
+        Arrays.asList(-2), f(Arrays.asList(-3, -2, -5)));
+    Assert.assertEquals(
+        Arrays.asList(-3), f(Arrays.asList(-3)));
+    Assert.assertEquals(
+        Arrays.asList(2), f(Arrays.asList(2)));
   }
 }
