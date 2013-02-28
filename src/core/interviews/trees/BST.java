@@ -126,26 +126,39 @@ public class BST<E> {
   }
 
   /**
-   * In-order traversal of this BST.
+   * In-order traversal of this BST with recursion.
    * Append the values to a given collection sorted at the end.
    */
-  public void traversal(Collection<E> collection) {
+  public void traversalInOrderRecursive(Collection<E> collection) {
     if(root == null) {
       return;
     }
-    root.traversal(collection);
+    root.traversalInOrderRecursive(collection);
   }
 
   /**
-   * In-order traversal of this BST.
+   * In-order traversal of this BST with recursion.
    * Return a sorted collection of the values in the BST.
    */
-  public Collection<E> traversal() {
+  public Collection<E> traversalInOrderRecursive() {
     if(root == null) {
       return null;
     }
     Collection<E> collection = new ArrayList<E>();
-    root.traversal(collection);
+    root.traversalInOrderRecursive(collection);
+    return collection;
+  }
+
+  /**
+   * In-order traversal of this BST without recursion (Morris traversal).
+   * Return a sorted collection of the values in the BST.
+   */
+  public Collection<E> traversalInOrderNonRecursive() {
+    if(root == null) {
+      return null;
+    }
+    Collection<E> collection = new ArrayList<E>();
+    BSTNode.traversalInOrderNonRecursive(collection, root);
     return collection;
   }
 

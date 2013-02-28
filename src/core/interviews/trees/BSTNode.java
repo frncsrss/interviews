@@ -86,18 +86,18 @@ public class BSTNode<E> {
   }
 
   /**
-   * In-order traversal of the subtree under this BSTNode.
+   * In-order traversal of the subtree under this BSTNode with recursion.
    * Append the value to a given collection sorted at the end.
    */
-  protected void traversal(Collection<E> collection) {
+  protected void traversalInOrderRecursive(Collection<E> collection) {
     if(left != null) {
-      left.traversal(collection);
+      left.traversalInOrderRecursive(collection);
     }
     for(int i = 0; i < frequency; i++) {
       collection.add(value);
     }
     if(right != null) {
-      right.traversal(collection);
+      right.traversalInOrderRecursive(collection);
     }
   }
 
@@ -141,5 +141,37 @@ public class BSTNode<E> {
       }
       return left.remove(e, this);
     }    
+  }
+
+  /**
+   * In-order traversal of the subtree under this BSTNode without recursion (Morris traversal).
+   * Append the value to a given collection sorted at the end.
+   */
+  public static <E> void traversalInOrderNonRecursive(Collection<E> collection, BSTNode<E> root) {
+    if(root == null) {
+      return;
+    }
+    BSTNode<E> current, tmp;  // current root and temporary parent
+    current = root;
+    while(current != null) {
+      if(current.left == null) {  // we reached the leftmost child
+        collection.add(current.value);
+        current = current.right;
+      } else {  // find the in-order predecessor of current
+        tmp = current.left;
+        // make tmp the rightmost child of the left subtree (in-order predecessor of current)
+        while(tmp.right != null && tmp.right != current) {
+          tmp = tmp.right;
+        }
+        if(tmp.right == null) {  // make current the right child of its in-order predecessor
+          tmp.right = current;
+          current = current.left;
+        } else {  // tmp.right == current - a temporary parent has been found
+          tmp.right = null;  // cut the right pointer of the current parent - no longer a parent
+          collection.add(current.value);
+          current = current.right;
+        } 
+      } 
+    } 
   }
 }

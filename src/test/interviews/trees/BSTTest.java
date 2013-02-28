@@ -103,10 +103,10 @@ public class BSTTest {
   }
 
   @Test
-  public void test_traversal() {
+  public void test_traversalInOrderRecursive() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     final List<Integer> list = new ArrayList<Integer>();
-    bst.traversal(list);
+    bst.traversalInOrderRecursive(list);
     Assert.assertEquals(true, list.isEmpty());
     bst.add(10);
     bst.add(5);
@@ -119,10 +119,29 @@ public class BSTTest {
     bst.add(14);
     bst.add(11);
     bst.add(16);
-    bst.traversal(list);
+    bst.traversalInOrderRecursive(list);
     Assert.assertEquals(false, list.isEmpty());
     Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), list);
-    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversal());
+    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderRecursive());
+    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderRecursive());
+  }
+
+  @Test
+  public void test_traversalInOrderNonRecursive() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.add(10);
+    bst.add(5);
+    bst.add(3);
+    bst.add(8);
+    bst.add(2);
+    bst.add(4);
+    bst.add(6);
+    bst.add(9);
+    bst.add(14);
+    bst.add(11);
+    bst.add(16);
+    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderNonRecursive());
+    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderNonRecursive());
   }
 
   @Test
