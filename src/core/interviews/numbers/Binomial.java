@@ -84,12 +84,12 @@ public class Binomial {
    * Returns (k..n) in O(k) time, O(1) space.
    */
   public static long binomial_k(int n, int k) {
+    if(k < 0 || k > n) {
+      return 0;
+    }
     // we use the symmetry property.
     if (k > n-k) {
       k = n-k;
-    }
-    if(k < 0) {
-      return 0;
     }
     if(k == 0) {
       return 1;
@@ -98,8 +98,8 @@ public class Binomial {
       return n;
     }
     long ret = 1;
-    for(int i=1; i<=k; i++) {
-      ret *= n-k+i;
+    for(int i = 1; i <= k; i++) {
+      ret *= n - k + i;
       ret /= i;
     }
     return ret;

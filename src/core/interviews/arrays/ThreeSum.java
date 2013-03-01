@@ -76,7 +76,6 @@ public class ThreeSum {
           } else {
             int nb_total = nb_lower*nb_higher;
             while(nb_total-- > 0) {
-              System.out.println(arr[i]+","+ arr[lower]+","+ arr[higher]);
               triples.add(new int[]{arr[i], arr[lower], arr[higher]});              
             }
           }
