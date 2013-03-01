@@ -7,8 +7,7 @@ import java.util.Comparator;
  * BSTNode.
  * @author Francois Rousseau
  */
-public class BSTNode<E> {
-  protected E value;
+public class BSTNode<E> extends BTNode<E> {
   protected BSTNode<E> left;
   protected BSTNode<E> right;
   protected int frequency;
@@ -21,7 +20,6 @@ public class BSTNode<E> {
 
   /**
    * Inserts the specified element under this BSTNode.
-   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   protected void add(E e) {
     if(value == null) {
@@ -103,6 +101,7 @@ public class BSTNode<E> {
 
   /**
    * Removes a single instance of the specified element from under this BSTNode, if it is present.
+   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   protected boolean remove(E e, BSTNode<E> parent) {
     final int result = comparator.compare(e, value);

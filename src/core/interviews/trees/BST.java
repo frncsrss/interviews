@@ -11,9 +11,9 @@ import java.util.Queue;
  * Binary Search Tree.
  * @author Francois Rousseau
  */
-public class BST<E> {
-  private BSTNode<E> root;
-  private final Comparator<E> comparator;
+public class BST<E> extends BT<E> {
+  protected BSTNode<E> root;
+  protected final Comparator<E> comparator;
 
   public BST(Comparator<E> comparator) {
     this.comparator = comparator;
