@@ -1,13 +1,11 @@
 package interviews.trees;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Assert;
 import interviews.sorts.Sorts;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -105,9 +103,6 @@ public class BSTTest {
   @Test
   public void test_traversalInOrderRecursive() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
-    final List<Integer> list = new ArrayList<Integer>();
-    bst.traversalInOrderRecursive(list);
-    Assert.assertEquals(true, list.isEmpty());
     bst.add(10);
     bst.add(5);
     bst.add(3);
@@ -119,9 +114,6 @@ public class BSTTest {
     bst.add(14);
     bst.add(11);
     bst.add(16);
-    bst.traversalInOrderRecursive(list);
-    Assert.assertEquals(false, list.isEmpty());
-    Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), list);
     Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderRecursive());
     Assert.assertEquals(Arrays.asList(2, 3, 4, 5, 6, 8, 9, 10, 11, 14, 16), bst.traversalInOrderRecursive());
   }

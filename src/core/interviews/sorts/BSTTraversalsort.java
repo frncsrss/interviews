@@ -12,7 +12,6 @@ import java.util.List;
 public class BSTTraversalSort {
   public static <E> void f(List<E> list, Comparator<E> comparator) {
     BST<E> tree = new BST<E>(list, comparator);
-    list.clear();
-    tree.traversalInOrderRecursive(list);
+    list = tree.traversalInOrderRecursive();
   }
 }

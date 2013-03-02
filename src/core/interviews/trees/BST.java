@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
@@ -11,8 +12,8 @@ import java.util.Queue;
  * Binary Search Tree.
  * @author Francois Rousseau
  */
-public class BST<E> extends BT<E> {
-  protected BSTNode<E> root;
+public class BST<E> {
+  protected Node root;
   protected final Comparator<E> comparator;
 
   public BST(Comparator<E> comparator) {
@@ -21,16 +22,16 @@ public class BST<E> extends BT<E> {
 
   public BST(E e, Comparator<E> comparator) {
     this(comparator);
-    root = new BSTNode<E>(e, comparator);
+    root = new Node(e);
   }
 
   public BST(Collection<E> collection, Comparator<E> comparator) {
     this(comparator);
-   for(E e : collection) {
+    for(E e : collection) {
       if(root == null) {
-        root = new BSTNode<E>(e, comparator);
+        root = new Node(e);
       } else {
-        root.add(e);
+        add(root, e);
       }
     }
   }
@@ -43,9 +44,9 @@ public class BST<E> extends BT<E> {
       throw new NullPointerException();
     }
     if(root == null) {
-      root = new BSTNode<E>(e, comparator);
+      root = new Node(e);
     } else {
-      root.add(e);
+      add(root, e);
     }
     return true;
   }
@@ -64,7 +65,7 @@ public class BST<E> extends BT<E> {
     if(root == null) {
       throw new NoSuchElementException();
     }
-   return root.min();
+   return min(root);
   }
 
   /**
@@ -74,7 +75,7 @@ public class BST<E> extends BT<E> {
     if(root == null) {
       throw new NoSuchElementException();
     }
-    return root.max();
+    return max(root);
   }
 
   /**
@@ -97,20 +98,20 @@ public class BST<E> extends BT<E> {
       } else if(root.right == null) {  // no right child, the root should become the left child
         root = root.left;
       } else {  // two children, this is the tricky part
-        root.value = root.right.min();
-        root.right.remove(root.value, root);
+        root.value = min(root.right);
+        remove(root.right, root.value, root);
       }
       return true;
     } else if(result > 0) {  // move to the right
       if(root.right == null) {  // no right child, nothing to remove
         return false;
       }
-      return root.right.remove(e, root);
+      return remove(root.right, e, root);
     } else {  // move to the left
       if(root.left == null) {  // no left child, nothing to remove
         return false;
       }
-      return root.left.remove(e, root);
+      return remove(root.left, e, root);
     }
   }
 
@@ -122,44 +123,33 @@ public class BST<E> extends BT<E> {
     if(root == null) {
       return false;
     }
-    return root.search(e);
-  }
-
-  /**
-   * In-order traversal of this BST with recursion.
-   * Append the values to a given collection sorted at the end.
-   */
-  public void traversalInOrderRecursive(Collection<E> collection) {
-    if(root == null) {
-      return;
-    }
-    root.traversalInOrderRecursive(collection);
+    return search(root, e);
   }
 
   /**
    * In-order traversal of this BST with recursion.
    * Return a sorted collection of the values in the BST.
    */
-  public Collection<E> traversalInOrderRecursive() {
+  public List<E> traversalInOrderRecursive() {
     if(root == null) {
       return null;
     }
-    Collection<E> collection = new ArrayList<E>();
-    root.traversalInOrderRecursive(collection);
-    return collection;
+    List<E> list = new ArrayList<E>();
+    traversalInOrderRecursive(root, list);
+    return list;
   }
 
   /**
    * In-order traversal of this BST without recursion (Morris traversal).
    * Return a sorted collection of the values in the BST.
    */
-  public Collection<E> traversalInOrderNonRecursive() {
+  public List<E> traversalInOrderNonRecursive() {
     if(root == null) {
       return null;
     }
-    Collection<E> collection = new ArrayList<E>();
-    BSTNode.traversalInOrderNonRecursive(collection, root);
-    return collection;
+    List<E> list = new ArrayList<E>();
+    traversalInOrderNonRecursive(list);
+    return list;
   }
 
   /**
@@ -171,10 +161,10 @@ public class BST<E> extends BT<E> {
       return "";
     }
     final StringBuilder buffer = new StringBuilder();
-    final Queue<BSTNode<E>> queue = new LinkedList<BSTNode<E>>();
+    final Queue<Node> queue = new LinkedList<Node>();
     queue.add(root);
     while(!queue.isEmpty()) {
-      BSTNode<E> current = queue.poll();
+      Node current = queue.poll();
       buffer.append(current.value + " ");
       if(current.left != null) {
         queue.add(current.left);
@@ -184,5 +174,178 @@ public class BST<E> extends BT<E> {
       }
     }
     return buffer.deleteCharAt(buffer.length() - 1).toString();
+  }
+
+
+  /**
+   * Inserts the specified element under this Node.
+   */
+  private void add(Node node, E e) {
+    if(node.value == null) {
+      node.value = e;
+      node.frequency++;
+    } else {
+      final int result = comparator.compare(e, node.value);
+      // we consider our BST as a Set
+      // Hence, we don't insert an element already in the BST (i.e. result == 0)
+      // we just increment is frequency
+      if(result == 0) {
+        node.frequency++;
+      } else if(result > 0) {
+        if(node.right == null) {
+          node.right = new Node(e);
+        } else {
+          add(node.right, e);          
+        }
+      } else {  // (result < 0)
+        if(node.left == null) {
+          node.left = new Node(e);
+        } else {
+          add(node.left, e);
+        }
+      }
+    }
+  }
+
+  /**
+   * Returns the minimal element under this Node.
+   */
+  private E min(Node node) {
+    if(node.left == null) {
+      return node.value;
+    }
+    return min(node.left);
+  }
+
+  /**
+   * Returns the maximal element under this Node.
+   */
+  private E max(Node node) {
+    if(node.right == null) {
+      return node.value;
+    }
+    return max(node.right);
+  }
+
+  /**
+   * Search a given element under this Node.
+   * Returns a boolean value accordingly.
+   */
+  private boolean search(Node node, E e) throws NullPointerException {
+    final int result = comparator.compare(e, node.value);
+    if(result == 0) {  // search hit
+      return true;
+    }
+    if(result > 0) {
+      return (node.right == null) ? false : search(node.right, e);
+    }
+    return (node.left == null) ? false : search(node.left, e);
+  }
+
+  /**
+   * In-order traversal of the subtree under this Node with recursion.
+   * Append the value to a given collection sorted at the end.
+   */
+  private void traversalInOrderRecursive(Node node, Collection<E> collection) {
+    if(node.left != null) {
+      traversalInOrderRecursive(node.left, collection);
+    }
+    for(int i = 0; i < node.frequency; i++) {
+      collection.add(node.value);
+    }
+    if(node.right != null) {
+      traversalInOrderRecursive(node.right, collection);
+    }
+  }
+
+  /**
+   * Removes a single instance of the specified element from under this Node, if it is present.
+   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
+   */
+  private boolean remove(Node node, E e, Node parent) {
+    final int result = comparator.compare(e, node.value);
+    if(result == 0) {  // we found the node
+      if(node.left == null && node.right == null) {  // no children, the parent should point to null
+        if(parent.left == node) {
+          parent.left = null;
+        } else {
+          parent.right = null;
+        }
+      } else if(node.left == null) {  // no left child, the parent should point to the right child
+        if(parent.left == node) {
+          parent.left = node.right;
+        } else {
+          parent.right = node.right;
+        }
+      } else if(node.right == null) {  // no right child, the parent should point to the left child
+        if(parent.left == node) {
+          parent.left = node.left;
+        } else {
+          parent.right = node.left;
+        }
+      } else {  // two children, this is the tricky part
+        node.value = min(node.right);
+        remove(node.right, node.value, node);
+      }
+      return true;
+    } else if(result > 0) {  // move to the right
+      if(node.right == null) {  // no right child, nothing to remove
+        return false;
+      }
+      return remove(node.right, e, node);
+    } else {  // move to the left
+      if(node.left == null) {  // no left child, nothing to remove
+        return false;
+      }
+      return remove(node.left, e, node);
+    }    
+  }
+
+  /**
+   * In-order traversal of the subtree under this Node without recursion (Morris traversal).
+   * Append the value to a given collection sorted at the end.
+   */
+  private void traversalInOrderNonRecursive(Collection<E> collection) {
+    if(root == null) {
+      return;
+    }
+    Node current, tmp;  // current root and temporary parent
+    current = root;
+    while(current != null) {
+      if(current.left == null) {  // we reached the leftmost child
+        collection.add(current.value);
+        current = current.right;
+      } else {  // find the in-order predecessor of current
+        tmp = current.left;
+        // make tmp the rightmost child of the left subtree (in-order predecessor of current)
+        while(tmp.right != null && tmp.right != current) {
+          tmp = tmp.right;
+        }
+        if(tmp.right == null) {  // make current the right child of its in-order predecessor
+          tmp.right = current;
+          current = current.left;
+        } else {  // tmp.right == current - a temporary parent has been found
+          tmp.right = null;  // cut the right pointer of the current parent - no longer a parent
+          collection.add(current.value);
+          current = current.right;
+        } 
+      } 
+    } 
+  }
+
+
+  /**
+   * Private inner class for an internal BST node.
+   */
+  private class Node {
+    private E value;
+    private Node left;
+    private Node right;
+    private int frequency;
+
+    private Node(E value) {
+      this.value = value;
+      this.frequency++;
+    }
   }
 }
