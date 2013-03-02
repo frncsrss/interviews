@@ -5,13 +5,13 @@ package interviews.trees;
  * @author Francois Rousseau
  */
 public class BT<E> {
-  public static <E> String serialize(BTNode<E> root) {
+  public static <E> String serialize(Node<E> root) {
     StringBuilder builder = new StringBuilder();
     serialize(root, builder);
     return builder.toString();
   }
 
-  private static <E> void serialize(BTNode<E> node, StringBuilder builder) {
+  private static <E> void serialize(Node<E> node, StringBuilder builder) {
     if(node == null) {
       return;
     }
@@ -27,11 +27,11 @@ public class BT<E> {
     builder.append(')');
   }
 
-  public static BTNode<Integer> deserialize(String s) {
+  public static Node<Integer> deserialize(String s) {
     return deserialize(s.toCharArray(), new int[]{-1});  // -1 to eat the non-existent (
   }
 
-  private static BTNode<Integer> deserialize(char[] arr, int[] i) {  // int[] to pass it like a reference
+  private static Node<Integer> deserialize(char[] arr, int[] i) {  // int[] to pass it like a reference
     i[0]++;  // eat up (
     if(arr[i[0]] == ')') {
       i[0]++;  // eat up )
@@ -42,7 +42,7 @@ public class BT<E> {
       builder.append(arr[i[0]]);
       i[0]++;
     }
-    BTNode<Integer> node = new BTNode<Integer>();
+    Node<Integer> node = new Node<Integer>();
     node.value = Integer.parseInt(builder.toString());
     if(i[0] == arr.length) {  // single root
     } else if(arr[i[0]] == ')') {  // leaf
@@ -54,5 +54,11 @@ public class BT<E> {
     }
     i[0]++;  // eat up )
     return node;
+  }
+
+  private static class Node<E> {
+    private E value;
+    private Node<E> left;
+    private Node<E> right;
   }
 }
