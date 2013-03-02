@@ -28,38 +28,30 @@ public class BST<E> {
   public BST(Collection<E> collection, Comparator<E> comparator) {
     this(comparator);
     for(E e : collection) {
-      if(root == null) {
-        root = new Node(e);
-      } else {
-        add(root, e);
-      }
+      root = insert(root, e);
     }
   }
 
   /**
-   * Inserts the specified element into this BST.
-   */
-  public boolean add(E e) throws NullPointerException {
-    if(e == null) {
-      throw new NullPointerException();
-    }
-    if(root == null) {
-      root = new Node(e);
-    } else {
-      add(root, e);
-    }
-    return true;
-  }
-
-  /**
-   * Returns the comparator used to order the elements in this BST.
+   * Return the comparator used to order the elements in this BST.
    */
   public Comparator<E> comparator() {
     return comparator;
   }
 
   /**
-   * Returns the minimal element of this BST.
+   * Insert the specified element into this BST.
+   */
+  public boolean insert(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    root = insert(root, e);
+    return true;
+  }
+
+  /**
+   * Return the minimal element of this BST.
    */
   public E min() {
     if(root == null) {
@@ -69,7 +61,7 @@ public class BST<E> {
   }
 
   /**
-   * Returns the maximal element of this BST.
+   * Return the maximal element of this BST.
    */
   public E max() {
     if(root == null) {
@@ -79,7 +71,7 @@ public class BST<E> {
   }
 
   /**
-   * Removes a single instance of the specified element from this BST, if it is present.
+   * Remove a single instance of the specified element from this BST, if it is present.
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   public boolean remove(E e) {
@@ -119,7 +111,7 @@ public class BST<E> {
    * Search a given element in this BST.
    * Returns a boolean value accordingly.
    */
-  public boolean search(E e) throws NullPointerException {
+  public boolean search(E e) {
     if(root == null) {
       return false;
     }
@@ -178,37 +170,28 @@ public class BST<E> {
 
 
   /**
-   * Inserts the specified element under this Node.
+   * Insert the specified element under this Node and returns it.
    */
-  private void add(Node node, E e) {
-    if(node.value == null) {
-      node.value = e;
-      node.frequency++;
-    } else {
-      final int result = comparator.compare(e, node.value);
-      // we consider our BST as a Set
-      // Hence, we don't insert an element already in the BST (i.e. result == 0)
-      // we just increment is frequency
-      if(result == 0) {
-        node.frequency++;
-      } else if(result > 0) {
-        if(node.right == null) {
-          node.right = new Node(e);
-        } else {
-          add(node.right, e);          
-        }
-      } else {  // (result < 0)
-        if(node.left == null) {
-          node.left = new Node(e);
-        } else {
-          add(node.left, e);
-        }
-      }
+  private Node insert(Node node, E value) {
+    if(node == null) {
+      return new Node(value);
     }
+    final int result = comparator.compare(value, node.value);
+    // we consider our BST as a Set
+    // Hence, we don't insert an element already in the BST (i.e. result == 0)
+    // we just increment is frequency
+    if(result == 0) {
+      node.frequency++;
+    } else if(result > 0) {
+      node.right = insert(node.right, value);          
+    } else {  // (result < 0)
+      node.left = insert(node.left, value);
+    }
+    return node;
   }
 
   /**
-   * Returns the minimal element under this Node.
+   * Return the minimal element under this Node.
    */
   private E min(Node node) {
     if(node.left == null) {
@@ -218,7 +201,7 @@ public class BST<E> {
   }
 
   /**
-   * Returns the maximal element under this Node.
+   * Return the maximal element under this Node.
    */
   private E max(Node node) {
     if(node.right == null) {
@@ -231,7 +214,7 @@ public class BST<E> {
    * Search a given element under this Node.
    * Returns a boolean value accordingly.
    */
-  private boolean search(Node node, E e) throws NullPointerException {
+  private boolean search(Node node, E e) {
     final int result = comparator.compare(e, node.value);
     if(result == 0) {  // search hit
       return true;
@@ -259,7 +242,7 @@ public class BST<E> {
   }
 
   /**
-   * Removes a single instance of the specified element from under this Node, if it is present.
+   * Remove a single instance of the specified element from under this Node, if it is present.
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   private boolean remove(Node node, E e, Node parent) {
