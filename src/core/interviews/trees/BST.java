@@ -42,12 +42,22 @@ public class BST<E> {
   /**
    * Insert the specified element into this BST.
    */
-  public boolean insert(E e) throws NullPointerException {
+  public void insert(E e) throws NullPointerException {
     if(e == null) {
       throw new NullPointerException();
     }
     root = insert(root, e);
-    return true;
+  }
+
+  /**
+   * Return the largest element lesser than the given element in this BST.
+   */
+  public E floor(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    Node floor = floor(root, e);
+    return (floor == null) ? null : floor.e;
   }
 
   /**
@@ -81,7 +91,7 @@ public class BST<E> {
     if(root == null) {
       return false;
     }
-    final int result = comparator.compare(e, root.value);
+    final int result = comparator.compare(e, root.e);
     if(result == 0) {  // we found the node
       if(root.left == null && root.right == null) {  // no children, the root should be null
         root = null;
@@ -90,8 +100,8 @@ public class BST<E> {
       } else if(root.right == null) {  // no right child, the root should become the left child
         root = root.left;
       } else {  // two children, this is the tricky part
-        root.value = min(root.right);
-        remove(root.right, root.value, root);
+        root.e = min(root.right);
+        remove(root.right, root.e, root);
       }
       return true;
     } else if(result > 0) {  // move to the right
@@ -157,7 +167,7 @@ public class BST<E> {
     queue.add(root);
     while(!queue.isEmpty()) {
       Node current = queue.poll();
-      buffer.append(current.value + " ");
+      buffer.append(current.e + " ");
       if(current.left != null) {
         queue.add(current.left);
       }
@@ -172,22 +182,40 @@ public class BST<E> {
   /**
    * Insert the specified element under this Node and returns it.
    */
-  private Node insert(Node node, E value) {
+  private Node insert(Node node, E e) {
     if(node == null) {
-      return new Node(value);
+      return new Node(e);
     }
-    final int result = comparator.compare(value, node.value);
+    final int result = comparator.compare(e, node.e);
     // we consider our BST as a Set
     // Hence, we don't insert an element already in the BST (i.e. result == 0)
     // we just increment is frequency
     if(result == 0) {
       node.frequency++;
     } else if(result > 0) {
-      node.right = insert(node.right, value);          
+      node.right = insert(node.right, e);          
     } else {  // (result < 0)
-      node.left = insert(node.left, value);
+      node.left = insert(node.left, e);
     }
     return node;
+  }
+
+  /**
+   * Return the largest element lesser than the given element under this Node.
+   */
+  private Node floor(Node node, E e) {
+    if(node == null) {
+      return null;
+    }
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {
+      return node;
+    } else if(result < 0) {
+      return floor(node.left, e);
+    } else {  // (result > 0)
+      Node tmp = floor(node.right, e);
+      return (tmp == null) ? node : tmp;
+    }
   }
 
   /**
@@ -195,7 +223,7 @@ public class BST<E> {
    */
   private E min(Node node) {
     if(node.left == null) {
-      return node.value;
+      return node.e;
     }
     return min(node.left);
   }
@@ -205,7 +233,7 @@ public class BST<E> {
    */
   private E max(Node node) {
     if(node.right == null) {
-      return node.value;
+      return node.e;
     }
     return max(node.right);
   }
@@ -215,7 +243,7 @@ public class BST<E> {
    * Returns a boolean value accordingly.
    */
   private boolean search(Node node, E e) {
-    final int result = comparator.compare(e, node.value);
+    final int result = comparator.compare(e, node.e);
     if(result == 0) {  // search hit
       return true;
     }
@@ -234,7 +262,7 @@ public class BST<E> {
       traversalInOrderRecursive(node.left, collection);
     }
     for(int i = 0; i < node.frequency; i++) {
-      collection.add(node.value);
+      collection.add(node.e);
     }
     if(node.right != null) {
       traversalInOrderRecursive(node.right, collection);
@@ -246,7 +274,7 @@ public class BST<E> {
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
   private boolean remove(Node node, E e, Node parent) {
-    final int result = comparator.compare(e, node.value);
+    final int result = comparator.compare(e, node.e);
     if(result == 0) {  // we found the node
       if(node.left == null && node.right == null) {  // no children, the parent should point to null
         if(parent.left == node) {
@@ -267,8 +295,8 @@ public class BST<E> {
           parent.right = node.left;
         }
       } else {  // two children, this is the tricky part
-        node.value = min(node.right);
-        remove(node.right, node.value, node);
+        node.e = min(node.right);
+        remove(node.right, node.e, node);
       }
       return true;
     } else if(result > 0) {  // move to the right
@@ -296,7 +324,7 @@ public class BST<E> {
     current = root;
     while(current != null) {
       if(current.left == null) {  // we reached the leftmost child
-        collection.add(current.value);
+        collection.add(current.e);
         current = current.right;
       } else {  // find the in-order predecessor of current
         tmp = current.left;
@@ -309,7 +337,7 @@ public class BST<E> {
           current = current.left;
         } else {  // tmp.right == current - a temporary parent has been found
           tmp.right = null;  // cut the right pointer of the current parent - no longer a parent
-          collection.add(current.value);
+          collection.add(current.e);
           current = current.right;
         } 
       } 
@@ -321,13 +349,13 @@ public class BST<E> {
    * Private inner class for an internal BST node.
    */
   private class Node {
-    private E value;
+    private E e;
     private Node left;
     private Node right;
     private int frequency;
 
     private Node(E value) {
-      this.value = value;
+      this.e = value;
       this.frequency++;
     }
   }

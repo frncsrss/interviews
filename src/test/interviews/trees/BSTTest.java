@@ -15,7 +15,7 @@ import org.junit.Test;
 public class BSTTest {
 
   @Test(expected = NullPointerException.class)
-  public void test_add_exception() {
+  public void test_insert_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.insert(null);
   }
@@ -30,6 +30,42 @@ public class BSTTest {
   public void test_min_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.min();
+  }
+
+  @Test
+  public void test_insert() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(8);
+    bst.insert(2);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(14);
+    bst.insert(11);
+    bst.insert(16);
+  }
+
+  @Test
+  public void test_floor() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(8);
+    bst.insert(2);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(14);
+    bst.insert(11);
+    bst.insert(16);
+    Assert.assertEquals(null, bst.floor(1));
+    Assert.assertEquals(new Integer(6), bst.floor(7));
+    Assert.assertEquals(new Integer(6), bst.floor(6));
+    Assert.assertEquals(new Integer(16), bst.floor(17));
   }
 
   @Test
