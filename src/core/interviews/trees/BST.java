@@ -203,7 +203,7 @@ public class BST<E> {
    * Delete the given element from under this Node, if it is present.
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
-  private Node delete(Node node, E e) {
+  protected Node delete(Node node, E e) {
     if(node == null) {
       return null;
     }
@@ -230,7 +230,7 @@ public class BST<E> {
   /**
    * Insert the specified element under this Node and returns it.
    */
-  private Node insert(Node node, E e) {
+  protected Node insert(Node node, E e) {
     if(node == null) {
       return new Node(e);
     }
@@ -322,7 +322,7 @@ public class BST<E> {
   /**
    * Return the number of elements under this Node.
    */
-  private int size(Node node) {
+  protected int size(Node node) {
     if(node == null) {
       return 0;
     }
@@ -379,17 +379,17 @@ public class BST<E> {
 
 
   /**
-   * Private inner class for an internal BST node.
+   * Protected inner class for an internal BST node.
    */
-  private class Node {
-    private E e;
-    private Node left;
-    private Node right;
-    private int frequency;
-    private int size;
+  protected class Node {
+    protected E e;
+    protected Node left;
+    protected Node right;
+    protected int frequency;
+    protected int size;
 
-    private Node(E value) {
-      this.e = value;
+    protected Node(E e) {
+      this.e = e;
       this.frequency = 1;
       this.size = 1;
     }
