@@ -102,40 +102,14 @@ public class BST<E> {
   }
 
   /**
-   * Remove a single instance of the specified element from this BST, if it is present.
+   * Delete the given element from this BST, if it is present.
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
    */
-  public boolean remove(E e) {
+  public void delete(E e) {
     if(e == null) {
       throw new NullPointerException();
     }
-    if(root == null) {
-      return false;
-    }
-    final int result = comparator.compare(e, root.e);
-    if(result == 0) {  // we found the node
-      if(root.left == null && root.right == null) {  // no children, the root should be null
-        root = null;
-      } else if(root.left == null) {  // no left child, the root should become the right child
-        root = root.right;
-      } else if(root.right == null) {  // no right child, the root should become the left child
-        root = root.left;
-      } else {  // two children, this is the tricky part
-        root.e = min(root.right);
-        remove(root.right, root.e, root);
-      }
-      return true;
-    } else if(result > 0) {  // move to the right
-      if(root.right == null) {  // no right child, nothing to remove
-        return false;
-      }
-      return remove(root.right, e, root);
-    } else {  // move to the left
-      if(root.left == null) {  // no left child, nothing to remove
-        return false;
-      }
-      return remove(root.left, e, root);
-    }
+    root = delete(root, e);
   }
 
   /**
@@ -223,6 +197,34 @@ public class BST<E> {
       Node tmp = ceiling(node.left, e);
       return (tmp == null) ? node : tmp;
     }
+  }
+
+  /**
+   * Delete the given element from under this Node, if it is present.
+   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
+   */
+  private Node delete(Node node, E e) {
+    if(node == null) {
+      return null;
+    }
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {  // we found the node
+      if(node.right == null) {
+        return node.left;
+      }
+      if(node.left == null) {
+        return node.right;
+      }
+      // two children, this is the tricky part
+      node.e = min(node.right);  // set the current value to the leftmost node of the right subtree
+      node.right = delete(node.right, node.e);  //delete the leftmost node of the right subtree
+    } else if(result > 0) {  // move to the right
+      node.right = delete(node.right, e);
+    } else {  // move to the left
+      node.left = delete(node.left, e);
+    }
+    node.size = 1 + size(node.left) + size(node.right);
+    return node;
   }
 
   /**
@@ -341,49 +343,6 @@ public class BST<E> {
     if(node.right != null) {
       traversalInOrderRecursive(node.right, collection);
     }
-  }
-
-  /**
-   * Remove a single instance of the specified element from under this Node, if it is present.
-   * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
-   */
-  private boolean remove(Node node, E e, Node parent) {
-    final int result = comparator.compare(e, node.e);
-    if(result == 0) {  // we found the node
-      if(node.left == null && node.right == null) {  // no children, the parent should point to null
-        if(parent.left == node) {
-          parent.left = null;
-        } else {
-          parent.right = null;
-        }
-      } else if(node.left == null) {  // no left child, the parent should point to the right child
-        if(parent.left == node) {
-          parent.left = node.right;
-        } else {
-          parent.right = node.right;
-        }
-      } else if(node.right == null) {  // no right child, the parent should point to the left child
-        if(parent.left == node) {
-          parent.left = node.left;
-        } else {
-          parent.right = node.left;
-        }
-      } else {  // two children, this is the tricky part
-        node.e = min(node.right);
-        remove(node.right, node.e, node);
-      }
-      return true;
-    } else if(result > 0) {  // move to the right
-      if(node.right == null) {  // no right child, nothing to remove
-        return false;
-      }
-      return remove(node.right, e, node);
-    } else {  // move to the left
-      if(node.left == null) {  // no left child, nothing to remove
-        return false;
-      }
-      return remove(node.left, e, node);
-    }    
   }
 
   /**

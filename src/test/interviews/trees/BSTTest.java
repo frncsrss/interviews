@@ -162,7 +162,7 @@ public class BSTTest {
   }
 
   @Test
-  public void test_remove() {
+  public void test_delete() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.insert(10);
     bst.insert(5);
@@ -176,23 +176,23 @@ public class BSTTest {
     bst.insert(11);
     bst.insert(16);
     Assert.assertEquals("10 5 14 3 8 11 16 2 4 6 9", bst.toString());
-    Assert.assertEquals(true, bst.remove(5));
+    bst.delete(5);
     Assert.assertEquals("10 6 14 3 8 11 16 2 4 9", bst.toString());
-    Assert.assertEquals(true, bst.remove(10));  // remove root
+    bst.delete(10);  // remove root
     Assert.assertEquals("11 6 14 3 8 16 2 4 9", bst.toString());
-    Assert.assertEquals(false, bst.remove(10));
-    Assert.assertEquals(true, bst.remove(3));
-    Assert.assertEquals(true, bst.remove(8));
-    Assert.assertEquals(true, bst.remove(2));
-    Assert.assertEquals(true, bst.remove(4));
-    Assert.assertEquals(true, bst.remove(6));
-    Assert.assertEquals(true, bst.remove(9));
-    Assert.assertEquals(true, bst.remove(14));
-    Assert.assertEquals(true, bst.remove(11));
-    Assert.assertEquals(true, bst.remove(16));
-    Assert.assertEquals(false, bst.remove(16));
+    bst.delete(10);  // remove non-existent element
+    bst.delete(3);
+    bst.delete(8);
+    bst.delete(2);
+    bst.delete(4);
+    bst.delete(6);
+    bst.delete(9);
+    bst.delete(14);
+    bst.delete(11);
+    bst.delete(16);
+    bst.delete(16);
     bst.insert(5);
-    Assert.assertEquals(true, bst.remove(5));
+    bst.delete(5);
   }
 
   @Test
