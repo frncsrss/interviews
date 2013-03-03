@@ -15,6 +15,12 @@ import org.junit.Test;
 public class BSTTest {
 
   @Test(expected = NullPointerException.class)
+  public void test_ceiling_exception() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.ceiling(null);
+  }
+
+  @Test(expected = NullPointerException.class)
   public void test_floor_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.floor(null);
@@ -42,6 +48,26 @@ public class BSTTest {
   public void test_min_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.min();
+  }
+
+  @Test
+  public void test_ceiling() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(8);
+    bst.insert(2);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(14);
+    bst.insert(11);
+    bst.insert(16);
+    Assert.assertEquals(null, bst.ceiling(17));
+    Assert.assertEquals(new Integer(8), bst.ceiling(7));
+    Assert.assertEquals(new Integer(8), bst.ceiling(8));
+    Assert.assertEquals(new Integer(2), bst.ceiling(1));
   }
 
   @Test

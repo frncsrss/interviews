@@ -40,6 +40,17 @@ public class BST<E> {
   }
 
   /**
+   * Return the smallest element greater than the given element in this BST.
+   */
+  public E ceiling(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    Node ceiling = ceiling(root, e);
+    return (ceiling == null) ? null : ceiling.e;
+  }
+
+  /**
    * Insert the specified element into this BST.
    */
   public void insert(E e) throws NullPointerException {
@@ -195,6 +206,24 @@ public class BST<E> {
     return buffer.deleteCharAt(buffer.length() - 1).toString();
   }
 
+
+  /**
+   * Return the smallest element greater than the given element under this Node.
+   */
+  private Node ceiling(Node node, E e) {
+    if(node == null) {
+      return null;
+    }
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {
+      return node;
+    } else if(result > 0) {
+      return ceiling(node.right, e);
+    } else {  // (result > 0)
+      Node tmp = ceiling(node.left, e);
+      return (tmp == null) ? node : tmp;
+    }
+  }
 
   /**
    * Insert the specified element under this Node and returns it.
