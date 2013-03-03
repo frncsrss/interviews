@@ -50,7 +50,7 @@ public class BST<E> {
   }
 
   /**
-   * Return the largest element lesser than the given element in this BST.
+   * Return the largest element less than the given element in this BST.
    */
   public E floor(E e) throws NullPointerException {
     if(e == null) {
@@ -78,6 +78,16 @@ public class BST<E> {
       throw new NoSuchElementException();
     }
     return max(root);
+  }
+
+  /**
+   * Return the number of elements strictly less than the given element in this BST.
+   */
+  public int rank(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    return rank(root, e);
   }
 
   /**
@@ -209,7 +219,7 @@ public class BST<E> {
   }
 
   /**
-   * Return the largest element lesser than the given element under this Node.
+   * Return the largest element less than the given element under this Node.
    */
   private Node floor(Node node, E e) {
     if(node == null) {
@@ -244,6 +254,23 @@ public class BST<E> {
       return node.e;
     }
     return max(node.right);
+  }
+
+  /**
+   * Return the number of elements strictly less than the given element under this Node.
+   */
+  private int rank(Node node, E e) {
+    if(node == null) {
+      return 0;
+    }
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {  // search hit
+      return size(node.left);  // strictly less than
+    }
+    if(result > 0) {
+      return 1 + size(node.left) + rank(node.right, e);
+    }
+    return rank(node.left, e);
   }
 
   /**

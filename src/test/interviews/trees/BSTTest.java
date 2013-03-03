@@ -15,9 +15,21 @@ import org.junit.Test;
 public class BSTTest {
 
   @Test(expected = NullPointerException.class)
+  public void test_floor_exception() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.floor(null);
+  }
+
+  @Test(expected = NullPointerException.class)
   public void test_insert_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.insert(null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void test_rank_exception() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.rank(null);
   }
 
   @Test(expected = NoSuchElementException.class)
@@ -101,6 +113,26 @@ public class BSTTest {
     bst.insert(11);
     bst.insert(16);
     Assert.assertEquals(new Integer(2), bst.min());
+  }
+
+  @Test
+  public void test_rank() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(8);
+    bst.insert(2);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(14);
+    bst.insert(11);
+    bst.insert(16);
+    Assert.assertEquals(0, bst.rank(1));
+    Assert.assertEquals(5, bst.rank(7));
+    Assert.assertEquals(4, bst.rank(6));
+    Assert.assertEquals(11, bst.rank(17));
   }
 
   @Test
