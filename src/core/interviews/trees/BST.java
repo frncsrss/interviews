@@ -129,6 +129,13 @@ public class BST<E> {
   }
 
   /**
+   * Return the number of elements in this BST.
+   */
+  public int size() {
+    return size(root);
+  }
+
+  /**
    * In-order traversal of this BST with recursion.
    * Return a sorted collection of the values in the BST.
    */
@@ -197,6 +204,7 @@ public class BST<E> {
     } else {  // (result < 0)
       node.left = insert(node.left, e);
     }
+    node.size = 1 + size(node.left) + size(node.right);
     return node;
   }
 
@@ -251,6 +259,16 @@ public class BST<E> {
       return (node.right == null) ? false : search(node.right, e);
     }
     return (node.left == null) ? false : search(node.left, e);
+  }
+
+  /**
+   * Return the number of elements under this Node.
+   */
+  private int size(Node node) {
+    if(node == null) {
+      return 0;
+    }
+    return node.size;
   }
 
   /**
@@ -353,10 +371,12 @@ public class BST<E> {
     private Node left;
     private Node right;
     private int frequency;
+    private int size;
 
     private Node(E value) {
       this.e = value;
-      this.frequency++;
+      this.frequency = 1;
+      this.size = 1;
     }
   }
 }
