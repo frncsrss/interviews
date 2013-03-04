@@ -1,7 +1,7 @@
 package interviews.arrays;
 
 /**
- * Equilibrium. Returns, if it exists, the index in the array where the sum
+ * Equilibrium. Return, if it exists, the index in the array where the sum
  * of the elements at its right equals the one at its left.
  * @author Francois Rousseau
  */

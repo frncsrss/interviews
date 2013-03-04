@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Returns the most frequent element of an array.
+ * Return the most frequent element of an array.
  * @author Francois Rousseau
  */
 public class Dominator {

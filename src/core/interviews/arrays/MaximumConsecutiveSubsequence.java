@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Returns the longest subsequence of a list with the maximum sum in O(n) time.
+ * Return the longest subsequence of a list with the maximum sum in O(n) time.
  * @author Francois Rousseau
  */
 public class MaximumConsecutiveSubsequence {

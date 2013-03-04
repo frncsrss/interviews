@@ -3,7 +3,7 @@ package interviews.arrays;
 import java.util.List;
 
 /**
- * Shuffles uniformly a list in place.
+ * Shuffle uniformly a list in place.
  * @author Francois Rousseau
  */
 public class Shuffle {

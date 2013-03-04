@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Returns all the 2^n subsets of a list of size n <= 31.
+ * Return all the 2^n subsets of a list of size n <= 31.
  * @author Francois Rousseau
  */
 public class Subsets {

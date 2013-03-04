@@ -32,7 +32,7 @@ public abstract class Heap<E> implements Iterable<E> {
 	}
 
 	/**
-	 * Inserts the specified element into this heap.
+	 * Insert the specified element into this heap.
 	 */
 	public boolean add(E e) throws NullPointerException {
 	  if(e == null) {
@@ -44,28 +44,28 @@ public abstract class Heap<E> implements Iterable<E> {
 	}
 
 	 /**
-   * Removes all of the elements from this heap.
+   * Remove all of the elements from this heap.
    */
 	public void clear() {
 	  heap.clear();
 	}
 
 	/**
-	 * Returns the comparator used to order the elements in this heap.
+	 * Return the comparator used to order the elements in this heap.
 	 */
 	public Comparator<E> comparator() {
 	  return comparator;
 	}
 
 	/**
-	 * Returns true if this heap contains the specified element.
+	 * Return true if this heap contains the specified element.
 	 */
 	public boolean contains(E e) {
 	  return contains(e, 0);
 	}
 
 	/**
-	 * Retrieves, but does not remove, the head of this heap.
+	 * Retrieve, but does not remove, the head of this heap.
 	 * @throws: NoSuchElementException if the heap is empty.
 	 */
 	public E element() {
@@ -83,7 +83,7 @@ public abstract class Heap<E> implements Iterable<E> {
   }
   
   /**
-   * Returns an iterator over the elements in this heap.
+   * Return an iterator over the elements in this heap.
    */
   @Override
   public Iterator<E> iterator() {
@@ -91,14 +91,14 @@ public abstract class Heap<E> implements Iterable<E> {
   }
 
 	/**
-	 * Inserts the specified element into this heap.
+	 * Insert the specified element into this heap.
 	 */
   public boolean offer(E e) throws NullPointerException {
     return add(e);
   }
 
   /**
-   * Retrieves, but does not remove, the head of this heap.
+   * Retrieve, but does not remove, the head of this heap.
    * or returns null if this heap is empty.
    */
   public E peek() {
@@ -110,7 +110,7 @@ public abstract class Heap<E> implements Iterable<E> {
   }
 
 	/**
-	 * Retrieves and removes the head of this heap, or returns null if this heap is empty.
+	 * Retrieve and remove the head of this heap, or return null if this heap is empty.
 	 */
   public E poll() {
     try {
@@ -121,7 +121,7 @@ public abstract class Heap<E> implements Iterable<E> {
   }
 
 	/**
-   * Retrieves and remove the head of this heap.
+   * Retrieve and remove the head of this heap.
    * @throws: NoSuchElementException if the heap is empty.
 	 */
   public E remove() throws NoSuchElementException {
@@ -137,28 +137,28 @@ public abstract class Heap<E> implements Iterable<E> {
   }
 
 	/**
-	 * Removes a single instance of the specified element from this heap, if it is present.
+	 * Remove a single instance of the specified element from this heap, if it is present.
 	 */
   public boolean remove(E e) {
     return remove(e, 0);
   }
 
 	/**
-	 * Returns the number of elements in this collection.
+	 * Return the number of elements in this collection.
 	 */
   public int size() {
     return heap.size();
   }
   
 	/**
-	 * Returns an array containing all of the elements in this heap.
+	 * Return an array containing all of the elements in this heap.
 	 */
   public Object[] toArray() {
     return heap.toArray();
   }
   
 	/**
-	 * Returns an array containing all of the elements in this heap.
+	 * Return an array containing all of the elements in this heap.
 	 * The runtime type of the returned array is that of the specified array.
 	 */
   public <T> T[] toArray(T[] a) throws ArrayStoreException, NullPointerException {
