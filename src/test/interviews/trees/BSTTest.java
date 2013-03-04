@@ -21,6 +21,12 @@ public class BSTTest {
   }
 
   @Test(expected = NullPointerException.class)
+  public void test_count_exception() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.count(null, null);
+  }
+
+  @Test(expected = NullPointerException.class)
   public void test_floor_exception() {
     BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
     bst.floor(null);
@@ -68,6 +74,25 @@ public class BSTTest {
     Assert.assertEquals(new Integer(8), bst.ceiling(7));
     Assert.assertEquals(new Integer(8), bst.ceiling(8));
     Assert.assertEquals(new Integer(2), bst.ceiling(1));
+  }
+
+  @Test
+  public void test_count() {
+    BST<Integer> bst = new BST<Integer>(Sorts.getComparatorOfIntegers());
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(8);
+    bst.insert(2);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(14);
+    bst.insert(11);
+    bst.insert(16);
+    Assert.assertEquals(11, bst.count(1, 17));
+    Assert.assertEquals(11, bst.count(2, 16));
+    Assert.assertEquals(4, bst.count(3, 7));
   }
 
   @Test

@@ -51,6 +51,19 @@ public class BST<E> {
   }
 
   /**
+   * Return the number of elements in this BST between the two given elements (inclusive).
+   */
+  public int count(E lo, E hi) throws NullPointerException {
+    if(lo == null || hi == null) {
+      throw new NullPointerException();
+    }
+    if(search(hi)) {
+      return rank(hi) - rank(lo) + 1;
+    }
+    return rank(hi) - rank(lo);
+  }
+
+  /**
    * Insert the specified element into this BST.
    */
   public void insert(E e) throws NullPointerException {
