@@ -12,7 +12,7 @@ public class CoveringPrefix {
     final int[] B = new int[N];
 
     int count=0;
-    for(int i=0; i<N; i++) {
+    for(int i = 0; i < N; i++) {
       if(B[A[i]] == 0) {
         count++;
       }
@@ -22,7 +22,7 @@ public class CoveringPrefix {
       return N-1;
     }
 
-    for(int i=0; i<N; i++) {
+    for(int i = 0; i < N; i++) {
       if(B[A[i]] == 1) {
         count--;
       }

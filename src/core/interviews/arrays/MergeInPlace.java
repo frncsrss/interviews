@@ -17,7 +17,7 @@ public class MergeInPlace {
       while(list.get(start_b+scope) < list.get(start_a)) {
         scope++;
       }
-      for(int i=0;i<scope;i++) {
+      for(int i = 0; i < scope; i++) {
         Collections.swap(list, start_a++, start_b+i);
       }
     }

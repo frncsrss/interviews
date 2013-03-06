@@ -13,7 +13,7 @@ public class EveryoneExceptMe {
     List<Integer> new_list = new ArrayList<Integer>(list.size());
     int product = 1;
     new_list.add(1);
-    for(int i=0;i<list.size()-1;i++) {
+    for(int i = 0; i < list.size() - 1; i++) {
       product *= list.get(i);
       new_list.add(product);
     }
@@ -43,10 +43,10 @@ public class EveryoneExceptMe {
 
   public static void f3(int[] arr) {
     int product = 1;
-    for(int i=0;i<arr.length;i++) {
+    for(int i = 0; i < arr.length; i++) {
       product *= arr[i];
     }
-    for(int i=0;i<arr.length;i++) {
+    for(int i = 0; i < arr.length; i++) {
       arr[i] = product/arr[i];
     }
   }

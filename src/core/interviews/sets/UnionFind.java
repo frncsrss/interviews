@@ -36,7 +36,7 @@ public abstract class UnionFind {
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
-    for(int i=0; i<id.length; i++) {
+    for(int i = 0; i < id.length; i++) {
       builder.append(id[i] + " ");
     }
     return builder.toString();

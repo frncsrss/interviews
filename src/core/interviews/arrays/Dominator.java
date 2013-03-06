@@ -13,7 +13,7 @@ public class Dominator {
   public static int f(int[] A) {
     int dominator = -1, count = 0;
     // main idea is to cancel values which are different by pairs.
-    for(int i=0;i<A.length;i++) {
+    for(int i = 0; i < A.length; i++) {
       if(count == 0) {
         dominator = i;
         count = 1;
@@ -26,7 +26,7 @@ public class Dominator {
     // one more pass to confirm that the value occurs in more than half of the
     // elements of A. [3, 1, 2, 1, 2, 1, 3] would lead to 6 otherwise.
     count = 0;
-    for(int i=0;i<A.length;i++) {
+    for(int i = 0; i < A.length; i++) {
       if(A[dominator] == A[i]) {
         count++;
         // force the returned index to be the last one. Easier to test.
@@ -41,7 +41,7 @@ public class Dominator {
     if(count*2 < A.length && dominator < A.length-1) {
       dominator++;
       count = 0;
-      for(int i=0;i<A.length;i++) {
+      for(int i = 0; i < A.length; i++) {
         if(A[dominator] == A[i]) {
           count++;
           // force the returned index to be the last one. Easier to test.
@@ -54,7 +54,7 @@ public class Dominator {
 
   public static <T> int f(T[] A, int k) {
     Map<T, Integer> buckets = new HashMap<T, Integer>(k);
-    for(int i=0;i<A.length;i++) {
+    for(int i = 0; i < A.length; i++) {
       if(buckets.containsKey(A[i])) {
         buckets.put(A[i], buckets.get(A[i])+1);
       } else {
@@ -82,7 +82,7 @@ public class Dominator {
     }
     if (dominator != null) {
       int count = 0;
-      for(int i=0;i<A.length;i++) {
+      for(int i = 0; i < A.length; i++) {
         if(dominator.getKey() == A[i]) {
           count++;
           // force the returned index to be the last one. Easier to test.

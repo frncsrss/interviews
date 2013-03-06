@@ -12,7 +12,7 @@ import java.util.List;
 public class ThreeSum {
   public static List<Integer> find(List<Integer> list) {
     Collections.sort(list);
-    for(int i=0;i<list.size()-3;i++) {
+    for(int i = 0; i < list.size() - 3; i++) {
       int lower = i+1;
       int higher = list.size()-1;
       while(lower < higher) {
@@ -31,7 +31,7 @@ public class ThreeSum {
 
   public static int[] find(int[] arr) {
     Arrays.sort(arr);
-    for(int i=0; i<arr.length-3; i++) {
+    for(int i = 0; i < arr.length - 3; i++) {
       int lower = i+1;
       int higher = arr.length-1;
       while(lower < higher) {
@@ -55,7 +55,7 @@ public class ThreeSum {
   public static List<int[]> findAll(int[] arr, boolean unique) {
     Arrays.sort(arr);
     List<int[]> triples = new ArrayList<int[]>();
-    for(int i=0; i<arr.length-3; i++) {
+    for(int i = 0; i < arr.length - 3; i++) {
       int lower = i+1;
       int higher = arr.length-1;
       while(lower < higher) {
@@ -98,7 +98,7 @@ public class ThreeSum {
   public static int count(int[] arr, boolean unique) {
     int count = 0;
     Arrays.sort(arr);
-    for(int i=0; i<arr.length-3; i++) {
+    for(int i = 0; i < arr.length - 3; i++) {
       int lower = i+1;
       int higher = arr.length-1;
       while(lower < higher) {

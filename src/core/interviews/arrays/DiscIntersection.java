@@ -40,7 +40,7 @@ public class DiscIntersection {
   public static int f1(int[] A) {
     int count = 0, N=A.length;
     List<Interval> list = new ArrayList<Interval>();
-    for(int i=0;i<N;i++) {
+    for(int i = 0; i < N; i++) {
       list.add(new Interval(i-A[i], i+A[i]));
     }
     Collections.sort(list, new Comparator<Interval>() {
@@ -56,7 +56,7 @@ public class DiscIntersection {
     });
 
     // no need to process the last disc.
-    for(int i=0;i<N-1;i++) {
+    for(int i = 0; i < N-1; i++) {
       // early pruning.
       if(list.get(i+1).min > list.get(i).max) {
         continue;
@@ -101,7 +101,7 @@ public class DiscIntersection {
   public static int f3(int[] A) {
     int N = A.length;
     List<Boundary> list = new ArrayList<Boundary>();
-    for(int i=0;i<N;i++) {
+    for(int i = 0; i < N; i++) {
       list.add(new Boundary(i-A[i], false));
       list.add(new Boundary(i+A[i], true));
     }
@@ -112,7 +112,7 @@ public class DiscIntersection {
       }
     });
     int count = 0, ret = 0;
-    for(int i=0;i<2*N;i++) {
+    for(int i = 0; i < 2*N; i++) {
       if(!list.get(i).isEnd) {
         count++;
       } else {
