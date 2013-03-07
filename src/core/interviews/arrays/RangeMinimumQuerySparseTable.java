@@ -24,7 +24,7 @@ public class RangeMinimumQuerySparseTable {
       i = i^j;
       j = i^j;
       i = i^j;
-    } else if(i==j) {
+    } else if(i == j) {
       return A[i];
     }
     final int k = log2(j - i);  // k = E(log2(j - i)) <= log2(j - i)

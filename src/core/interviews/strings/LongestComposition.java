@@ -25,7 +25,7 @@ public class LongestComposition {
   }
   
   public static int numberOfWords(List<String> list, String s, int start) {
-    for(int i=start+1; i<=s.length();i++) {
+    for(int i = start + 1; i <= s.length(); i++) {
       final String current = s.substring(start, i);
       if(s.equals(current) || !list.contains(current)) {
         continue;

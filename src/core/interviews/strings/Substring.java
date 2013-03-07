@@ -108,7 +108,7 @@ public class Substring {
    * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
    * For example, consider:
    * i   0123456789
-   * s = abcdab abc (i=0)
+   * s = abcdab abc (i = 0)
    * p = abcdabd    (j=0)
    * j   0123456
    * 
@@ -117,7 +117,7 @@ public class Substring {
    * Therefore, you should move i from 0 to 4 (6-2) but start j at 2 since we already know that the
    * first 2 characters are matching (this is why the complexity is O(n) and not O(n*m)).
    * i   0123456789
-   * s = abcdab abc  (i=4)
+   * s = abcdab abc  (i = 4)
    * p =     abcdabd (j=2)
    * j       0123456
    * 

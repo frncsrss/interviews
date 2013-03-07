@@ -80,7 +80,7 @@ public class Rotation {
 
   private static <E> void reverse(List<E> list, int start, int end) {
     final int middle = (start+end) >>> 1;
-    for(int i=start; i<middle+1; i++) {
+    for(int i = start; i < middle+1; i++) {
       Swap.f(list, i, start + end - i);
     }
   }

@@ -32,7 +32,7 @@ public class Splitter {
     }
 
     final StringBuffer exl = new StringBuffer();
-    for(int i=start+1; i<=s.length(); i++) {
+    for(int i = start + 1; i <= s.length(); i++) {
       final String current = s.substring(start, i);
       if(!dict.contains(current)) {  // potentially an EXL
         if(current.length() > 1) {

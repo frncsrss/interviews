@@ -24,7 +24,7 @@ public class RangeMinimumQuerySegmentTrees {
       i = i^j;
       j = i^j;
       i = i^j;
-    } else if(i==j) {
+    } else if(i == j) {
       return A[i];
     }
     return query(i, j, 0, A.length-1, 1);

@@ -66,7 +66,7 @@ public class MyFileReaderTest {
     List<Integer> list = generateNumbers(max_value);
     List<Integer> removed = new ArrayList<Integer>(10);
     // we remove at the end for efficiency reason
-    for(int i=max_value-1; i>max_value-10; i--) {
+    for(int i = max_value-1; i>max_value-10; i--) {
       removed.add(list.remove(i));
     }
     return new Pair<List<Integer>, List<Integer>>(list, removed);

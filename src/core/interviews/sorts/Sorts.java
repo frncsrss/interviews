@@ -59,7 +59,7 @@ public class Sorts {
   }
 
   public static <E> boolean isSorted(List<E> list, Comparator<E> comparator, int lo, int hi) {
-    for(int i=lo; i < hi-1; i++) {
+    for(int i = lo; i < hi-1; i++) {
       if(comparator.compare(list.get(i), list.get(i+1)) > 0) {
         return false;
       }

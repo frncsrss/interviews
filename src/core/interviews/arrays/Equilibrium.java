@@ -12,7 +12,7 @@ public class Equilibrium {
     if(length == 0) {
       return -1;
     }
-    for(i=1; i<length; i++) {
+    for(i = 1; i < length; i++) {
       sum_right += A[i];
     }
     for(i = 0; i < length - 1; i++) {

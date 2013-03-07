@@ -122,10 +122,10 @@ public class Mergesort {
     final Queue<E> aux1 = new LinkedList<E>();
     final Queue<E> aux2 = new LinkedList<E>();
 
-    for(int i=lo; i<=mid; i++) {
+    for(int i = lo; i <= mid; i++) {
       aux1.add(list.get(i));
     }
-    for(int i=mid+1; i<=hi; i++) {
+    for(int i = mid + 1; i <= hi; i++) {
       aux2.add(list.get(i));
     }
 
@@ -149,7 +149,7 @@ public class Mergesort {
     assert Sorts.isSorted(list, comparator, lo, mid);
     assert Sorts.isSorted(list, comparator, mid+1, hi);
 
-    for(int i=lo; i <= hi; i++) {
+    for(int i = lo; i <= hi; i++) {
       aux.set(i, list.get(i));
     }
 

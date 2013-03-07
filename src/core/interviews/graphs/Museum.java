@@ -37,7 +37,7 @@ public class Museum  {
 	
 	public static int[] traversal(Room root, int n, int n2) {
 		final int[] distance = new int[n2+1];
-		for(int i=1;i<n2+1;i++) {
+		for(int i = 1; i < n2 + 1; i++) {
 			distance[i] = Integer.MAX_VALUE;
 		}
 		
@@ -69,7 +69,7 @@ public class Museum  {
 	    }
 
 	    // Adding the children.
-	    for(int i=1;i<n2+1;i++) {
+	    for(int i = 1; i < n2 + 1; i++) {
 	      Room room = grid.get(i);
 	      if(i%n != 1)
 	        room.addNeighbour(grid.get(i-1));
@@ -77,7 +77,7 @@ public class Museum  {
 	        room.addNeighbour(grid.get(i+1));
 	      if(i>n)
 	        room.addNeighbour(grid.get(i-n));
-	      if(i<=n2-n)
+	      if(i <= n2 - n)
 	        room.addNeighbour(grid.get(i+n));
 	    }
 	    return grid;

@@ -17,7 +17,7 @@ public class Shellsort {
     }
 
     while(h >= 1) {  // h-sort the list
-      for(int i=h; i < list.size(); i++) {  // insertion sort with a h-window
+      for(int i = h; i < list.size(); i++) {  // insertion sort with a h-window
         for(int j = i; j >= h && comparator.compare(list.get(j), list.get(j-h)) < 0; j-=h) {
           Swap.f(list, j, j-h);
         }

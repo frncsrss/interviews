@@ -136,7 +136,7 @@ public class Quicksort {
   private static <E> int partition3(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     int firsthigh = lo;
-    for(int i=lo; i < hi; i++) {
+    for(int i = lo; i < hi; i++) {
       if(comparator.compare(list.get(i), list.get(hi)) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;
@@ -169,7 +169,7 @@ public class Quicksort {
     p = hi;
 
     int firsthigh=lo;
-    for(int i=firsthigh;i<p;i++) {
+    for(int i = firsthigh;i < p; i++) {
       if(comparator.compare(list.get(i), list.get(p)) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;

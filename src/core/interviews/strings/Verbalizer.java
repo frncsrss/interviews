@@ -22,7 +22,7 @@ public class Verbalizer {
     List<String> list = new ArrayList<String>();
     char[] arr = s.toCharArray();
     final int length = arr.length;
-    for(int i=length-1; i>=0; i--) {
+    for(int i = length-1; i>=0; i--) {
       if(arr[i] == '0') {
         continue;
       }
@@ -64,7 +64,7 @@ public class Verbalizer {
       }
     }
     StringBuffer buffer = new StringBuffer(2*list.size());
-    for (int i=list.size()-1;i>=0;i--) {
+    for (int i = list.size()-1;i>=0;i--) {
       buffer.append(list.get(i));
       buffer.append(" ");
     }

@@ -38,7 +38,7 @@ public class Fibonacci {
     }
     long back1 = 1, back2 = 0;
     long current;
-    for(int i=2;i<n;i++) {
+    for(int i = 2;i < n; i++) {
       current = back1 + back2;
       back2 = back1;
       back1 = current;

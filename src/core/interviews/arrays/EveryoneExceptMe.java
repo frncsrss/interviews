@@ -18,7 +18,7 @@ public class EveryoneExceptMe {
       new_list.add(product);
     }
     product = 1;
-    for(int i=list.size()-1;i>0;i--) {
+    for(int i = list.size() - 1; i > 0; i--) {
       product *= list.get(i);
       new_list.set(i-1, new_list.get(i-1)*product);
     }
@@ -29,12 +29,12 @@ public class EveryoneExceptMe {
     int[] products = new int[arr.length];
     products[0] = 1;
     int product = 1;
-    for(int i=1;i<=arr.length-1;i++) {
+    for(int i = 1; i <= arr.length - 1; i++) {
       product *= arr[i-1];
       products[i] = product;
     }
     product = arr[arr.length-1];
-    for(int i=arr.length-2;i>=0;i--) {
+    for(int i = arr.length - 2; i >= 0; i--) {
       product *= arr[i+1];
       products[i] *= product;
     }

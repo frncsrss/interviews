@@ -30,7 +30,7 @@ public class Binomial {
     long[] b_n = new long[n+1];
     b_n[0] = 1;  // (0..n) = 1
     b_n[1] = 1;  // (1..1) = 1
-    for(int i=2;i<n;i++) {
+    for(int i = 2 ; i < n; i++) {
       b_n[i] = 1;
       b_n[i-1] = i;
       // we go backwards so we can overwrite without problems.
@@ -66,7 +66,7 @@ public class Binomial {
     long[] b_n = new long[n+1];
     b_n[0] = 1;  // (0..n) = 1
     b_n[1] = 1;  // (1..1) = 1
-    for(int i=2;i<=n;i++) {
+    for(int i = 2; i <= n; i++) {
       b_n[i] = 1;
       b_n[i-1] = i;
       // we go backwards so we can overwrite without problems.
