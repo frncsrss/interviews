@@ -51,14 +51,14 @@ public class RotationTest {
   public void test_reversalAlgorithm1_big() {
     final int N = 1000000;
     List<Integer> input = new ArrayList<Integer>(N);
-    for(int i=0; i<N; i++) {
+    for(int i = 0; i < N; i++) {
       input.add(i);
     }
     List<Integer> expected = new ArrayList<Integer>(N);
-    for(int i=N/2; i<N; i++) {
+    for(int i = N/2; i < N; i++) {
       expected.add(i);
     }
-    for(int i=0; i<N/2; i++) {
+    for(int i = 0; i < N/2; i++) {
       expected.add(i);
     }
     Assert.assertEquals(expected, reversalAlgorithm1(input, N/2));
@@ -99,14 +99,14 @@ public class RotationTest {
   public void test_reversalAlgorithm2_big() {
     final int N = 1000000;
     List<Integer> input = new ArrayList<Integer>(N);
-    for(int i=0; i<N; i++) {
+    for(int i = 0; i < N; i++) {
       input.add(i);
     }
     List<Integer> expected = new ArrayList<Integer>(N);
-    for(int i=N/2; i<N; i++) {
+    for(int i = N/2; i < N; i++) {
       expected.add(i);
     }
-    for(int i=0; i<N/2; i++) {
+    for(int i = 0; i < N/2; i++) {
       expected.add(i);
     }
     Assert.assertEquals(expected, reversalAlgorithm2(input, N/2));
@@ -147,14 +147,14 @@ public class RotationTest {
   public void test_blockSwap_big() {
     final int N = 1000000;
     int[] input = new int[N];
-    for(int i=0; i<N; i++) {
+    for(int i = 0; i < N; i++) {
       input[i] = i;
     }
     int[] expected = new int[N];
-    for(int i=N/2; i<N; i++) {
+    for(int i = N/2; i < N; i++) {
       expected[i-N/2] = i;
     }
-    for(int i=0; i<N/2; i++) {
+    for(int i = 0; i < N/2; i++) {
       expected[i+N/2] = i;
     }
     Assert.assertArrayEquals(expected, blockSwap(input, N/2));

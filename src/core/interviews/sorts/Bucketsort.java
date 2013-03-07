@@ -18,7 +18,7 @@ public class BucketSort {
     for(int k=0;k<nb_buckets;k++) {
       buckets.add(new ArrayList<E>());
     }
-    for(int i=0; i<nb_passes; i++) {
+    for(int i = 0; i < nb_passes; i++) {
       for(int k=0; k<nb_buckets; k++) {
         buckets.get(k).clear();
       }

@@ -9,7 +9,7 @@ public class Compresser {
     final StringBuffer buffer = new StringBuffer();
     final char[] arr = s.toCharArray();
     int count = 1;
-    for(int i=0; i<s.length(); i++) {
+    for(int i = 0; i < s.length(); i++) {
       while(i < s.length()-1
             && arr[i] == arr[i+1]) {
         count++;

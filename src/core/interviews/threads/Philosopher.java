@@ -22,14 +22,14 @@ public class Philosopher extends Thread {
     boolean[] chopsticks = new boolean[n];
     Philosopher[] philosophers = new Philosopher[n];
     List<Philosopher> list = new ArrayList<Philosopher>(n);
-    for(int i=0;i<n;i++) {
+    for(int i = 0; i < n; i++) {
       chopsticks[i] = true;
       philosophers[i] = new Philosopher(i, chopsticks);
       list.add(philosophers[i]);
     }
     // we shuffle it so the threads don't start in the same order.
     Collections.shuffle(list);
-    for(int i=0;i<n;i++) {
+    for(int i = 0; i < n; i++) {
       list.get(i).start();
     }
   }

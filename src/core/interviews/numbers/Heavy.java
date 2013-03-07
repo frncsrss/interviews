@@ -67,7 +67,7 @@ public class Heavy {
     }
 
     int count = 0;
-    for (int i=0; i<=9; i++) {
+    for (int i = 0; i <= 9; i++) {
       // the sum to reach is decreasing as we increase the current digit.
       count += count_heavy(nb_digits-1, min_sum-i);
     }

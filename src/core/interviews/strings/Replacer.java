@@ -13,7 +13,7 @@ public class Replacer {
       return s;
     }
     final char[] arr = new char[s.length()+2*count];
-    for(int i=0;i<s.length();i++) {
+    for(int i = 0; i < s.length(); i++) {
       arr[i] = str[i];
     }
     return escapeWhitespace(arr, s.length());
@@ -35,7 +35,7 @@ public class Replacer {
 
   private static int countSpace(char[] str) {
     int count = 0;
-    for(int i=0; i<str.length; i++) {
+    for(int i = 0; i < str.length; i++) {
       if(str[i] == ' ') {
         count++;
       }

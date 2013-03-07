@@ -52,7 +52,7 @@ public class Transformer {
 
   private static Set<String> wordsAtDistance1(String word) {
     Set<String> words = new TreeSet<String>();
-    for(int i=0; i<word.length(); i++) {
+    for(int i = 0; i < word.length(); i++) {
       char[] arr = word.toCharArray();
       for(char c='a'; c<='z'; c++) {
         if(c != word.charAt(i)) {

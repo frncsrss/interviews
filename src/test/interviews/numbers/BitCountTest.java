@@ -12,21 +12,21 @@ import static interviews.numbers.BitCount.*;
 public class BitCountTest {
   @Test
   public void test_f1() {
-    for(int i=0; i<100000000; i++) {
+    for(int i = 0; i < 100000000; i++) {
       Assert.assertEquals(Integer.bitCount(i), f1(i));
     }
   }
 
   @Test
   public void test_f2() {
-    for(int i=0; i<100000000; i++) {
+    for(int i = 0; i < 100000000; i++) {
       Assert.assertEquals(Integer.bitCount(i), f2(i));
     }
   }
 
   @Test
   public void test_f3() {
-    for(int i=0; i<100000000; i++) {
+    for(int i = 0; i < 100000000; i++) {
       Assert.assertEquals(Integer.bitCount(i), f3(i));
     }
   }

@@ -54,7 +54,7 @@ public class MyFileReaderTest {
       String filename, int max_value) throws IOException {
     PrintWriter out = new PrintWriter(new FileWriter(filename));
     Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(max_value);
-    for(int i=0; i<pair.first().size(); i++) {
+    for(int i = 0; i < pair.first().size(); i++) {
       out.println(pair.first().get(i));
     }
     out.close();
@@ -74,7 +74,7 @@ public class MyFileReaderTest {
 
   private static List<Integer> generateNumbers(int max_value) {
     List<Integer> list = new ArrayList<Integer>(max_value);
-    for(int i=0; i<max_value; i++) {
+    for(int i = 0; i < max_value; i++) {
       list.add(i);
     }
     Collections.shuffle(list);

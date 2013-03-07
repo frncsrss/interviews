@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class InsertionSort {
   public static <E> void f(List<E> list, Comparator<E> comparator) {
-    for(int i=0; i < list.size(); i++) {
+    for(int i = 0; i < list.size(); i++) {
       for(int j = i; j > 0 && comparator.compare(list.get(j), list.get(j-1)) < 0; j--) {
         Swap.f(list, j, j-1);
       }

@@ -42,7 +42,7 @@ public class MyFileReader {
     }
 
     int lower = -1;
-    for(int i=0;i<arraySize;i++) {
+    for(int i = 0; i < arraySize; i++) {
       if(blocks[i] < rangeSize) {
         lower = i*rangeSize;
         break;
@@ -61,7 +61,7 @@ public class MyFileReader {
       }
     }
 
-    for(int i=0; i<rangeSize/8; i++) {
+    for(int i = 0; i < rangeSize/8; i++) {
       for(int j=0; j<8; j++) {
         if((bitvector[i] & (1 << j)) == 0) {
           return lower + i*8 + j;

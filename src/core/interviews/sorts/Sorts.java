@@ -50,7 +50,7 @@ public class Sorts {
   }
 
   public static <E> boolean isSorted(List<E> list, Comparator<E> comparator) {
-    for(int i=0; i < list.size()-1; i++) {
+    for(int i = 0; i < list.size() - 1; i++) {
       if(comparator.compare(list.get(i), list.get(i+1)) > 0) {
         return false;
       }

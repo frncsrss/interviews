@@ -64,7 +64,7 @@ public class Museum  {
 	protected static List<Room> getStandardGrid(int n, int n2) {
 	   final List<Room> grid = new ArrayList<Room>();
 	    // The first room of id 0 is a virtual one used later.
-	    for(int i=0;i<n2+1;i++) {
+	    for(int i = 0; i < n2 + 1; i++) {
 	      grid.add(new Room(i));
 	    }
 

@@ -218,7 +218,7 @@ public class Trie {
    * @return the auto-completed suffix, null if there is none
    */
   protected String completion(Node node, String s, boolean force) {
-    for(int i=0; i < s.length(); i++) {  // loop until you get the last child
+    for(int i = 0; i < s.length(); i++) {  // loop until you get the last child
       Node child = node.getChild(s.charAt(i));
       if(child == null) {  // the string we want to complete is not even in the trie
         return null;
