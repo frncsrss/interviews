@@ -5,17 +5,17 @@ package interviews.numbers;
  * @author Francois Rousseau
  */
 public class Fibonacci {
-  public static long fibonacci_1(int n) {
+  public static long f1(int n) {
     if(n == 0) {
       return 0;
     }
     if(n == 1) {
       return 1;
     }
-    return fibonacci_1(n-1) + fibonacci_1(n-2);
+    return f1(n-1) + f1(n-2);
   }
   
-  public static long fibonacci_2(int n) {
+  public static long f2(int n) {
     final long[] arr = new long[50];
     arr[0] = 0;
     arr[1] = 1;
@@ -29,7 +29,7 @@ public class Fibonacci {
     return arr[n];
   }
 
-  public static long fibonacci_3(int n) {
+  public static long f3(int n) {
     if(n == 0) {
       return 0;
     }

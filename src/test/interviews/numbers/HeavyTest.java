@@ -4,16 +4,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static interviews.numbers.Heavy.average_value_digits;
-import static interviews.numbers.Heavy.f;
-import static interviews.numbers.Heavy.f2;
 
+/**
+ * Test class.
+ * @author Francois Rousseau
+ */
 public class HeavyTest {
   @Test
   public void test_good() {
-    Assert.assertEquals(5, f(8675, 8689));
-    Assert.assertEquals(5, f2(8675, 8689));
-    Assert.assertEquals(15, f(1214, 5678));
-    Assert.assertEquals(15, f2(1214, 5678));
+    Assert.assertEquals(5, Heavy.f(8675, 8689));
+    Assert.assertEquals(5, Heavy.f2(8675, 8689));
+    Assert.assertEquals(15, Heavy.f(1214, 5678));
+    Assert.assertEquals(15, Heavy.f2(1214, 5678));
   }
 
   @Test

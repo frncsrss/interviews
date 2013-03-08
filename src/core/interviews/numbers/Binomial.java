@@ -6,7 +6,7 @@ package interviews.numbers;
  */
 public class Binomial {
 
-  public static long binomial(int n, int k) {
+  public static long f(int n, int k) {
     return binomial_nk(n, k);
   }
 
