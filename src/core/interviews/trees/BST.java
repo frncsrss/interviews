@@ -51,67 +51,26 @@ public class BST<E> {
   }
 
   /**
+   * Does the BST contains this element?
+   */
+  public boolean contains(E e) {
+    if(root == null) {
+      return false;
+    }
+    return contains(root, e);
+  }
+
+  /**
    * Return the number of elements in this BST between the two given elements (inclusive).
    */
   public int count(E lo, E hi) throws NullPointerException {
     if(lo == null || hi == null) {
       throw new NullPointerException();
     }
-    if(search(hi)) {
+    if(contains(hi)) {
       return rank(hi) - rank(lo) + 1;
     }
     return rank(hi) - rank(lo);
-  }
-
-  /**
-   * Insert the specified element into this BST.
-   */
-  public void insert(E e) throws NullPointerException {
-    if(e == null) {
-      throw new NullPointerException();
-    }
-    root = insert(root, e);
-  }
-
-  /**
-   * Return the largest element less than the given element in this BST.
-   */
-  public E floor(E e) throws NullPointerException {
-    if(e == null) {
-      throw new NullPointerException();
-    }
-    Node floor = floor(root, e);
-    return (floor == null) ? null : floor.e;
-  }
-
-  /**
-   * Return the minimal element of this BST.
-   */
-  public E min() {
-    if(root == null) {
-      throw new NoSuchElementException();
-    }
-   return min(root);
-  }
-
-  /**
-   * Return the maximal element of this BST.
-   */
-  public E max() {
-    if(root == null) {
-      throw new NoSuchElementException();
-    }
-    return max(root);
-  }
-
-  /**
-   * Return the number of elements strictly less than the given element in this BST.
-   */
-  public int rank(E e) throws NullPointerException {
-    if(e == null) {
-      throw new NullPointerException();
-    }
-    return rank(root, e);
   }
 
   /**
@@ -126,14 +85,54 @@ public class BST<E> {
   }
 
   /**
-   * Search a given element in this BST.
-   * Returns a boolean value accordingly.
+   * Return the largest element less than the given element in this BST.
    */
-  public boolean search(E e) {
-    if(root == null) {
-      return false;
+  public E floor(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
     }
-    return search(root, e);
+    Node floor = floor(root, e);
+    return (floor == null) ? null : floor.e;
+  }
+
+  /**
+   * Insert the specified element into this BST.
+   */
+  public void insert(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    root = insert(root, e);
+  }
+
+  /**
+   * Return the maximal element of this BST.
+   */
+  public E max() {
+    if(root == null) {
+      throw new NoSuchElementException();
+    }
+    return max(root);
+  }
+
+  /**
+   * Return the minimal element of this BST.
+   */
+  public E min() {
+    if(root == null) {
+      throw new NoSuchElementException();
+    }
+   return min(root);
+  }
+
+  /**
+   * Return the number of elements strictly less than the given element in this BST.
+   */
+  public int rank(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    return rank(root, e);
   }
 
   /**
@@ -141,6 +140,30 @@ public class BST<E> {
    */
   public int size() {
     return size(root);
+  }
+
+  /**
+   * Breadth-first traversal of this BST.
+   */
+  @Override
+  public String toString() {
+    if(root == null) {
+      return "";
+    }
+    final StringBuilder buffer = new StringBuilder();
+    final Queue<Node> queue = new LinkedList<Node>();
+    queue.add(root);
+    while(!queue.isEmpty()) {
+      Node current = queue.poll();
+      buffer.append(current.e + " ");
+      if(current.left != null) {
+        queue.add(current.left);
+      }
+      if(current.right != null) {
+        queue.add(current.right);
+      }
+    }
+    return buffer.deleteCharAt(buffer.length() - 1).toString();
   }
 
   /**
@@ -169,30 +192,6 @@ public class BST<E> {
     return list;
   }
 
-  /**
-   * Breadth-first traversal of this BST.
-   */
-  @Override
-  public String toString() {
-    if(root == null) {
-      return "";
-    }
-    final StringBuilder buffer = new StringBuilder();
-    final Queue<Node> queue = new LinkedList<Node>();
-    queue.add(root);
-    while(!queue.isEmpty()) {
-      Node current = queue.poll();
-      buffer.append(current.e + " ");
-      if(current.left != null) {
-        queue.add(current.left);
-      }
-      if(current.right != null) {
-        queue.add(current.right);
-      }
-    }
-    return buffer.deleteCharAt(buffer.length() - 1).toString();
-  }
-
 
   /**
    * Return the smallest element greater than the given element under this Node.
@@ -210,6 +209,20 @@ public class BST<E> {
       Node tmp = ceiling(node.left, e);
       return (tmp == null) ? node : tmp;
     }
+  }
+
+  /**
+   * Does the tree under this Node contains this element?
+   */
+  private boolean contains(Node node, E e) {
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {  // search hit
+      return true;
+    }
+    if(result > 0) {
+      return (node.right == null) ? false : contains(node.right, e);
+    }
+    return (node.left == null) ? false : contains(node.left, e);
   }
 
   /**
@@ -241,6 +254,24 @@ public class BST<E> {
   }
 
   /**
+   * Return the largest element less than the given element under this Node.
+   */
+  private Node floor(Node node, E e) {
+    if(node == null) {
+      return null;
+    }
+    final int result = comparator.compare(e, node.e);
+    if(result == 0) {
+      return node;
+    } else if(result < 0) {
+      return floor(node.left, e);
+    } else {  // (result > 0)
+      Node tmp = floor(node.right, e);
+      return (tmp == null) ? node : tmp;
+    }
+  }
+
+  /**
    * Insert the specified element under this Node and returns it.
    */
   protected Node insert(Node node, E e) {
@@ -263,21 +294,13 @@ public class BST<E> {
   }
 
   /**
-   * Return the largest element less than the given element under this Node.
+   * Return the maximal element under this Node.
    */
-  private Node floor(Node node, E e) {
-    if(node == null) {
-      return null;
+  private E max(Node node) {
+    if(node.right == null) {
+      return node.e;
     }
-    final int result = comparator.compare(e, node.e);
-    if(result == 0) {
-      return node;
-    } else if(result < 0) {
-      return floor(node.left, e);
-    } else {  // (result > 0)
-      Node tmp = floor(node.right, e);
-      return (tmp == null) ? node : tmp;
-    }
+    return max(node.right);
   }
 
   /**
@@ -288,16 +311,6 @@ public class BST<E> {
       return node.e;
     }
     return min(node.left);
-  }
-
-  /**
-   * Return the maximal element under this Node.
-   */
-  private E max(Node node) {
-    if(node.right == null) {
-      return node.e;
-    }
-    return max(node.right);
   }
 
   /**
@@ -315,21 +328,6 @@ public class BST<E> {
       return 1 + size(node.left) + rank(node.right, e);
     }
     return rank(node.left, e);
-  }
-
-  /**
-   * Search a given element under this Node.
-   * Returns a boolean value accordingly.
-   */
-  private boolean search(Node node, E e) {
-    final int result = comparator.compare(e, node.e);
-    if(result == 0) {  // search hit
-      return true;
-    }
-    if(result > 0) {
-      return (node.right == null) ? false : search(node.right, e);
-    }
-    return (node.left == null) ? false : search(node.left, e);
   }
 
   /**

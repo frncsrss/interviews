@@ -35,6 +35,20 @@ public class LLRBT<E> extends BST<E> {
   }
 
   /**
+   * Flip colors: the color of the parent becomes black and the colors of both its children red.
+   * Maintains symmetric order and perfect black balance.
+   */
+  @SuppressWarnings("unchecked")
+  private void flipColors(Node parent) {
+    assert !isRed(parent);
+    assert isRed(parent.left);
+    assert isRed(parent.right);
+    parent.color = COLOR.RED;
+    ((Node) parent.left).color = COLOR.BLACK;
+    ((Node) parent.right).color = COLOR.BLACK;
+  }
+
+  /**
    * Insert the specified element under this Node and returns it.
    */
   @Override
@@ -110,20 +124,6 @@ public class LLRBT<E> extends BST<E> {
     left.color = parent.color;
     parent.color = COLOR.RED;
     return left;
-  }
-
-  /**
-   * Flip colors: the color of the parent becomes black and the colors of both its children red.
-   * Maintains symmetric order and perfect black balance.
-   */
-  @SuppressWarnings("unchecked")
-  private void flipColors(Node parent) {
-    assert !isRed(parent);
-    assert isRed(parent.left);
-    assert isRed(parent.right);
-    parent.color = COLOR.RED;
-    ((Node) parent.left).color = COLOR.BLACK;
-    ((Node) parent.right).color = COLOR.BLACK;
   }
 
 

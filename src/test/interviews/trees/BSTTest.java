@@ -90,9 +90,26 @@ public class BSTTest {
   }
 
   @Test
-  public void test_insert() {
+  public void test_delete() {
     BST<Integer> bst = getBSTOfIntegers();
-    Assert.assertEquals(11, bst.size());
+    Assert.assertEquals("10 5 14 3 8 11 16 2 4 6 9", bst.toString());
+    bst.delete(5);
+    Assert.assertEquals("10 6 14 3 8 11 16 2 4 9", bst.toString());
+    bst.delete(10);  // remove root
+    Assert.assertEquals("11 6 14 3 8 16 2 4 9", bst.toString());
+    bst.delete(10);  // remove non-existent element
+    bst.delete(3);
+    bst.delete(8);
+    bst.delete(2);
+    bst.delete(4);
+    bst.delete(6);
+    bst.delete(9);
+    bst.delete(14);
+    bst.delete(11);
+    bst.delete(16);
+    bst.delete(16);
+    bst.insert(5);
+    bst.delete(5);
   }
 
   @Test
@@ -102,6 +119,12 @@ public class BSTTest {
     Assert.assertEquals(new Integer(6), bst.floor(7));
     Assert.assertEquals(new Integer(6), bst.floor(6));
     Assert.assertEquals(new Integer(16), bst.floor(17));
+  }
+
+  @Test
+  public void test_insert() {
+    BST<Integer> bst = getBSTOfIntegers();
+    Assert.assertEquals(11, bst.size());
   }
 
   @Test
@@ -123,29 +146,6 @@ public class BSTTest {
     Assert.assertEquals(5, bst.rank(7));
     Assert.assertEquals(4, bst.rank(6));
     Assert.assertEquals(11, bst.rank(17));
-  }
-
-  @Test
-  public void test_delete() {
-    BST<Integer> bst = getBSTOfIntegers();
-    Assert.assertEquals("10 5 14 3 8 11 16 2 4 6 9", bst.toString());
-    bst.delete(5);
-    Assert.assertEquals("10 6 14 3 8 11 16 2 4 9", bst.toString());
-    bst.delete(10);  // remove root
-    Assert.assertEquals("11 6 14 3 8 16 2 4 9", bst.toString());
-    bst.delete(10);  // remove non-existent element
-    bst.delete(3);
-    bst.delete(8);
-    bst.delete(2);
-    bst.delete(4);
-    bst.delete(6);
-    bst.delete(9);
-    bst.delete(14);
-    bst.delete(11);
-    bst.delete(16);
-    bst.delete(16);
-    bst.insert(5);
-    bst.delete(5);
   }
 
   @Test
