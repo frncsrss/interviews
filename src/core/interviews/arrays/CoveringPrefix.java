@@ -19,7 +19,7 @@ public class CoveringPrefix {
       B[A[i]] = 1;
     }
     if(count == N) {
-      return N-1;
+      return N - 1;
     }
 
     for(int i = 0; i < N; i++) {

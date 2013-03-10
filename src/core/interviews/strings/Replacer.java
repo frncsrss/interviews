@@ -21,7 +21,7 @@ public class Replacer {
 
   private static String escapeWhitespace(char[] str, int length) {
     int index = str.length-1;
-    for(int i = length-1; i>=0; i--) {
+    for(int i = length-1; i >= 0; i--) {
       if(str[i] != ' ') {
         str[index--] = str[i];
       } else {

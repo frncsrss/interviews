@@ -24,7 +24,7 @@ public class Fibonacci {
    * Uses an array to store the values already computed.
    */
   public static long f2(int n) {
-    final long[] arr = new long[50];
+    final long[] arr = new long[n + 2];
     arr[0] = 0;
     arr[1] = 1;
     return f2(n, arr);

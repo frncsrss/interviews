@@ -15,7 +15,7 @@ public class Heavy {
   public static int f(int A, int B) {
     int count=0;
     // this solution costs O((B-A)log(B)) in time.
-    for(int i = A;i <= B; i++) {
+    for(int i = A; i <= B; i++) {
       if(is_heavy(i)) {
         count++;
       }

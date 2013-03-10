@@ -24,7 +24,7 @@ public class BitCount {
 
   public static int f3(int i) {
     int count; // c accumulates the total bits set in v
-    for (count = 0; i>0; count++) {
+    for (count = 0; i > 0; count++) {
       i &= i - 1; // clear the least significant bit set
     }
     return count;

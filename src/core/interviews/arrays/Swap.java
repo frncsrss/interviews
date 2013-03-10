@@ -27,10 +27,11 @@ public class Swap {
   }
 
   /**
-   * This function swaps 2 integers of an array at index i and j.
+   * This function swaps 2 integers of an array at index i and j
+   * without the use of any temporary variable.
    */
   public static void f(int[] arr, int i, int j) {
-    if(i!=j) {
+    if(i != j) {
       arr[i] = arr[i]^arr[j];
       arr[j] = arr[i]^arr[j];
       arr[i] = arr[i]^arr[j];

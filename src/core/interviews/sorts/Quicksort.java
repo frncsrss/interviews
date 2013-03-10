@@ -169,7 +169,7 @@ public class Quicksort {
     p = hi;
 
     int firsthigh=lo;
-    for(int i = firsthigh;i < p; i++) {
+    for(int i = firsthigh; i < p; i++) {
       if(comparator.compare(list.get(i), list.get(p)) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;

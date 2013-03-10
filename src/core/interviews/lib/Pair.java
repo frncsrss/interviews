@@ -21,6 +21,6 @@ public class Pair<X,Y> {
   }
 
   public String toString() {
-    return "("+first+","+second+")";
+    return "("+first+", "+second+")";
   }
 }

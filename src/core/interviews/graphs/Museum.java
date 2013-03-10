@@ -75,7 +75,7 @@ public class Museum  {
 	        room.addNeighbour(grid.get(i-1));
 	      if(i%n != 0)
 	        room.addNeighbour(grid.get(i+1));
-	      if(i>n)
+	      if(i > n)
 	        room.addNeighbour(grid.get(i-n));
 	      if(i <= n2 - n)
 	        room.addNeighbour(grid.get(i+n));
