@@ -28,9 +28,11 @@ public class LLRBT<E> extends BST<E> {
   /**
    * Delete the given element from under this Node, if it is present.
    * Uses Hibbard deletion: it is not symmetric and can yield to a height of sqrt(N) instead of log(N)
+   * TODO: use the red-black tree deletion
    */
   @Override
   protected BST<E>.Node delete(BST<E>.Node node, E e) {
+    //TODO: use the red-black tree deletion
     return super.delete(node, e);  // can un-balance the LLRBT
   }
 

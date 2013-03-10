@@ -6,6 +6,8 @@ package interviews.numbers;
  */
 public class Max {  
   public static int f(int a, int b) {
-    return a + (((a-b)>>31)&1)*(b-a);
+    // (a - b) >> 31 corresponds to the leftmost bit (sign bit)
+    // ((a - b) >> 31) & 1 is 0 if it is positive (a >= b), 1 if it is negative (a < b)
+    return a + (((a - b) >> 31) & 1) * (b - a);
   }
 }
