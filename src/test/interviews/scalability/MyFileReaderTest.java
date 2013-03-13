@@ -26,15 +26,30 @@ public class MyFileReaderTest {
   public void test_basic() throws NoMissingNumberFoundException {
     Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(1 << 16);
     List<Integer> list = pair.first();
-    final int golden = Collections.min(pair.second());
-    final int res = findMissingNumber(list, 1 << 12, 1 << 4);  // max_value = 1 << 16;
+    int golden = Collections.min(pair.second());
+    int res = findMissingNumber(list, 1 << 12, 1 << 4, false);  // max_value = 1 << 16;
+    Assert.assertEquals(golden, res);
+  }
+
+  @Test
+  public void test_enoughMemory() throws NoMissingNumberFoundException {
+    Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(1 << 16);
+    List<Integer> list = pair.first();
+    int golden = Collections.min(pair.second());
+    int res = findMissingNumber(list, 1 << 12, 1 << 4, true);  // max_value = 1 << 16;
     Assert.assertEquals(golden, res);
   }
 
   @Test(expected=NoMissingNumberFoundException.class)
   public void test_noMissingNumber() throws NoMissingNumberFoundException {
     List<Integer> list = generateNumbers(1 << 16);
-    Assert.assertEquals(true, findMissingNumber(list, 1 << 12, 1 << 4));
+    Assert.assertEquals(true, findMissingNumber(list, 1 << 12, 1 << 4, false));
+  }
+
+  @Test(expected=NoMissingNumberFoundException.class)
+  public void test_noMissingNumber_enoughMemory() throws NoMissingNumberFoundException {
+    List<Integer> list = generateNumbers(1 << 16);
+    Assert.assertEquals(true, findMissingNumber(list, 1 << 12, 1 << 4, true));
   }
 
   @Rule
@@ -45,8 +60,18 @@ public class MyFileReaderTest {
     final String filename = tmp_dir.getRoot() + "/file.txt";
     Pair<List<Integer>, List<Integer>> pair =
         generateMissingNumberFile(filename, 1 << 16);  // max_value = 1 << 16;
-    final int golden = Collections.min(pair.second());
-    final int res = findMissingNumber(filename, 1 << 12, 1 << 4);
+    int golden = Collections.min(pair.second());
+    int res = findMissingNumber(filename, 1 << 12, 1 << 4, false);
+    Assert.assertEquals(golden, res);
+  }
+
+  @Test
+  public void test_file_enoughMemory() throws NoMissingNumberFoundException, IOException {
+    final String filename = tmp_dir.getRoot() + "/file.txt";
+    Pair<List<Integer>, List<Integer>> pair =
+        generateMissingNumberFile(filename, 1 << 16);  // max_value = 1 << 16;
+    int golden = Collections.min(pair.second());
+    int res = findMissingNumber(filename, 1 << 12, 1 << 4, true);
     Assert.assertEquals(golden, res);
   }
 
@@ -61,8 +86,7 @@ public class MyFileReaderTest {
     return pair;
   }
 
-  private static Pair<List<Integer>, List<Integer>> generateMissingNumber(
-      int max_value) {
+  private static Pair<List<Integer>, List<Integer>> generateMissingNumber(int max_value) {
     List<Integer> list = generateNumbers(max_value);
     List<Integer> removed = new ArrayList<Integer>(10);
     // we remove at the end for efficiency reason
