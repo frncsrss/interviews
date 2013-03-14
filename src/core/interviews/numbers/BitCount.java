@@ -5,6 +5,9 @@ package interviews.numbers;
  * @author Francois Rousseau
  */
 public class BitCount {
+  /**
+   * Simplest method. Go bit by bit and check if it is set to 1.
+   */
   public static int f1(int i) {
     int count = 0;
     while(i > 0) {

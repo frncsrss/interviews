@@ -38,7 +38,8 @@ public class Fibonacci {
   }
 
   /**
-   * Bottom-up version. The most effective as it only stored the previous two values.
+   * Bottom-up dynamic programming.
+   * The most effective version as it only stores the previous two values.
    */
   public static long f3(int n) {
     if(n == 0) {
