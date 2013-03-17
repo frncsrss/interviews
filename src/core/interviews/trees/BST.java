@@ -143,7 +143,7 @@ public class BST<E> {
   }
 
   /**
-   * Breadth-first traversal of this BST.
+   * Level-order traversal of this BST.
    */
   @Override
   public String toString() {
