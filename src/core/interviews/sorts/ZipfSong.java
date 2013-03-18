@@ -1,7 +1,6 @@
 package interviews.sorts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -9,8 +8,8 @@ import java.util.Scanner;
 /**
  * Zipf's song.
  * 
- * Return the m best songs from a set of n songs in O(nlogm).
- * Quality is defined as being listened to more often than predicted by ZipfÕs Law.
+ * Return the m best songs from a set of n songs in O(nlogm) time and O(m) space.
+ * Quality is defined as being listened to more often than predicted by Zipf's Law.
  * Use a min-oriented priority queue maintaining the m best songs so far.
  * 
  * @author Francois Rousseau
@@ -18,11 +17,8 @@ import java.util.Scanner;
 public class ZipfSong {
   public static void main(String[] args) {
     Scanner stdin = new Scanner(System.in);
-    final int n = stdin.nextInt();
-    int m = stdin.nextInt();
-    if(m > n) {  // just in case
-      m = n;
-    }
+    final int n = stdin.nextInt();  // up to 50,000
+    int m = stdin.nextInt();  // up to n
     // we will maintain a priority queue of the m highest quality songs
     PriorityQueue<Song> pq = new PriorityQueue<Song>();
     for(int i = 0; i < n; i++) {  // O(nlogm)
@@ -37,12 +33,12 @@ public class ZipfSong {
         }
       }
     }
-    List<Song> bestSongs = new ArrayList<Song>(m);  // list holding in sorted order the m best songs
+    // list holding in ascending order of quality the m best songs
+    List<Song> bestSongs = new ArrayList<Song>(m);
     while(!pq.isEmpty()) {  // O(mlogm)
       bestSongs.add(pq.poll());
     }
-    Collections.reverse(bestSongs);  // O(m)
-    for(int i = 0; i < m; i++) {  // O(m)
+    for(int i = m - 1; i >= 0; i--) {  // O(m)
       System.out.println(bestSongs.get(i).name);
     }
     stdin.close();
@@ -55,7 +51,7 @@ public class ZipfSong {
 
     private Song(int index, int listened, String name) {
       this.index = index;
-      // ratio being number of times being listened to and predicted by Zipf's Law
+      // ratio being number of times being listened to and predicted by Zipf's Law (1/index)
       this.quality = index * listened;
       this.name = name;
     }

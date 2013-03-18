@@ -7,6 +7,7 @@ import java.util.Scanner;
  * 
  * For instance, the binary representation of 13 is 1101,
  * and reversing it gives 1011,which corresponds to number 11.
+ * 
  * @author Francois Rousseau
  */
 public class ReversedBinary {
@@ -22,10 +23,11 @@ public class ReversedBinary {
     final int numberOfDigits = 32 - Integer.numberOfLeadingZeros(n);
     int reverse = 0;
     for(int i = 0; i < numberOfDigits; i++) {
-      if(((n >> i) & 1) == 1) {  // if ith bit of n is 1
-        reverse |= 1 << (numberOfDigits - 1 - i);  // set (n - 1 - i)th bit of reverse to 1
+      if(((n >> i) & 1) == 1) {  // if the ith bit of n is 1
+        // set the (n - 1 - i)th bit of reverse to 1
+        reverse |= 1 << (numberOfDigits - 1 - i);
       }
-      // else, the bit is already set to 0
+      // else, the (n - 1 - i)th bit is already set to 0
     }
     return reverse;
   }
