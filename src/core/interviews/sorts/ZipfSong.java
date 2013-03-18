@@ -1,7 +1,5 @@
 package interviews.sorts;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
@@ -15,6 +13,8 @@ import java.util.Scanner;
  * Fixes:
  *  1. use ASCII characters in the javadoc (Compile Time Error)
  *  2. use long instead of int for quality (Run Time Error)
+ *  3. use Array of best songs instead of List
+ *     set initial capacity of the priority queue to m
  *
  * @author Francois Rousseau
  */
@@ -24,7 +24,7 @@ public class ZipfSong {
     final int n = stdin.nextInt();  // up to 50,000
     int m = stdin.nextInt();  // up to n
     // we will maintain a priority queue of the m highest quality songs
-    PriorityQueue<Song> pq = new PriorityQueue<Song>();
+    PriorityQueue<Song> pq = new PriorityQueue<Song>(m);
     for(int i = 0; i < n; i++) {  // O(nlogm)
       Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
       if(pq.size() < m) {  // add at least the first m songs
@@ -37,13 +37,14 @@ public class ZipfSong {
         }
       }
     }
-    // list holding in ascending order of quality the m best songs
-    List<Song> bestSongs = new ArrayList<Song>(m);
+    // array holding in ascending order of quality the m best songs
+    Song[] bestSongs = new Song[m];
+    int i = 0;
     while(!pq.isEmpty()) {  // O(mlogm)
-      bestSongs.add(pq.poll());
+      bestSongs[i++] = pq.poll();
     }
-    for(int i = m - 1; i >= 0; i--) {  // O(m)
-      System.out.println(bestSongs.get(i).name);
+    for(i = m - 1; i >= 0; i--) {  // O(m)
+      System.out.println(bestSongs[i].name);
     }
     stdin.close();
   }
