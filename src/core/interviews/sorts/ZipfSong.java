@@ -25,16 +25,19 @@ public class ZipfSong {
     int m = stdin.nextInt();  // up to n
     // we will maintain a priority queue of the m highest quality songs
     PriorityQueue<Song> pq = new PriorityQueue<Song>(m);
-    for(int i = 0; i < n; i++) {  // O(nlogm)
+    // we add the first m songs
+    for(int i = 0; i < m; i++) {  // O(mlogm)
       Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
-      if(pq.size() < m) {  // add at least the first m songs
+      pq.add(song);  // O(logm)
+    }
+    // we then scan the remaining n - m songs
+    for(int i = m; i < n; i++) {  // O(nlogm)
+      Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
+      Song head = pq.peek();
+      // add a new song if its quality is higher than the lowest quality in the priority queue
+      if(song.compareTo(head) > 0) {
+        pq.poll();  // O(logm)
         pq.add(song);  // O(logm)
-      } else {  // add a new song if its quality is higher than the lowest in the priority queue
-        Song head = pq.peek();
-        if(song.compareTo(head) > 0) {
-          pq.poll();  // O(logm)
-          pq.add(song);  // O(logm)
-        }
       }
     }
     // array holding in ascending order of quality the m best songs
