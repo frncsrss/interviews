@@ -1,8 +1,10 @@
 package interviews.sorts;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
@@ -20,12 +22,14 @@ import java.util.StringTokenizer;
  *     set initial capacity of the priority queue to m
  *  4. use BufferedReader and StringTokenizer instead of Scanner (Time Limit Exceeded)
  *     (reduce the running time by a factor 2) 
+ *  5. use BufferedWriter for the output
  *
  * @author Francois Rousseau
  */
 public class ZipfSong {
   public static void main(String[] args) {
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter stdout = new BufferedWriter(new OutputStreamWriter(System.out));
     try {
       StringTokenizer st = new StringTokenizer(stdin.readLine());
       final int n = Integer.parseInt(st.nextToken());  // up to 50,000
@@ -56,8 +60,10 @@ public class ZipfSong {
         bestSongs[i++] = pq.poll();
       }
       for(i = m - 1; i >= 0; i--) {  // O(m)
-        System.out.println(bestSongs[i].name);
+        stdout.write(bestSongs[i].name);
+        stdout.newLine();
       }
+      stdout.flush();
       stdin.close();
     } catch (IOException e) {
       e.printStackTrace();
