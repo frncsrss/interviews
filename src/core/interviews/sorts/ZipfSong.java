@@ -12,6 +12,10 @@ import java.util.Scanner;
  * Quality is defined as being listened to more often than predicted by Zipf's Law.
  * Use a min-oriented priority queue maintaining the m best songs so far.
  * 
+ * Fixes:
+ *  1. use ASCII characters in the javadoc (Compile Time Error)
+ *  2. use long instead of int for quality (Run Time Error)
+ *
  * @author Francois Rousseau
  */
 public class ZipfSong {
@@ -22,7 +26,7 @@ public class ZipfSong {
     // we will maintain a priority queue of the m highest quality songs
     PriorityQueue<Song> pq = new PriorityQueue<Song>();
     for(int i = 0; i < n; i++) {  // O(nlogm)
-      Song song = new Song(i + 1, stdin.nextInt(), stdin.nextLine().trim());
+      Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
       if(pq.size() < m) {  // add at least the first m songs
         pq.add(song);  // O(logm)
       } else {  // add a new song if its quality is higher than the lowest in the priority queue
@@ -45,11 +49,11 @@ public class ZipfSong {
   }
 
   private static class Song implements Comparable<Song> {
-    private int index;
-    private int quality;
+    private int index;  // up to 50,000
+    private long quality;  // up to 50,000 x 10^12 = 5 x 10^16 < 2^63 - 1
     private String name;
 
-    private Song(int index, int listened, String name) {
+    private Song(int index, long listened, String name) {
       this.index = index;
       // ratio being number of times being listened to and predicted by Zipf's Law (1/index)
       this.quality = index * listened;
