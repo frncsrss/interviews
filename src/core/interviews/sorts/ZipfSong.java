@@ -1,7 +1,10 @@
 package interviews.sorts;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  * Zipf's song.
@@ -15,41 +18,50 @@ import java.util.Scanner;
  *  2. use long instead of int for quality (Run Time Error)
  *  3. use Array of best songs instead of List
  *     set initial capacity of the priority queue to m
+ *  4. use BufferedReader and StringTokenizer instead of Scanner (Time Limit Exceeded)
+ *     (reduce the running time by a factor 2) 
  *
  * @author Francois Rousseau
  */
 public class ZipfSong {
   public static void main(String[] args) {
-    Scanner stdin = new Scanner(System.in);
-    final int n = stdin.nextInt();  // up to 50,000
-    int m = stdin.nextInt();  // up to n
-    // we will maintain a priority queue of the m highest quality songs
-    PriorityQueue<Song> pq = new PriorityQueue<Song>(m);
-    // we add the first m songs
-    for(int i = 0; i < m; i++) {  // O(mlogm)
-      Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
-      pq.add(song);  // O(logm)
-    }
-    // we then scan the remaining n - m songs
-    for(int i = m; i < n; i++) {  // O(nlogm)
-      Song song = new Song(i + 1, stdin.nextLong(), stdin.nextLine().trim());
-      Song head = pq.peek();
-      // add a new song if its quality is higher than the lowest quality in the priority queue
-      if(song.compareTo(head) > 0) {
-        pq.poll();  // O(logm)
+    BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+    try {
+      StringTokenizer st = new StringTokenizer(stdin.readLine());
+      final int n = Integer.parseInt(st.nextToken());  // up to 50,000
+      int m = Integer.parseInt(st.nextToken());  // up to n
+      // we will maintain a priority queue of the m highest quality songs
+      PriorityQueue<Song> pq = new PriorityQueue<Song>(m);
+      // we add the first m songs
+      for(int i = 0; i < m; i++) {  // O(mlogm)
+        st = new StringTokenizer(stdin.readLine());
+        Song song = new Song(i + 1, Long.parseLong(st.nextToken()), st.nextToken());
         pq.add(song);  // O(logm)
       }
+      // we then scan the remaining n - m songs
+      for(int i = m; i < n; i++) {  // O(nlogm)
+        st = new StringTokenizer(stdin.readLine());
+        Song song = new Song(i + 1, Long.parseLong(st.nextToken()), st.nextToken());
+        Song head = pq.peek();
+        // add a new song if its quality is higher than the lowest quality in the priority queue
+        if(song.compareTo(head) > 0) {
+          pq.poll();  // O(logm)
+          pq.add(song);  // O(logm)
+        }
+      }
+      // array holding in ascending order of quality the m best songs
+      Song[] bestSongs = new Song[m];
+      int i = 0;
+      while(!pq.isEmpty()) {  // O(mlogm)
+        bestSongs[i++] = pq.poll();
+      }
+      for(i = m - 1; i >= 0; i--) {  // O(m)
+        System.out.println(bestSongs[i].name);
+      }
+      stdin.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    // array holding in ascending order of quality the m best songs
-    Song[] bestSongs = new Song[m];
-    int i = 0;
-    while(!pq.isEmpty()) {  // O(mlogm)
-      bestSongs[i++] = pq.poll();
-    }
-    for(i = m - 1; i >= 0; i--) {  // O(m)
-      System.out.println(bestSongs[i].name);
-    }
-    stdin.close();
   }
 
   private static class Song implements Comparable<Song> {
