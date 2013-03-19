@@ -19,6 +19,10 @@ public class ReversedBinary {
     stdin.close();
   }
 
+  /**
+   * Reverse the binary representation of a number.
+   * Use bit shifting.
+   */
   public static int reverse(int n) {
     final int numberOfDigits = 32 - Integer.numberOfLeadingZeros(n);
     int reverse = 0;
@@ -30,5 +34,20 @@ public class ReversedBinary {
       // else, the (n - 1 - i)th bit is already set to 0
     }
     return reverse;
+  }
+
+  /**
+   * Reverse the binary representation of a number.
+   * Use array of characters.
+   */
+  public static int reverse2(int n) {
+    char[] arr = Integer.toBinaryString(n).toCharArray();
+    final int max = arr.length - 1;
+    for(int i = 0; i < arr.length/2; i++) {
+      char tmp = arr[i];
+      arr[i] = arr[max - i];
+      arr[max - i] = tmp;
+    }
+    return Integer.valueOf(new String(arr), 2);
   }
 }
