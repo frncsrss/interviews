@@ -105,7 +105,7 @@ public class Trie {
     if(s == null) {
       return false;
     }
-    return remove(root, s.toCharArray(), 0).first();
+    return remove(root, s.toCharArray(), 0).x();
   }
 
   /**
@@ -267,7 +267,7 @@ public class Trie {
       return new Pair<Boolean, Node>(false, node);
     }
     Pair<Boolean, Node> pair = remove(child, arr, i+1);
-    if(pair.first() && pair.second() == null) {
+    if(pair.x() && pair.y() == null) {
       node.removeChild(arr[i]);
       if(!node.children.isEmpty()) {
         return new Pair<Boolean, Node>(true, node);
@@ -275,7 +275,7 @@ public class Trie {
         return new Pair<Boolean, Node>(true, null);
       }
     }
-    return new Pair<Boolean, Node>(pair.first(), node);
+    return new Pair<Boolean, Node>(pair.x(), node);
   }
 
   /**
