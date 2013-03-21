@@ -19,8 +19,8 @@ public class Equilibrium {
       if(sum_left == sum_right) {
         return i;
       }
-      sum_left+=A[i];
-      sum_right-=A[i+1];
+      sum_left += A[i];
+      sum_right -= A[i + 1];
     }
     if(sum_left == sum_right) {
       return length-1;

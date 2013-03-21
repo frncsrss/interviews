@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class MergeInPlace {
+  /**
+   * Given a listed in ascending order until index n - 1 and in ascending order from index n,
+   * sort in ascending order the entire list 
+   */
   public static void f(List<Integer> list, int n) {
     int start_a = 0;
     int start_b = n;

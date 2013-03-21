@@ -20,7 +20,7 @@ public class RangeMinimumQuerySegmentTrees {
     if(i < 0 || i >= A.length || j < 0 || j >= A.length) {
       throw new IndexOutOfBoundsException();
     }
-    if(i > j) {
+    if(i > j) {  // swap i and j
       i = i^j;
       j = i^j;
       i = i^j;
