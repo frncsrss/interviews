@@ -2,6 +2,7 @@ package interviews.sorts;
 
 import interviews.arrays.Swap;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,5 +25,11 @@ public class Shellsort {
       }
       h /= 3;
     }
+  }
+
+  public static void main(String[] args) {
+    f(Arrays.asList("iris", "wine", "pear", "dusk", "bark", "ruby", "sage", "aqua", "rust", "rose",
+        "fawn", "onyx", "lava", "buff", "sand", "teal", "lime", "herb", "palm", "mint", "silk",
+        "leaf", "pink", "gray"), String.CASE_INSENSITIVE_ORDER);
   }
 }

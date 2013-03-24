@@ -28,6 +28,32 @@ public class HeapMaxTest {
   }
 
   @Test
+  public void test_poll() {
+    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    heap.add(1);
+    heap.add(2);
+    heap.add(3);
+    heap.add(4);
+    heap.add(5);
+    heap.add(6);
+    Assert.assertEquals(new Integer(6), heap.peek());
+    heap.add(7);
+    heap.add(8);
+    heap.add(9);
+    heap.add(10);
+    Assert.assertEquals(new Integer(10), heap.poll());
+    Assert.assertEquals(new Integer(9), heap.poll());
+    Assert.assertEquals(new Integer(8), heap.poll());
+    Assert.assertEquals(new Integer(7), heap.poll());
+    Assert.assertEquals(new Integer(6), heap.poll());
+    Assert.assertEquals(new Integer(5), heap.poll());
+    Assert.assertEquals(new Integer(4), heap.poll());
+    Assert.assertEquals(new Integer(3), heap.poll());
+    Assert.assertEquals(new Integer(2), heap.poll());
+    Assert.assertEquals(new Integer(1), heap.poll());
+  }
+
+  @Test
   public void test_remove() {
     Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
     heap.add(1);
@@ -105,31 +131,5 @@ public class HeapMaxTest {
     Assert.assertEquals("9\n8 6\n7 3 2 5\n1 4", heap.toString());
     heap.add(10);
     Assert.assertEquals("10\n9 6\n7 8 2 5\n1 4 3", heap.toString());
-  }
-
-  @Test
-  public void test() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
-    heap.add(1);
-    heap.add(2);
-    heap.add(3);
-    heap.add(4);
-    heap.add(5);
-    heap.add(6);
-    Assert.assertEquals(new Integer(6), heap.peek());
-    heap.add(7);
-    heap.add(8);
-    heap.add(9);
-    heap.add(10);
-    Assert.assertEquals(new Integer(10), heap.poll());
-    Assert.assertEquals(new Integer(9), heap.poll());
-    Assert.assertEquals(new Integer(8), heap.poll());
-    Assert.assertEquals(new Integer(7), heap.poll());
-    Assert.assertEquals(new Integer(6), heap.poll());
-    Assert.assertEquals(new Integer(5), heap.poll());
-    Assert.assertEquals(new Integer(4), heap.poll());
-    Assert.assertEquals(new Integer(3), heap.poll());
-    Assert.assertEquals(new Integer(2), heap.poll());
-    Assert.assertEquals(new Integer(1), heap.poll());
   }
 }

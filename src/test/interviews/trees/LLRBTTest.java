@@ -1,5 +1,7 @@
 package interviews.trees;
 
+import interviews.sorts.Sorts;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,5 +37,25 @@ public class LLRBTTest {
     Assert.assertEquals("M K R E L P X C H S A", llrbt.toString());
     llrbt.insert("D");
     Assert.assertEquals("M E R C K P X A D H L S", llrbt.toString());
+  }
+
+  @Test
+  public void test_quizz() {
+    LLRBT<Integer> llrbt = new LLRBT<Integer>(Sorts.getComparatorOfIntegers());
+    llrbt.insert(29);
+    llrbt.insert(21);
+    llrbt.insert(20);
+    llrbt.insert(28);
+    llrbt.insert(80);
+    llrbt.insert(69);
+    llrbt.insert(98);
+    llrbt.insert(58);
+    llrbt.insert(71);
+    llrbt.insert(87);
+    Assert.assertEquals("29 21 80 20 28 69 98 58 71 87", llrbt.toString());
+    llrbt.insert(54);
+    llrbt.insert(72);
+    llrbt.insert(34);
+    Assert.assertEquals("69 29 80 21 54 72 98 20 28 34 58 71 87", llrbt.toString());
   }
 }
