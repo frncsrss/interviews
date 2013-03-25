@@ -11,7 +11,7 @@ public class GraphTest {
   @Test
   public void test_basic() {
     final Graph<Integer> g = new Graph<Integer>(false);
-    Assert.assertEquals(0, g.getNumberOfEdges());
+    Assert.assertEquals(0, g.E());
     Assert.assertEquals(true, g.addEdge(1, 2));
     Assert.assertEquals(true, g.addEdge(1, 5));
     Assert.assertEquals(true, g.addEdge(1, 6));
@@ -19,7 +19,7 @@ public class GraphTest {
     Assert.assertEquals(true, g.addEdge(2, 5));
     Assert.assertEquals(true, g.addEdge(3, 4));
     Assert.assertEquals(true, g.addEdge(4, 5));
-    Assert.assertEquals(7, g.getNumberOfEdges());
+    Assert.assertEquals(7, g.E());
   }
 
   @Test
