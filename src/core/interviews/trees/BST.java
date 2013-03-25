@@ -280,8 +280,8 @@ public class BST<E> {
     }
     final int result = comparator.compare(e, node.e);
     // we consider our BST as a Set
-    // Hence, we don't insert an element already in the BST (i.e. result == 0)
-    // we just increment is frequency
+    // hence, we don't insert an element already in the BST (i.e. result == 0),
+    // we just increment its frequency
     if(result == 0) {
       node.frequency++;
     } else if(result > 0) {

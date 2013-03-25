@@ -61,8 +61,8 @@ public class LLRBT<E> extends BST<E> {
     }
     final int result = comparator.compare(e, node.e);
     // we consider our BST as a Set
-    // Hence, we don't insert an element already in the BST (i.e. result == 0)
-    // we just increment is frequency
+    // hence, we don't insert an element already in the BST (i.e. result == 0),
+    // we just increment its frequency
     if(result == 0) {
       node.frequency++;
     } else if(result > 0) {
@@ -71,13 +71,13 @@ public class LLRBT<E> extends BST<E> {
       node.left = insert(node.left, e);
     }
 
-    if (isRed(node.right) && !isRed(node.left)) {  // lean left
+    if(isRed(node.right) && !isRed(node.left)) {  // lean left
       node = rotateLeft((Node) node);
     }
-    if (isRed(node.left) && isRed(node.left.left)) {  // balance 4-node
+    if(isRed(node.left) && isRed(node.left.left)) {  // balance 4-node
       node = rotateRight((Node) node);
     }
-    if (isRed(node.left) && isRed(node.right)) {  // split 4-node
+    if(isRed(node.left) && isRed(node.right)) {  // split 4-node
       flipColors((Node) node);
     }
 
