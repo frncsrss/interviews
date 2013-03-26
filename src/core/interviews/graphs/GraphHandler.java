@@ -22,28 +22,47 @@ public class GraphHandler<Vertex> {
     this.visited = new HashSet<Vertex>();
   }
   
+  /**
+   * Perform a breadth-first search traversal of the graph from the given vertex.
+   * Set the given vertex as current source for subsequent methods.
+   */
   public void bfs(Vertex v) {
     parent.clear();  // clear the parent table from previous traversals
     visited.clear();  // clear the visited set from previous traversals
     this.source = v;  // set the source
-    bfs(v, new LinkedList<Vertex>());
+    bfsHelper(v);
   }
 
+  /**
+   * Perform a depth-first search traversal of the graph from the given vertex.
+   * Set the given vertex as current source for subsequent methods.
+   */
   public void dfs(Vertex v) {
     parent.clear();   // clear the parent table from previous traversals
     visited.clear();  // clear the visited set from previous traversals
     this.source = v;  // set the source
-    dfs(v, visited);
+    dfsHelper(v);
   }
 
+  /**
+   * Is there a path between the current source and the given vertex?
+   */
   public boolean hasPathTo(Vertex v) {
     return visited.contains(v);
   }
 
+  /**
+   * Parent of the given vertex.
+   * Depend on the traversal used.
+   */
   public Vertex parent(Vertex v) {
     return parent.get(v);
   }
 
+  /**
+   * Path from the current source to the given vertex.
+   * Depend on the traversal used.
+   */
   public Iterable<Vertex> pathTo(Vertex v) {
     if(!hasPathTo(v)) {
       return null;
@@ -57,7 +76,12 @@ public class GraphHandler<Vertex> {
   }
 
 
-  private void bfs(Vertex v, Queue<Vertex> queue) {
+  /**
+   * Internal routine that performs a breadth-first search traversal of the graph.
+   * Use a FIFO queue.
+   */
+  private void bfsHelper(Vertex v) {
+    Queue<Vertex> queue = new LinkedList<Vertex>();
     queue.add(v);
     visited.add(v);  // mark vertex as visited
     while(!queue.isEmpty()) {
@@ -74,13 +98,17 @@ public class GraphHandler<Vertex> {
     }
   }
 
-  private void dfs(Vertex v, Set<Vertex> visited) {
+  /**
+   * Internal routine that performs a depth-first search traversal of the graph.
+   * Use recursion (LIFO queue).
+   */
+  private void dfsHelper(Vertex v) {
     visited.add(v);  // mark vertex as visited
     Edge<Vertex> edge = graph.adjancencyLists.get(v);
     while(edge != null) {
       if(!visited.contains(edge.y)) {  // not already visited
         parent.put(edge.y, v);  // store the parent (v) of edge.y
-        dfs(edge.y, visited);
+        dfsHelper(edge.y);
       }
       edge = edge.next;
     }
