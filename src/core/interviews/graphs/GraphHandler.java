@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -56,7 +57,7 @@ public class GraphHandler<Vertex> {
   }
 
 
-  private void bfs(Vertex v, LinkedList<Vertex> queue) {
+  private void bfs(Vertex v, Queue<Vertex> queue) {
     queue.add(v);
     visited.add(v);  // mark vertex as visited
     while(!queue.isEmpty()) {
@@ -64,7 +65,7 @@ public class GraphHandler<Vertex> {
       Edge<Vertex> edge = graph.adjancencyLists.get(current);
       while(edge != null) {
         if(!visited.contains(edge.y)) {  // not already visited
-          queue.addLast(edge.y);
+          queue.add(edge.y);
           parent.put(edge.y, current);  // store the parent (current) of edge.y
           visited.add(edge.y);
         }
