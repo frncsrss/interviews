@@ -65,8 +65,8 @@ public class GraphHandler<Vertex> {
       Edge<Vertex> edge = graph.adjancencyLists.get(current);
       while(edge != null) {
         if(!visited.contains(edge.y)) {  // not already visited
-          queue.add(edge.y);
           parent.put(edge.y, current);  // store the parent (current) of edge.y
+          queue.add(edge.y);
           visited.add(edge.y);
         }
         edge = edge.next;

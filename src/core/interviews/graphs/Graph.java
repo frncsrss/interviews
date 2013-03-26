@@ -4,18 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Graph<Vertex> {
-  
   protected int V;
   protected int E;
   protected boolean directed;
   protected Map<Vertex, Edge<Vertex>> adjancencyLists;
-  protected Map<Vertex, Integer> degree;
-  protected enum STATE {UNIDISCOVERED, DISCOVERED, PROCESSED};
 
   public Graph(boolean directed) {
     this.directed = directed;
     this.adjancencyLists = new HashMap<Vertex, Edge<Vertex>>();
-    this.degree = new HashMap<Vertex, Integer>();
   }
 
   public boolean addEdge(Vertex x, Vertex y) {
