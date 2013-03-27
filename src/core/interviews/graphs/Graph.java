@@ -10,10 +10,9 @@ import java.util.Map;
  * @author Francois Rousseau
  */
 public class Graph<Vertex> {
-  protected int V;
-  protected int E;
-  protected boolean directed;
-  protected Map<Vertex, Edge<Vertex>> adjancencyLists;
+  private int E;
+  private boolean directed;
+  private Map<Vertex, Edge<Vertex>> adjancencyLists;
 
   public Graph(boolean directed) {
     this.directed = directed;
@@ -52,6 +51,13 @@ public class Graph<Vertex> {
     return adjancencyLists.size();
   }
 
+  /**
+   * Return all the vertices from this graph.
+   */
+  public Iterable<Vertex> vertices() {
+    return adjancencyLists.keySet();
+  }
+
 
   /**
    * Add a (directed) edge between vertex v and vertex w.
@@ -88,7 +94,7 @@ public class Graph<Vertex> {
   /**
    * Internal class representing an edge inside a linked-list.
    */
-  protected static class Edge<Vertex> {
+  private static class Edge<Vertex> {
     protected Vertex v;
     protected Edge<Vertex> next;
 

@@ -45,7 +45,7 @@ public class GraphHandler<Vertex> {
     visited.clear();  // clear the visited set from previous traversals
     source = null;    // set the source
     count = 0;
-    for(Vertex v: graph.adjancencyLists.keySet()) {
+    for(Vertex v: graph.vertices()) {
       if(!visited.containsKey(v)) {
         dfsHelper(v);
         count++;
