@@ -10,6 +10,10 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
+/**
+ * Graph operations.
+ * @author Francois Rousseau
+ */
 public class GraphHandler<Vertex> {
   protected Graph<Vertex> graph;
   protected Vertex source;
@@ -20,6 +24,7 @@ public class GraphHandler<Vertex> {
     this.graph = graph;
     this.parent = new HashMap<Vertex, Vertex>();
     this.visited = new HashSet<Vertex>();
+    this.source = null;
   }
   
   /**
@@ -113,5 +118,4 @@ public class GraphHandler<Vertex> {
       edge = edge.next;
     }
   }
-
 }
