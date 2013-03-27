@@ -73,7 +73,7 @@ public class GraphHandler<Vertex> {
       return null;
     }
     Stack<Vertex> path = new Stack<Vertex>();
-    for (Vertex x = v; !x.equals(source); x = parent.get(x)) {
+    for(Vertex x = v; !x.equals(source); x = parent.get(x)) {
       path.push(x);
     }
     path.push(source);
