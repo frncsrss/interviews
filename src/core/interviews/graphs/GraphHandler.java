@@ -1,7 +1,5 @@
 package interviews.graphs;
 
-import interviews.graphs.Graph.Edge;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -15,10 +13,10 @@ import java.util.Stack;
  * @author Francois Rousseau
  */
 public class GraphHandler<Vertex> {
-  protected Graph<Vertex> graph;
-  protected Vertex source;
-  protected Map<Vertex, Vertex> parent;
-  protected Set<Vertex> visited;
+  private Graph<Vertex> graph;
+  private Vertex source;
+  private Map<Vertex, Vertex> parent;
+  private Set<Vertex> visited;
 
   public GraphHandler(Graph<Vertex> graph) {
     this.graph = graph;
@@ -91,14 +89,12 @@ public class GraphHandler<Vertex> {
     visited.add(v);  // mark vertex as visited
     while(!queue.isEmpty()) {
       Vertex current = queue.poll();
-      Edge<Vertex> edge = graph.adjancencyLists.get(current);
-      while(edge != null) {
-        if(!visited.contains(edge.y)) {  // not already visited
-          parent.put(edge.y, current);  // store the parent (current) of edge.y
-          queue.add(edge.y);
-          visited.add(edge.y);
+      for(Vertex w: graph.adjancents(current)) {
+        if(!visited.contains(w)) {  // not already visited
+          parent.put(w, current);  // store the parent (current) of edge.v
+          queue.add(w);
+          visited.add(w);
         }
-        edge = edge.next;
       }
     }
   }
@@ -109,13 +105,11 @@ public class GraphHandler<Vertex> {
    */
   private void dfsHelper(Vertex v) {
     visited.add(v);  // mark vertex as visited
-    Edge<Vertex> edge = graph.adjancencyLists.get(v);
-    while(edge != null) {
-      if(!visited.contains(edge.y)) {  // not already visited
-        parent.put(edge.y, v);  // store the parent (v) of edge.y
-        dfsHelper(edge.y);
+    for(Vertex w: graph.adjancents(v)) {
+      if(!visited.contains(w)) {  // not already visited
+        parent.put(w, v);  // store the parent (v) of edge.v
+        dfsHelper(w);
       }
-      edge = edge.next;
     }
   }
 }

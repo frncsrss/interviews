@@ -1,6 +1,8 @@
 package interviews.graphs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +26,16 @@ public class Graph<Vertex> {
    */
   public boolean addEdge(Vertex v, Vertex w) {
     return addEdge(v, w, directed);
+  }
+
+  public Iterable<Vertex> adjancents(Vertex v) {
+    List<Vertex> adjancents = new ArrayList<Vertex>();
+    Edge<Vertex> current = adjancencyLists.get(v);
+    while(current != null) {
+      adjancents.add(current.v);
+      current = current.next;
+    }
+    return adjancents;
   }
 
   /**
@@ -59,7 +71,7 @@ public class Graph<Vertex> {
     // otherwise we go through the adjancencyList
     Edge<Vertex> currentEdge = adjancencyLists.get(v);
     while(currentEdge.hasNext()) {
-      if(currentEdge.y.equals(w)) {  // the edge <x, y> is already in the adjacency list
+      if(currentEdge.v.equals(w)) {  // the edge <v, w> is already in the adjacency list
         return false;
       }
       currentEdge = currentEdge.next;
@@ -77,11 +89,11 @@ public class Graph<Vertex> {
    * Internal class representing an edge inside a linked-list.
    */
   protected static class Edge<Vertex> {
-    protected Vertex y;
+    protected Vertex v;
     protected Edge<Vertex> next;
 
-    public Edge(Vertex y) {
-      this.y = y;
+    public Edge(Vertex v) {
+      this.v = v;
     }
 
     public boolean hasNext() {
@@ -90,7 +102,7 @@ public class Graph<Vertex> {
 
     @Override
     public String toString() {
-      return "Edge to " + y + " pointing to " + next;
+      return "Edge to " + v + " pointing to " + next;
     }
   }
 }
