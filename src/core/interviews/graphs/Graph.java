@@ -2,8 +2,10 @@ package interviews.graphs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Graph representation.
@@ -12,10 +14,12 @@ import java.util.Map;
 public class Graph<Vertex> {
   private int E;
   private boolean directed;
+  private Set<Vertex> vertices;
   private Map<Vertex, Edge<Vertex>> adjancencyLists;
 
   public Graph(boolean directed) {
     this.directed = directed;
+    this.vertices = new HashSet<Vertex>();
     this.adjancencyLists = new HashMap<Vertex, Edge<Vertex>>();
   }
 
@@ -24,6 +28,8 @@ public class Graph<Vertex> {
    * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(Vertex v, Vertex w) {
+    vertices.add(v);
+    vertices.add(w);
     return addEdge(v, w, directed);
   }
 
@@ -48,14 +54,14 @@ public class Graph<Vertex> {
    * Number of vertices.
    */
   public int V() {
-    return adjancencyLists.size();
+    return vertices.size();
   }
 
   /**
    * Return all the vertices from this graph.
    */
   public Iterable<Vertex> vertices() {
-    return adjancencyLists.keySet();
+    return vertices;
   }
 
 

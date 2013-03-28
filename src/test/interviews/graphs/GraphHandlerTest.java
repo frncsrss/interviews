@@ -1,7 +1,6 @@
 package interviews.graphs;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -12,14 +11,20 @@ public class GraphHandlerTest extends GraphTest {
   protected GraphHandler<Integer> gh;
 
   @Override
-  @Before
-  public void setUp() {
-    super.setUp();
+  protected void setUpDirected() {
+    super.setUpDirected();
+    gh = new GraphHandler<Integer>(g);
+  }
+
+  @Override
+  protected void setUpUndirected() {
+    super.setUpUndirected();
     gh = new GraphHandler<Integer>(g);
   }
 
   @Test
   public void test_bfs() {
+    setUpUndirected();
     gh.bfs(0);
     Assert.assertEquals(null, gh.parent(0));
     Assert.assertEquals(new Integer(0), gh.parent(1));
@@ -40,6 +45,7 @@ public class GraphHandlerTest extends GraphTest {
 
   @Test
   public void test_cc() {
+    setUpUndirected();
     gh.cc();
     Assert.assertEquals(3, gh.count());
     Assert.assertEquals(0, gh.id(0));
@@ -73,6 +79,7 @@ public class GraphHandlerTest extends GraphTest {
 
   @Test
   public void test_dfs() {
+    setUpUndirected();
     gh.dfs(0);
     Assert.assertEquals(null, gh.parent(0));
     Assert.assertEquals(new Integer(0), gh.parent(1));
