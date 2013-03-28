@@ -18,8 +18,8 @@ public class GraphTest {
     Assert.assertEquals(true, g.addEdge(2, 3));
     Assert.assertEquals(true, g.addEdge(3, 2));
     Assert.assertEquals(true, g.addEdge(3, 5));
-    Assert.assertEquals(true, g.addEdge(4, 2));
     Assert.assertEquals(true, g.addEdge(4, 3));
+    Assert.assertEquals(true, g.addEdge(4, 2));
     Assert.assertEquals(true, g.addEdge(5, 4));
     Assert.assertEquals(true, g.addEdge(6, 0));
     Assert.assertEquals(true, g.addEdge(6, 4));
