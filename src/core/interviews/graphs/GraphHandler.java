@@ -116,6 +116,22 @@ public class GraphHandler<Vertex> {
     return path;
   }
 
+  /**
+   * Compute the connected components in linear time in number of edges/vertices.
+   */
+  public Iterable<Vertex> topological() {
+    parent.clear();   // clear the parent table from previous traversals
+    visited.clear();  // clear the visited set from previous traversals
+    source = null;    // set the source
+    Stack<Vertex> stack = new Stack<Vertex>();
+    for(Vertex v: graph.vertices()) {
+      if(!visited.containsKey(v)) {
+        dfsHelper(v, stack);
+      }
+    }
+    return stack;
+  }
+
 
   /**
    * Internal routine that performs a breadth-first search traversal of the graph.
@@ -149,5 +165,20 @@ public class GraphHandler<Vertex> {
         dfsHelper(w);
       }
     }
+  }
+
+  /**
+   * Internal routine that performs a depth-first search traversal of the graph.
+   * Use recursion (LIFO queue) and stack the elements in DFS postorder.
+   */
+  private void dfsHelper(Vertex v, Stack<Vertex> stack) {
+    visited.put(v, count);  // mark vertex as visited
+    for(Vertex w: graph.adjancents(v)) {
+      if(!visited.containsKey(w)) {  // not already visited
+        parent.put(w, v);  // store the parent (v) of edge.v
+        dfsHelper(w, stack);
+      }
+    }
+    stack.push(v);
   }
 }

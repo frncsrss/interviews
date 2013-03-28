@@ -132,4 +132,10 @@ public class GraphHandlerTest extends GraphTest {
     Assert.assertEquals("[4, 3, 5, 0]", gh.pathTo(4).toString());
     Assert.assertEquals("[6, 4, 3, 5, 0]", gh.pathTo(6).toString());
   }
+
+  @Test
+  public void test_topological() {
+    setUpDirected();
+    Assert.assertEquals("[1, 2, 3, 4, 5, 0, 8, 12, 10, 11, 9, 6, 7]", gh.topological().toString());
+  }
 }
