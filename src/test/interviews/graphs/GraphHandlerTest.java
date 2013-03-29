@@ -7,41 +7,16 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class GraphHandlerTest extends GraphTest {
-  protected GraphHandler<Integer> gh;
+public class GraphHandlerTest {
 
-  @Override
-  protected void setUpDirected() {
-    super.setUpDirected();
-    gh = new GraphHandler<Integer>(g);
-  }
-
-  @Override
-  protected void setUpUndirected() {
-    super.setUpUndirected();
-    gh = new GraphHandler<Integer>(g);
+  public static GraphHandler<Integer> setUp() {
+    GraphHandler<Integer> gh = new GraphHandler<Integer>(GraphTest.setUp());
+    return gh;
   }
 
   @Test
   public void test_bfs() {
-    setUpDirected();
-    gh.bfs(0);
-    Assert.assertEquals(null, gh.parent(0));
-    Assert.assertEquals(new Integer(0), gh.parent(1));
-    Assert.assertEquals(new Integer(4), gh.parent(2));
-    Assert.assertEquals(new Integer(4), gh.parent(3));
-    Assert.assertEquals(new Integer(5), gh.parent(4));
-    Assert.assertEquals(new Integer(0), gh.parent(5));
-    Assert.assertEquals(null, gh.parent(6));
-    Assert.assertEquals(null, gh.parent(7));
-    Assert.assertEquals(null, gh.parent(8));
-    Assert.assertEquals(null, gh.parent(9));
-    Assert.assertEquals(null, gh.parent(10));
-    Assert.assertEquals(null, gh.parent(11));
-    Assert.assertEquals(null, gh.parent(12));
-    Assert.assertEquals("[3, 4, 5, 0]", gh.pathTo(3).toString());
-
-    setUpUndirected();
+    GraphHandler<Integer> gh = setUp();
     gh.bfs(0);
     Assert.assertEquals(null, gh.parent(0));
     Assert.assertEquals(new Integer(0), gh.parent(1));
@@ -62,7 +37,7 @@ public class GraphHandlerTest extends GraphTest {
 
   @Test
   public void test_cc() {
-    setUpUndirected();
+    GraphHandler<Integer> gh = setUp();
     gh.cc();
     Assert.assertEquals(3, gh.count());
     Assert.assertEquals(0, gh.id(0));
@@ -99,24 +74,7 @@ public class GraphHandlerTest extends GraphTest {
 
   @Test
   public void test_dfs() {
-    setUpDirected();
-    gh.dfs(0);
-    Assert.assertEquals(null, gh.parent(0));
-    Assert.assertEquals(new Integer(0), gh.parent(1));
-    Assert.assertEquals(new Integer(3), gh.parent(2));
-    Assert.assertEquals(new Integer(4), gh.parent(3));
-    Assert.assertEquals(new Integer(5), gh.parent(4));
-    Assert.assertEquals(new Integer(0), gh.parent(5));
-    Assert.assertEquals(null, gh.parent(6));
-    Assert.assertEquals(null, gh.parent(7));
-    Assert.assertEquals(null, gh.parent(8));
-    Assert.assertEquals(null, gh.parent(9));
-    Assert.assertEquals(null, gh.parent(10));
-    Assert.assertEquals(null, gh.parent(11));
-    Assert.assertEquals(null, gh.parent(12));
-    Assert.assertEquals("[2, 3, 4, 5, 0]", gh.pathTo(2).toString());
-
-    setUpUndirected();
+    GraphHandler<Integer> gh = setUp();
     gh.dfs(0);
     Assert.assertEquals(null, gh.parent(0));
     Assert.assertEquals(new Integer(0), gh.parent(1));
@@ -134,11 +92,5 @@ public class GraphHandlerTest extends GraphTest {
     Assert.assertEquals("[3, 5, 0]", gh.pathTo(3).toString());
     Assert.assertEquals("[4, 3, 5, 0]", gh.pathTo(4).toString());
     Assert.assertEquals("[6, 4, 3, 5, 0]", gh.pathTo(6).toString());
-  }
-
-  @Test
-  public void test_topological() {
-    setUpDirected();
-    Assert.assertEquals("[1, 2, 3, 4, 5, 0, 8, 12, 10, 11, 9, 6, 7]", gh.topological().toString());
   }
 }

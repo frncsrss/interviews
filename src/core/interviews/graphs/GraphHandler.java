@@ -10,17 +10,17 @@ import java.util.Stack;
  * Graph operations.
  * @author Francois Rousseau
  */
-public class GraphHandler<Vertex> {
-  private Graph<Vertex> graph;
-  private Vertex source;
-  private Map<Vertex, Vertex> parent;
-  private Map<Vertex, Integer>  visited;
-  private int count;
+public class GraphHandler<V> {
+  protected Graph<V> graph;
+  protected V source;
+  protected Map<V, V> parent;
+  protected Map<V, Integer>  visited;
+  protected int count;
 
-  public GraphHandler(Graph<Vertex> graph) {
+  public GraphHandler(Graph<V> graph) {
     this.graph = graph;
-    this.parent = new HashMap<Vertex, Vertex>();
-    this.visited = new HashMap<Vertex, Integer>();
+    this.parent = new HashMap<V, V>();
+    this.visited = new HashMap<V, Integer>();
     this.source = null;
     this.count = -1;
   }
@@ -29,7 +29,7 @@ public class GraphHandler<Vertex> {
    * Perform a breadth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
    */
-  public void bfs(Vertex v) {
+  public void bfs(V v) {
     parent.clear();   // clear the parent table from previous traversals
     visited.clear();  // clear the visited set from previous traversals
     source = v;       // set the source
@@ -45,7 +45,7 @@ public class GraphHandler<Vertex> {
     visited.clear();  // clear the visited set from previous traversals
     source = null;    // set the source
     count = 0;
-    for(Vertex v: graph.vertices()) {
+    for(V v: graph.vertices()) {
       if(!visited.containsKey(v)) {
         dfsHelper(v);
         count++;
@@ -56,7 +56,7 @@ public class GraphHandler<Vertex> {
   /**
    * Check if two vertices are in the same (strongly) connected component.
    */
-  public boolean connected(Vertex v, Vertex w) {
+  public boolean connected(V v, V w) {
     if(count == -1) {
       cc();
     }
@@ -77,7 +77,7 @@ public class GraphHandler<Vertex> {
    * Perform a depth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
    */
-  public void dfs(Vertex v) {
+  public void dfs(V v) {
     parent.clear();   // clear the parent table from previous traversals
     visited.clear();  // clear the visited set from previous traversals
     source = v;       // set the source
@@ -88,14 +88,14 @@ public class GraphHandler<Vertex> {
   /**
    * Is there a path between the current source and the given vertex?
    */
-  public boolean hasPathTo(Vertex v) {
+  public boolean hasPathTo(V v) {
     return visited.containsKey(v);
   }
 
   /**
    * Return the connected component id for the given vertex.
    */
-  public int id(Vertex v) {
+  public int id(V v) {
     if(count == -1) {
       cc();
     }
@@ -106,7 +106,7 @@ public class GraphHandler<Vertex> {
    * Parent of the given vertex.
    * Depend on the traversal used.
    */
-  public Vertex parent(Vertex v) {
+  public V parent(V v) {
     return parent.get(v);
   }
 
@@ -114,32 +114,16 @@ public class GraphHandler<Vertex> {
    * Path from the current source to the given vertex.
    * Depend on the traversal used.
    */
-  public Iterable<Vertex> pathTo(Vertex v) {
+  public Iterable<V> pathTo(V v) {
     if(!hasPathTo(v) || source == null) {
       return null;
     }
-    Stack<Vertex> path = new Stack<Vertex>();
-    for(Vertex x = v; !x.equals(source); x = parent.get(x)) {
+    Stack<V> path = new Stack<V>();
+    for(V x = v; !x.equals(source); x = parent.get(x)) {
       path.push(x);
     }
     path.push(source);
     return path;
-  }
-
-  /**
-   * Compute the connected components in linear time in number of edges/vertices.
-   */
-  public Iterable<Vertex> topological() {
-    parent.clear();   // clear the parent table from previous traversals
-    visited.clear();  // clear the visited set from previous traversals
-    source = null;    // set the source
-    Stack<Vertex> stack = new Stack<Vertex>();
-    for(Vertex v: graph.vertices()) {
-      if(!visited.containsKey(v)) {
-        dfsHelper(v, stack);
-      }
-    }
-    return stack;
   }
 
 
@@ -147,13 +131,13 @@ public class GraphHandler<Vertex> {
    * Internal routine that performs a breadth-first search traversal of the graph.
    * Use a FIFO queue.
    */
-  private void bfsHelper(Vertex v) {
-    Queue<Vertex> queue = new LinkedList<Vertex>();
+  private void bfsHelper(V v) {
+    Queue<V> queue = new LinkedList<V>();
     queue.add(v);
     visited.put(v, count);  // mark vertex as visited
     while(!queue.isEmpty()) {
-      Vertex current = queue.poll();
-      for(Vertex w: graph.adjancents(current)) {
+      V current = queue.poll();
+      for(V w: graph.adjancents(current)) {
         if(!visited.containsKey(w)) {  // not already visited
           parent.put(w, current);  // store the parent (current) of edge.v
           queue.add(w);
@@ -167,28 +151,13 @@ public class GraphHandler<Vertex> {
    * Internal routine that performs a depth-first search traversal of the graph.
    * Use recursion (LIFO queue).
    */
-  private void dfsHelper(Vertex v) {
+  private void dfsHelper(V v) {
     visited.put(v, count);  // mark vertex as visited
-    for(Vertex w: graph.adjancents(v)) {
+    for(V w: graph.adjancents(v)) {
       if(!visited.containsKey(w)) {  // not already visited
         parent.put(w, v);  // store the parent (v) of edge.v
         dfsHelper(w);
       }
     }
-  }
-
-  /**
-   * Internal routine that performs a depth-first search traversal of the graph.
-   * Use recursion (LIFO queue) and stack the elements in DFS postorder.
-   */
-  private void dfsHelper(Vertex v, Stack<Vertex> stack) {
-    visited.put(v, count);  // mark vertex as visited
-    for(Vertex w: graph.adjancents(v)) {
-      if(!visited.containsKey(w)) {  // not already visited
-        parent.put(w, v);  // store the parent (v) of edge.v
-        dfsHelper(w, stack);
-      }
-    }
-    stack.push(v);
   }
 }
