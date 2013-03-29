@@ -54,6 +54,16 @@ public class GraphHandler<Vertex> {
   }
 
   /**
+   * Check if two vertices are in the same (strongly) connected component.
+   */
+  public boolean connected(Vertex v, Vertex w) {
+    if(count == -1) {
+      cc();
+    }
+    return visited.get(v) == visited.get(w);    
+  }
+
+  /**
    * Return the number of connected components.
    */
   public int count() {

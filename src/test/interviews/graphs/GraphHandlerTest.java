@@ -79,6 +79,9 @@ public class GraphHandlerTest extends GraphTest {
     Assert.assertEquals(2, gh.id(11));
     Assert.assertEquals(2, gh.id(12));
 
+    Assert.assertEquals(true,  gh.connected(0, 1));
+    Assert.assertEquals(false, gh.connected(0, 7));
+
     Assert.assertEquals(null, gh.parent(0));
     Assert.assertEquals(new Integer(0), gh.parent(1));
     Assert.assertEquals(new Integer(0), gh.parent(2));
