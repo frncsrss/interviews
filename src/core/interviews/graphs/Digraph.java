@@ -16,4 +16,17 @@ public class Digraph<V> extends Graph<V> {
     }
     return ret;
   }
+
+  /**
+   * Return a reverse digraph.
+   */
+  public Digraph<V> reverse() {
+    Digraph<V> reverse = new Digraph<V>();
+    for(V v: vertices()) {
+      for(V w: adjancents(v)) {
+        reverse.addEdge(w, v);
+      }
+    }
+    return reverse;
+  }
 }

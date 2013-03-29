@@ -64,6 +64,20 @@ public class Graph<V> {
     return vertices.size();
   }
 
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    for(V v: vertices()) {
+      builder.append(v + " -> [");
+      for(V w: adjancents(v)) {
+        builder.append(w + ", ");
+      }
+      builder.delete(builder.length() - 2, builder.length());
+      builder.append("]\n");
+    }
+    return builder.toString();
+  }
+
   /**
    * Return all the vertices from this graph.
    */
