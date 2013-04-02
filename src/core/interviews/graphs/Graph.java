@@ -38,7 +38,7 @@ public class Graph<V> {
   }
 
   /**
-   * Adjancent vertices of v.
+   * Adjacent vertices of v.
    */
   public Iterable<V> adjancents(V v) {
     List<V> adjancents = new ArrayList<V>();

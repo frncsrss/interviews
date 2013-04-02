@@ -85,7 +85,7 @@ public class GraphHandler<V> {
    * Internal routine that performs a breadth-first search traversal of the graph.
    * Use a FIFO queue.
    */
-  protected void bfsHelper(V v) {
+  private void bfsHelper(V v) {
     Queue<V> queue = new LinkedList<V>();
     queue.add(v);
     visited.put(v, count);  // mark vertex as visited
@@ -105,7 +105,7 @@ public class GraphHandler<V> {
    * Internal routine that performs a depth-first search traversal of the graph.
    * Use recursion (LIFO queue).
    */
-  protected void dfsHelper(V v) {
+  private void dfsHelper(V v) {
     visited.put(v, count);  // mark vertex as visited
     for(V w: graph.adjancents(v)) {
       if(!visited.containsKey(w)) {  // not already visited

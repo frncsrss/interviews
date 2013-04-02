@@ -3,6 +3,10 @@ package interviews.graphs;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * Digraph operations.
+ * @author Francois Rousseau
+ */
 public class DigraphHandler<V> extends GraphHandler<V> {
 
   public DigraphHandler(Graph<V> graph) {
