@@ -110,8 +110,8 @@ public class Graph<V> {
    * Internal class representing an edge inside a linked-list.
    */
   private static class Edge<V> {
-    protected V v;
-    protected Edge<V> next;
+    private final V v;
+    private Edge<V> next;
 
     public Edge(V v) {
       this.v = v;
