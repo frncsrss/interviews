@@ -8,6 +8,7 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class GraphTest {
+
   public static Graph<Integer> setUp() {
     Graph<Integer> g = new Graph<Integer>();
     Assert.assertEquals(true, g.addEdge(0, 1));
