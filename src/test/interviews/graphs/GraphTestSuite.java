@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
   DigraphTest.class,
   GraphHandlerTest.class,
   GraphTest.class,
+  MinimumSpanningTreeTest.class,
   WeightedGraphTest.class
 })
-
 public class GraphTestSuite {}
