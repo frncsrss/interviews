@@ -40,9 +40,16 @@ public class Graph {
   }
 
   /**
+   * Adjacent edges of v.
+   */
+  public Iterable<Edge> adjE(int v) {
+    return adjacencyLists[v];
+  }
+
+  /**
    * Adjacent vertices of v.
    */
-  public Iterable<Integer> adjacents(int v) {
+  public Iterable<Integer> adjV(int v) {
     List<Integer> adjacents = new ArrayList<Integer>();
     for(Edge edge: adjacencyLists[v]) {
       adjacents.add(edge.w);
@@ -72,7 +79,7 @@ public class Graph {
     StringBuilder builder = new StringBuilder();
     for(int v = 0; v < V; v++) {
       builder.append(v + " -> [");
-      for(int w: adjacents(v)) {
+      for(int w: adjV(v)) {
         builder.append(w + ", ");
       }
       builder.delete(builder.length() - 2, builder.length());
@@ -80,6 +87,7 @@ public class Graph {
     }
     return builder.toString();
   }
+
 
   /**
    * Add a (directed) edge between vertex v and vertex w.

@@ -29,7 +29,7 @@ public class Digraph extends Graph {
   public Digraph reverse() {
     Digraph reverse = new Digraph(V);
     for(int v = 0; v < V; v++) {
-      for(int w: adjacents(v)) {
+      for(int w: adjV(v)) {
         reverse.addEdge(w, v);
       }
     }

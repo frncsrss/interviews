@@ -85,7 +85,7 @@ public class GraphHandler {
     visited[v] = true;  // mark vertex as visited
     while(!queue.isEmpty()) {
       int current = queue.poll();
-      for(int w: graph.adjacents(current)) {
+      for(int w: graph.adjV(current)) {
         if(!visited[w]) {  // not already visited
           parent[w] = current;  // store the parent (current) of edge.v
           queue.add(w);
@@ -101,7 +101,7 @@ public class GraphHandler {
    */
   private void dfsHelper(int v) {
     visited[v] = true;  // mark vertex as visited
-    for(int w: graph.adjacents(v)) {
+    for(int w: graph.adjV(v)) {
       if(!visited[w]) {  // not already visited
         parent[w] = v;  // store the parent (current) of edge.v
         dfsHelper(w);

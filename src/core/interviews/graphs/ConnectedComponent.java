@@ -64,7 +64,7 @@ public class ConnectedComponent {
    */
   private void dfs(Graph g, int v) {
     visited[v] = count;  // mark vertex as visited
-    for(int w: g.adjacents(v)) {
+    for(int w: g.adjV(v)) {
       if(visited[w] == -1) {  // not already visited
         dfs(g, w);
       }
