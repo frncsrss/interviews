@@ -23,7 +23,7 @@ public class Digraph<V> extends Graph<V> {
   public Digraph<V> reverse() {
     Digraph<V> reverse = new Digraph<V>();
     for(V v: vertices()) {
-      for(V w: adjancents(v)) {
+      for(V w: adjacents(v)) {
         reverse.addEdge(w, v);
       }
     }

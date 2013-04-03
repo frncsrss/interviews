@@ -14,11 +14,11 @@ import java.util.Set;
 public class Graph<V> {
   protected int E;
   protected Set<V> vertices;
-  private Map<V, Edge<V>> adjancencyLists;
+  protected Map<V, Set<Edge<V>>> adjacencyLists;
 
   public Graph() {
     this.vertices = new HashSet<V>();
-    this.adjancencyLists = new HashMap<V, Edge<V>>();
+    this.adjacencyLists = new HashMap<V, Set<Edge<V>>>();
   }
 
   /**
@@ -40,14 +40,12 @@ public class Graph<V> {
   /**
    * Adjacent vertices of v.
    */
-  public Iterable<V> adjancents(V v) {
-    List<V> adjancents = new ArrayList<V>();
-    Edge<V> current = adjancencyLists.get(v);
-    while(current != null) {
-      adjancents.add(current.v);
-      current = current.next;
+  public Iterable<V> adjacents(V v) {
+    List<V> adjacents = new ArrayList<V>();
+    for(Edge<V> edge: adjacencyLists.get(v)) {
+      adjacents.add(edge.w);
     }
-    return adjancents;
+    return adjacents;
   }
 
   /**
@@ -58,24 +56,27 @@ public class Graph<V> {
   }
 
   /**
-   * Number of vertices.
+   * String representation by adjacency lists.
    */
-  public int V() {
-    return vertices.size();
-  }
-
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
     for(V v: vertices()) {
       builder.append(v + " -> [");
-      for(V w: adjancents(v)) {
+      for(V w: adjacents(v)) {
         builder.append(w + ", ");
       }
       builder.delete(builder.length() - 2, builder.length());
       builder.append("]\n");
     }
     return builder.toString();
+  }
+
+  /**
+   * Number of vertices.
+   */
+  public int V() {
+    return vertices.size();
   }
 
   /**
@@ -91,39 +92,9 @@ public class Graph<V> {
    * Create the vertices if not already present in the graph.
    */
   protected boolean addEdgeHelper(V v, V w) {
-    if(!adjancencyLists.containsKey(v)) {
-      adjancencyLists.put(v, new Edge<V>(w));
-    } else {
-      Edge<V> currentEdge = adjancencyLists.get(v);
-      while(currentEdge.hasNext()) {
-        if(currentEdge.v.equals(w)) {  // the edge <v, w> is already in the adjacency list
-          return false;
-        }
-        currentEdge = currentEdge.next;
-      }
-      currentEdge.next = new Edge<V>(w);
-    }
-    return true;
-  }
-
-  /**
-   * Internal class representing an edge inside a linked-list.
-   */
-  private static class Edge<V> {
-    private final V v;
-    private Edge<V> next;
-
-    public Edge(V v) {
-      this.v = v;
-    }
-
-    public boolean hasNext() {
-      return next != null;
-    }
-
-    @Override
-    public String toString() {
-      return "Edge to " + v + " pointing to " + next;
-    }
+    if(!adjacencyLists.containsKey(v)) {
+      adjacencyLists.put(v, new HashSet<Edge<V>>());
+    } 
+    return adjacencyLists.get(v).add(new Edge<V>(v, w));
   }
 }

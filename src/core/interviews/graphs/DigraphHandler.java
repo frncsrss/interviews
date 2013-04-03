@@ -36,7 +36,7 @@ public class DigraphHandler<V> extends GraphHandler<V> {
    */
   private void dfs(V v, Deque<V> stack) {
     visited.put(v, count);  // mark vertex as visited
-    for(V w: graph.adjancents(v)) {
+    for(V w: graph.adjacents(v)) {
       if(!visited.containsKey(w)) {  // not already visited
         parent.put(w, v);  // store the parent (v) of edge.v
         dfs(w, stack);
