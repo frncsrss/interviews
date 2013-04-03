@@ -56,6 +56,7 @@ public class MinimumSpanningTree {
    * Maintain a priority queue (min-oriented) of candidate edges.
    * Lazy implementation (keep in the priority queue edges with both endpoints that are already in
    * the minimum spanning tree).
+   * Run in O(ElogE) time and O(E) space.
    */
   public void prim(int v) {
     edges.clear();
@@ -76,6 +77,9 @@ public class MinimumSpanningTree {
   }
 
 
+  /**
+   * Internal subroutine for Prim's algorithm.
+   */
   private void visit(int v, boolean[] visited, PriorityQueue<Edge> pq) {
     visited[v] = true;
     for(Edge e: g.adjE(v)) {
