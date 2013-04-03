@@ -1,8 +1,6 @@
 package interviews.graphs;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -10,30 +8,27 @@ import java.util.Stack;
  * Graph operations.
  * @author Francois Rousseau
  */
-public class GraphHandler<V> {
-  protected Graph<V> graph;
-  protected V source;
-  protected Map<V, V> parent;
-  protected Map<V, Integer>  visited;
-  protected int count;
+public class GraphHandler {
+  protected Graph graph;
+  protected int source;
+  protected int[] parent;
+  protected boolean[] visited;
 
-  public GraphHandler(Graph<V> graph) {
+  public GraphHandler(Graph graph) {
     this.graph = graph;
-    this.parent = new HashMap<V, V>();
-    this.visited = new HashMap<V, Integer>();
-    this.source = null;
-    this.count = -1;
+    this.parent = new int[graph.V];
+    this.visited = new boolean[graph.V];
+    this.source = -1;
   }
   
   /**
    * Perform a breadth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
    */
-  public void bfs(V v) {
-    parent.clear();   // clear the parent table from previous traversals
-    visited.clear();  // clear the visited set from previous traversals
-    source = v;       // set the source
-    count = (count == -1) ? 0 : visited.get(source);
+  public void bfs(int v) {
+    reset(parent);   // clear the parent table from previous traversals
+    reset(visited);  // clear the visited table from previous traversals
+    source = v;      // set the source
     bfsHelper(v);
   }
  
@@ -41,39 +36,38 @@ public class GraphHandler<V> {
    * Perform a depth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
    */
-  public void dfs(V v) {
-    parent.clear();   // clear the parent table from previous traversals
-    visited.clear();  // clear the visited set from previous traversals
-    source = v;       // set the source
-    count = (count == -1) ? 0 : visited.get(source);
+  public void dfs(int v) {
+    reset(parent);   // clear the parent table from previous traversals
+    reset(visited);  // clear the visited table from previous traversals
+    source = v;      // set the source
     dfsHelper(v);
   }
 
   /**
    * Is there a path between the current source and the given vertex?
    */
-  public boolean hasPathTo(V v) {
-    return visited.containsKey(v);
+  public boolean hasPathTo(int v) {
+    return visited[v];
   }
 
   /**
    * Parent of the given vertex.
    * Depend on the traversal used.
    */
-  public V parent(V v) {
-    return parent.get(v);
+  public int parent(int v) {
+    return parent[v];
   }
 
   /**
    * Path from the current source to the given vertex.
    * Depend on the traversal used.
    */
-  public Iterable<V> pathTo(V v) {
-    if(!hasPathTo(v) || source == null) {
+  public Iterable<Integer> pathTo(int v) {
+    if(!hasPathTo(v) || source == -1) {
       return null;
     }
-    Stack<V> path = new Stack<V>();
-    for(V x = v; !x.equals(source); x = parent.get(x)) {
+    Stack<Integer> path = new Stack<Integer>();
+    for(int x = v; x != source; x = parent[x]) {
       path.push(x);
     }
     path.push(source);
@@ -85,17 +79,17 @@ public class GraphHandler<V> {
    * Internal routine that performs a breadth-first search traversal of the graph.
    * Use a FIFO queue.
    */
-  private void bfsHelper(V v) {
-    Queue<V> queue = new LinkedList<V>();
+  private void bfsHelper(int v) {
+    Queue<Integer> queue = new LinkedList<Integer>();
     queue.add(v);
-    visited.put(v, count);  // mark vertex as visited
+    visited[v] = true;  // mark vertex as visited
     while(!queue.isEmpty()) {
-      V current = queue.poll();
-      for(V w: graph.adjacents(current)) {
-        if(!visited.containsKey(w)) {  // not already visited
-          parent.put(w, current);  // store the parent (current) of edge.v
+      int current = queue.poll();
+      for(int w: graph.adjacents(current)) {
+        if(!visited[w]) {  // not already visited
+          parent[w] = current;  // store the parent (current) of edge.v
           queue.add(w);
-          visited.put(w, count);
+          visited[w] = true;
         }
       }
     }
@@ -105,13 +99,31 @@ public class GraphHandler<V> {
    * Internal routine that performs a depth-first search traversal of the graph.
    * Use recursion (LIFO queue).
    */
-  private void dfsHelper(V v) {
-    visited.put(v, count);  // mark vertex as visited
-    for(V w: graph.adjacents(v)) {
-      if(!visited.containsKey(w)) {  // not already visited
-        parent.put(w, v);  // store the parent (v) of edge.v
+  private void dfsHelper(int v) {
+    visited[v] = true;  // mark vertex as visited
+    for(int w: graph.adjacents(v)) {
+      if(!visited[w]) {  // not already visited
+        parent[w] = v;  // store the parent (current) of edge.v
         dfsHelper(w);
       }
+    }
+  }
+
+  /**
+   * Set all the values of an array to -1.
+   */
+  public static void reset(int[] arr) {
+    for(int i = 0; i < arr.length; i++) {
+      arr[i] = -1;
+    }
+  }
+
+  /**
+   * Set all the values of an array to -1.
+   */
+  public static void reset(boolean[] arr) {
+    for(int i = 0; i < arr.length; i++) {
+      arr[i] = false;
     }
   }
 }

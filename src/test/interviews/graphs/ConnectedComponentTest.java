@@ -10,7 +10,7 @@ import org.junit.Test;
 public class ConnectedComponentTest {
   @Test
   public void test_directed() {
-    ConnectedComponent<Integer> cc = new ConnectedComponent<Integer>(DigraphTest.setUp());
+    ConnectedComponent cc = new ConnectedComponent(DigraphTest.setUp());
     Assert.assertEquals(5, cc.count());
     Assert.assertEquals(1, cc.id(0));
     Assert.assertEquals(0, cc.id(1));
@@ -33,7 +33,7 @@ public class ConnectedComponentTest {
 
   @Test
   public void test_undirected() {
-    ConnectedComponent<Integer> cc = new ConnectedComponent<Integer>(GraphTest.setUp());
+    ConnectedComponent cc = new ConnectedComponent(GraphTest.setUp());
     Assert.assertEquals(3, cc.count());
     Assert.assertEquals(0, cc.id(0));
     Assert.assertEquals(0, cc.id(1));

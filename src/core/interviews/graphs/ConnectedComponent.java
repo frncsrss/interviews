@@ -1,8 +1,5 @@
 package interviews.graphs;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Compute the connected components in linear time in number of edges/vertices.
  * 
@@ -10,27 +7,29 @@ import java.util.Map;
  * Run first a DFS on the reverse graph to get a topological order of the vertices and then run a
  * DFS on the original graph using this order.
  */
-public class ConnectedComponent<V> {
-  private Map<V, Integer>  visited;
+public class ConnectedComponent {
+  protected int[] visited;
   private int count;
 
-  public ConnectedComponent(Graph<V> g) {
-    visited = new HashMap<V, Integer>();
+  public ConnectedComponent(Graph g) {
+    visited = new int[g.V];
+    GraphHandler.reset(visited);
     count = 0;
-    for(V v: g.vertices()) {
-      if(!visited.containsKey(v)) {
+    for(int v = 0; v < g.V; v++) {
+      if(visited[v] == -1) {  // not already visited
         dfs(g, v);
         count++;
       }
     }
   }
 
-  public ConnectedComponent(Digraph<V> g) {
-    visited = new HashMap<V, Integer>();
+  public ConnectedComponent(Digraph g) {
+    visited = new int[g.V];
+    GraphHandler.reset(visited);
     count = 0;
-    DigraphHandler<V> reverseHandler = new DigraphHandler<V>(g.reverse());
-    for(V v: reverseHandler.topological()) {
-      if(!visited.containsKey(v)) {
+    DigraphHandler reverseHandler = new DigraphHandler(g.reverse());
+    for(int v: reverseHandler.topological()) {
+      if(visited[v] == -1) {  // not already visited
         dfs(g, v);
         count++;
       }
@@ -40,8 +39,8 @@ public class ConnectedComponent<V> {
   /**
    * Check if two vertices are in the same (strongly) connected component.
    */
-  public boolean connected(V v, V w) {
-    return visited.get(v) == visited.get(w);    
+  public boolean connected(int v, int w) {
+    return visited[v] == visited[w];    
   }
 
   /**
@@ -54,8 +53,8 @@ public class ConnectedComponent<V> {
   /**
    * Return the connected component id for the given vertex.
    */
-  public int id(V v) {
-    return visited.get(v);
+  public int id(int v) {
+    return visited[v];
   }
 
 
@@ -63,10 +62,10 @@ public class ConnectedComponent<V> {
    * Internal routine that performs a depth-first search traversal of the graph.
    * Use recursion (LIFO queue).
    */
-  private void dfs(Graph<V> g, V v) {
-    visited.put(v, count);  // mark vertex as visited
-    for(V w: g.adjacents(v)) {
-      if(!visited.containsKey(w)) {  // not already visited
+  private void dfs(Graph g, int v) {
+    visited[v] = count;  // mark vertex as visited
+    for(int w: g.adjacents(v)) {
+      if(visited[w] == -1) {  // not already visited
         dfs(g, w);
       }
     }

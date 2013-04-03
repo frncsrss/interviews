@@ -9,8 +9,8 @@ import org.junit.Test;
  */
 public class WeightedGraphTest {
 
-  public static WeightedGraph<Integer> setUp() {
-    WeightedGraph<Integer> g = new WeightedGraph<Integer>();
+  public static WeightedGraph setUp() {
+    WeightedGraph g = new WeightedGraph(8);
     Assert.assertEquals(true, g.addEdge(0, 7, 0.16));
     Assert.assertEquals(true, g.addEdge(2, 3, 0.17));
     Assert.assertEquals(true, g.addEdge(1, 7, 0.19));
@@ -32,13 +32,13 @@ public class WeightedGraphTest {
 
   @Test
   public void test_E() {
-    WeightedGraph<Integer> g = setUp();
+    WeightedGraph g = setUp();
     Assert.assertEquals(16, g.E());
   }
 
   @Test
   public void test_V() {
-    WeightedGraph<Integer> g = setUp();
-    Assert.assertEquals(8, g.V());
+    WeightedGraph g = setUp();
+    Assert.assertEquals(8, g.V);
   }
 }

@@ -4,23 +4,23 @@ package interviews.graphs;
  * Edge.
  * @author Francois Rousseau
  */
-public class Edge<V> implements Comparable<Edge<V>> {
-  public final V v;
-  public final V w;
+public class Edge implements Comparable<Edge> {
+  public final int v;
+  public final int w;
   public final double weight;
 
-  public Edge(V v, V w, double weight) {
+  public Edge(int v, int w, double weight) {
     this.v = v;
     this.w = w;
     this.weight = weight;
   }
 
-  public Edge(V v, V w) {
+  public Edge(int v, int w) {
     this(v, w, -1);
   }
 
   @Override
-  public int compareTo(Edge<V> that) {
+  public int compareTo(Edge that) {
     if(this.weight < that.weight) return -1;
     if(this.weight > that.weight) return +1;
     return 0;
@@ -34,7 +34,7 @@ public class Edge<V> implements Comparable<Edge<V>> {
     if(this.getClass() != that.getClass()) {
       return false;
     }
-    Edge<?> edge = (Edge<?>) that;
+    Edge edge = (Edge) that;
     if(edge.weight != this.weight) {
       return false;
     }
