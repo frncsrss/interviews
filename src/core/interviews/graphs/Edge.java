@@ -38,11 +38,26 @@ public class Edge implements Comparable<Edge> {
     if(edge.weight != this.weight) {
       return false;
     }
-    if(edge.v == this.v && edge.w == this.w
-       || edge.v == this.w && edge.w == this.v) {
+    if((edge.v == this.v && edge.w == this.w)
+       || (edge.v == this.w && edge.w == this.v)) {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Return one endpoint.
+   */
+  public int either() {
+    return v;
+  }
+
+  /**
+   * Return the other endpoint from v.
+   */
+  public int other(int v) {
+    if(this.v == v) return w;
+    return this.v;
   }
 
   @Override

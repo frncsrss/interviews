@@ -30,9 +30,7 @@ public class Graph {
    * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(int v, int w) {
-    boolean ret = false;
-    ret |= addEdge(new Edge(v, w));
-    ret |= addEdge(new Edge(w, v));
+    boolean ret = addEdge(new Edge(v, w));
     if(ret) {
       E++;  // we only want to increment it once for undirected edge
     }
@@ -52,7 +50,7 @@ public class Graph {
   public Iterable<Integer> adjV(int v) {
     List<Integer> adjacents = new ArrayList<Integer>();
     for(Edge edge: adjacencyLists[v]) {
-      adjacents.add(edge.w);
+      adjacents.add(edge.other(v));
     }
     return adjacents;
   }
@@ -90,16 +88,11 @@ public class Graph {
 
 
   /**
-   * Add a (directed) edge between vertex v and vertex w.
+   * Add an edge between vertex v and vertex w.
    * Create the vertices if not already present in the graph.
    */
   protected boolean addEdge(Edge edge) {
     edges.add(edge);
-    for(Edge e: adjacencyLists[edge.v]) {
-      if(e.equals(edge)) {
-        return false;
-      }
-    }
-    return adjacencyLists[edge.v].add(edge);
+    return adjacencyLists[edge.v].add(edge) && adjacencyLists[edge.w].add(edge);
   }
 }

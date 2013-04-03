@@ -11,19 +11,6 @@ public class Digraph extends Graph {
   }
 
   /**
-   * Add an edge between vertex v and vertex w (directed from v to w if it is a directed graph).
-   * Create the vertices if not already present in the graph.
-   */
-  @Override
-  public boolean addEdge(int v, int w) {
-    boolean ret = addEdge(new Edge(v, w));
-    if(ret) {
-      E++;  // we only want to increment it once for undirected edge
-    }
-    return ret;
-  }
-
-  /**
    * Return a reverse digraph.
    */
   public Digraph reverse() {
@@ -35,4 +22,16 @@ public class Digraph extends Graph {
     }
     return reverse;
   }
+
+  
+  /**
+   * Add a (directed) edge between vertex v and vertex w.
+   * Create the vertices if not already present in the graph.
+   */
+  @Override
+  protected boolean addEdge(Edge edge) {
+    edges.add(edge);
+    return adjacencyLists[edge.v].add(edge);
+  }
+
 }
