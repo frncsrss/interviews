@@ -35,23 +35,21 @@ public class Edge<V> implements Comparable<Edge<V>> {
       return false;
     }
     Edge<?> edge = (Edge<?>) that;
-    if(edge.v != this.v) {
-      return false;
-    }
-    if(edge.w != this.w) {
-      return false;
-    }
     if(edge.weight != this.weight) {
       return false;
     }
-    return true;
+    if(edge.v == this.v && edge.w == this.w
+       || edge.v == this.w && edge.w == this.v) {
+      return true;
+    }
+    return false;
   }
 
   @Override
   public String toString() {
     if(weight > 0) {
-      return v + " -> " + w + "(" + weight + ")";
+      return v + "->" + w + "(" + weight + ")";
     }
-    return v + " -> " + w;
+    return v + "->" + w;
   }
 }

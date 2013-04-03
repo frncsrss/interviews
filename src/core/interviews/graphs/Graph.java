@@ -13,12 +13,14 @@ import java.util.Set;
  */
 public class Graph<V> {
   protected int E;
-  protected Set<V> vertices;
   protected Map<V, Set<Edge<V>>> adjacencyLists;
+  protected Set<Edge<V>> edges;
+  protected Set<V> vertices;
 
   public Graph() {
-    this.vertices = new HashSet<V>();
     this.adjacencyLists = new HashMap<V, Set<Edge<V>>>();
+    this.edges = new HashSet<Edge<V>>();
+    this.vertices = new HashSet<V>();
   }
 
   /**
@@ -29,8 +31,8 @@ public class Graph<V> {
     vertices.add(v);
     vertices.add(w);
     boolean ret = false;
-    ret |= addEdgeHelper(v, w);
-    ret |= addEdgeHelper(w, v);
+    ret |= addEdge(new Edge<V>(v, w));
+    ret |= addEdge(new Edge<V>(w, v));
     if(ret) {
       E++;  // we only want to increment it once for undirected edge
     }
@@ -53,6 +55,13 @@ public class Graph<V> {
    */
   public int E() {
     return E;
+  }
+
+  /**
+   * Return all the edges from this graph.
+   */
+  public Iterable<Edge<V>> edges() {
+    return edges;
   }
 
   /**
@@ -91,10 +100,11 @@ public class Graph<V> {
    * Add a (directed) edge between vertex v and vertex w.
    * Create the vertices if not already present in the graph.
    */
-  protected boolean addEdgeHelper(V v, V w) {
-    if(!adjacencyLists.containsKey(v)) {
-      adjacencyLists.put(v, new HashSet<Edge<V>>());
-    } 
-    return adjacencyLists.get(v).add(new Edge<V>(v, w));
+  protected boolean addEdge(Edge<V> edge) {
+    if(!adjacencyLists.containsKey(edge.v)) {
+      adjacencyLists.put(edge.v, new HashSet<Edge<V>>());
+    }
+    edges.add(edge);
+    return adjacencyLists.get(edge.v).add(edge);
   }
 }

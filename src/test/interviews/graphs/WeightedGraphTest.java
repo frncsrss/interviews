@@ -3,6 +3,10 @@ package interviews.graphs;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test class.
+ * @author Francois Rousseau
+ */
 public class WeightedGraphTest {
 
   public static WeightedGraph<Integer> setUp() {

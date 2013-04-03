@@ -1,5 +1,9 @@
 package interviews.graphs;
 
+/**
+ * Directed graph representation.
+ * @author Francois Rousseau
+ */
 public class Digraph<V> extends Graph<V> {
 
   /**
@@ -10,7 +14,7 @@ public class Digraph<V> extends Graph<V> {
   public boolean addEdge(V v, V w) {
     vertices.add(v);
     vertices.add(w);
-    boolean ret = addEdgeHelper(v, w);
+    boolean ret = addEdge(new Edge<V>(v, w));
     if(ret) {
       E++;  // we only want to increment it once for undirected edge
     }
