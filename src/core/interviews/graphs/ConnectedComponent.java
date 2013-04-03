@@ -3,7 +3,7 @@ package interviews.graphs;
 /**
  * Compute the connected components in linear time in number of edges/vertices.
  * 
- * For directed graphs, use the Kosaraju-Sharir algorithm.
+ * For directed graphs, use the Kosaraju-Sharir's algorithm.
  * Run first a DFS on the reverse graph to get a topological order of the vertices and then run a
  * DFS on the original graph using this order.
  */
