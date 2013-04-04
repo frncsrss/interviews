@@ -64,7 +64,7 @@ public class MinimumSpanningTree {
     PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 
     boolean[] visited = new boolean[g.V];  // is the vertex in the mst
-    visit(0, visited, pq);
+    visit(v, visited, pq);
     while(!pq.isEmpty() && edges.size() < g.V - 1) {  // a mst has V - 1 edges
       Edge e = pq.poll();
       if(visited[e.v] && visited[e.w]) {  // both endpoints are already in the mst
