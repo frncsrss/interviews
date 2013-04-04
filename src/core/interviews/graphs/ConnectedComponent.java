@@ -13,7 +13,7 @@ public class ConnectedComponent {
 
   public ConnectedComponent(Graph g) {
     visited = new int[g.V];
-    GraphHandler.reset(visited);
+    Traversal.reset(visited);
     count = 0;
     for(int v = 0; v < g.V; v++) {
       if(visited[v] == -1) {  // not already visited
@@ -25,10 +25,10 @@ public class ConnectedComponent {
 
   public ConnectedComponent(Digraph g) {
     visited = new int[g.V];
-    GraphHandler.reset(visited);
+    Traversal.reset(visited);
     count = 0;
-    DigraphHandler reverseHandler = new DigraphHandler(g.reverse());
-    for(int v: reverseHandler.topological()) {
+    Traversal reverseTraversal = new Traversal(g.reverse());
+    for(int v: reverseTraversal.topological()) {
       if(visited[v] == -1) {  // not already visited
         dfs(g, v);
         count++;

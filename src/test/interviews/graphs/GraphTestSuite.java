@@ -10,10 +10,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
   ConnectedComponentTest.class,
-  DigraphHandlerTest.class,
   DigraphTest.class,
-  GraphHandlerTest.class,
   GraphTest.class,
   MinimumSpanningTreeTest.class,
+  TraversalTest.class,
 })
 public class GraphTestSuite {}
