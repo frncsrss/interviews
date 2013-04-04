@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
   DigraphTest.class,
   GraphTest.class,
   MinimumSpanningTreeTest.class,
+  ShortestPathTest.class,
   TraversalTest.class,
 })
 public class GraphTestSuite {}
