@@ -38,6 +38,18 @@ public class Graph {
   }
 
   /**
+   * Add a weighted edge between vertex v and vertex w.
+   * Create the vertices if not already present in the graph.
+   */
+  public boolean addEdge(int v, int w, double weight) {
+    boolean ret = addEdge(new Edge(v, w, weight));
+    if(ret) {
+      E++;  // we only want to increment it once for undirected edge
+    }
+    return ret;
+  }
+
+  /**
    * Adjacent edges of v.
    */
   public Iterable<Edge> adjE(int v) {

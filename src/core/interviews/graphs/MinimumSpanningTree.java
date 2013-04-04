@@ -12,10 +12,10 @@ import java.util.PriorityQueue;
  * @author Francois Rousseau
  */
 public class MinimumSpanningTree {
-  private WeightedGraph g;
+  private Graph g;
   private List<Edge> edges;
 
-  public MinimumSpanningTree(WeightedGraph g) {
+  public MinimumSpanningTree(Graph g) {
     this.g = g;
     this.edges = new ArrayList<Edge>(g.V - 1);
   }

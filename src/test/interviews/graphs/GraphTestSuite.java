@@ -15,6 +15,5 @@ import org.junit.runners.Suite;
   GraphHandlerTest.class,
   GraphTest.class,
   MinimumSpanningTreeTest.class,
-  WeightedGraphTest.class
 })
 public class GraphTestSuite {}
