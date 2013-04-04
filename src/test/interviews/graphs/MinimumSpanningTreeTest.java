@@ -8,6 +8,7 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class MinimumSpanningTreeTest {
+
   @Test
   public void test_kruskal() {
     MinimumSpanningTree mst = new MinimumSpanningTree(GraphTest.setUpWeighted());

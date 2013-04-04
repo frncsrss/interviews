@@ -51,11 +51,17 @@ public class GraphTest {
   public void test_E() {
     Graph g = setUp();
     Assert.assertEquals(12, g.E());
+
+    g = setUpWeighted();
+    Assert.assertEquals(16, g.E());
   }
 
   @Test
   public void test_V() {
     Graph g = setUp();
     Assert.assertEquals(13, g.V);
+
+    g = setUpWeighted();
+    Assert.assertEquals(8, g.V);
   }
 }
