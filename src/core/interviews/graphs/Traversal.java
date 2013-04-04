@@ -5,22 +5,21 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * Graph traversals.
  * @author Francois Rousseau
  */
 public class Traversal {
-  protected Graph graph;
-  protected int source;
-  protected int[] parent;
-  protected boolean[] visited;
+  private Graph g;
+  private int source;
+  private int[] parent;
+  private boolean[] visited;
 
-  public Traversal(Graph graph) {
-    this.graph = graph;
-    this.parent = new int[graph.V];
-    this.visited = new boolean[graph.V];
+  public Traversal(Graph g) {
+    this.g = g;
+    this.parent = new int[g.V];
+    this.visited = new boolean[g.V];
     this.source = -1;
   }
   
@@ -69,7 +68,8 @@ public class Traversal {
     if(!hasPathTo(v) || source == -1) {
       return null;
     }
-    Stack<Integer> path = new Stack<Integer>();
+    // better than java.util.Stack that relies on a Vector!
+    Deque<Integer> path = new ArrayDeque<Integer>();
     for(int x = v; x != source; x = parent[x]) {
       path.push(x);
     }
@@ -86,7 +86,7 @@ public class Traversal {
     source = -1;     // set the source
     // better than java.util.Stack that relies on a Vector!
     Deque<Integer> stack = new ArrayDeque<Integer>();
-    for(int v = 0; v < graph.V; v++) {
+    for(int v = 0; v < g.V; v++) {
       if(!visited[v]) {  // not already visited
         dfs(v, stack);
       }
@@ -105,7 +105,7 @@ public class Traversal {
     visited[v] = true;  // mark vertex as visited
     while(!queue.isEmpty()) {
       int current = queue.poll();
-      for(int w: graph.adjV(current)) {
+      for(int w: g.adjV(current)) {
         if(!visited[w]) {  // not already visited
           parent[w] = current;  // store the parent (current) of edge.v
           queue.add(w);
@@ -121,7 +121,7 @@ public class Traversal {
    */
   private void dfsHelper(int v) {
     visited[v] = true;  // mark vertex as visited
-    for(int w: graph.adjV(v)) {
+    for(int w: g.adjV(v)) {
       if(!visited[w]) {  // not already visited
         parent[w] = v;  // store the parent (current) of edge.v
         dfsHelper(w);
@@ -135,7 +135,7 @@ public class Traversal {
    */
   private void dfs(int v, Deque<Integer> stack) {
     visited[v] = true;  // mark vertex as visited
-    for(int w: graph.adjV(v)) {
+    for(int w: g.adjV(v)) {
       if(!visited[w]) {  // not already visited
         parent[w] = v;  // store the parent (current) of edge.v
         dfs(w, stack);

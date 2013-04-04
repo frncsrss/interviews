@@ -34,7 +34,7 @@ public class TraversalTest {
     Assert.assertEquals(-1, trav.parent(10));
     Assert.assertEquals(-1, trav.parent(11));
     Assert.assertEquals(-1, trav.parent(12));
-    Assert.assertEquals("[3, 4, 5, 0]", trav.pathTo(3).toString());
+    Assert.assertEquals("[0, 5, 4, 3]", trav.pathTo(3).toString());
   }
 
   @Test
@@ -54,8 +54,8 @@ public class TraversalTest {
     Assert.assertEquals(-1, trav.parent(10));
     Assert.assertEquals(-1, trav.parent(11));
     Assert.assertEquals(-1, trav.parent(12));
-    Assert.assertEquals("[3, 5, 0]", trav.pathTo(3).toString());
-    Assert.assertEquals("[4, 6, 0]", trav.pathTo(4).toString());
+    Assert.assertEquals("[0, 5, 3]", trav.pathTo(3).toString());
+    Assert.assertEquals("[0, 6, 4]", trav.pathTo(4).toString());
   }
 
   @Test
@@ -75,7 +75,7 @@ public class TraversalTest {
     Assert.assertEquals(-1, trav.parent(10));
     Assert.assertEquals(-1, trav.parent(11));
     Assert.assertEquals(-1, trav.parent(12));
-    Assert.assertEquals("[3, 2, 4, 5, 0]", trav.pathTo(3).toString());
+    Assert.assertEquals("[0, 5, 4, 2, 3]", trav.pathTo(3).toString());
   }
 
   @Test
@@ -95,9 +95,9 @@ public class TraversalTest {
     Assert.assertEquals(-1, trav.parent(10));
     Assert.assertEquals(-1, trav.parent(11));
     Assert.assertEquals(-1, trav.parent(12));
-    Assert.assertEquals("[3, 5, 0]", trav.pathTo(3).toString());
-    Assert.assertEquals("[4, 3, 5, 0]", trav.pathTo(4).toString());
-    Assert.assertEquals("[6, 4, 3, 5, 0]", trav.pathTo(6).toString());
+    Assert.assertEquals("[0, 5, 3]", trav.pathTo(3).toString());
+    Assert.assertEquals("[0, 5, 3, 4]", trav.pathTo(4).toString());
+    Assert.assertEquals("[0, 5, 3, 4, 6]", trav.pathTo(6).toString());
   }
 
   @Test
