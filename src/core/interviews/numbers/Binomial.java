@@ -89,7 +89,7 @@ public class Binomial {
     }
     long ret = 1;
     for(int i = 1; i <= k; i++) {
-      ret *= n - k + i;
+      ret *= n - k + i;  // could be n--
       ret /= i;
     }
     return ret;

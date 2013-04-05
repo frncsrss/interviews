@@ -5,12 +5,11 @@ package interviews.sets;
  * @author Francois Rousseau
  */
 public abstract class UnionFind {
-  protected int[] id;  // id[i] = parent of i
+  protected int[] id;   // id[i] = parent of i
   protected int count;  // number of components
 
   /**
    * Return the number of disjoint sets.
-   * @return count
    */
   public int count() {
       return count;
@@ -18,13 +17,11 @@ public abstract class UnionFind {
 
   /**
    * Return component identifier for component containing p.
-   * @return id
    */
   public abstract int find(int p);
 
   /**
    * Are objects p and q in the same set?
-   * @return boolean
    */
   public abstract boolean connected(int p, int q);
 

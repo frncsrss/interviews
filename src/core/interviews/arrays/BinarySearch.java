@@ -9,8 +9,8 @@ public class BinarySearch {
     int lo = 0;
     int hi = arr.length;
     while(lo <= hi) {
-      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
-      final int midVal = arr[mid];
+      int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int midVal = arr[mid];
       if(midVal < i) {
         lo = mid + 1;
       } else if(midVal > i) {
@@ -19,6 +19,6 @@ public class BinarySearch {
         return mid;  // key found
       }
     }
-    return - lo - 1;  // key not found (-1 to avoid the 0 ambiguity)
+    return -lo - 1;  // key not found (-1 to avoid the 0 ambiguity)
   }
 }

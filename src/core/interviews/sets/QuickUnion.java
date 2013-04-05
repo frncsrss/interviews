@@ -11,8 +11,8 @@ public class QuickUnion extends UnionFind {
 
   public QuickUnion(final int N) {
     this.count = N;
-    id = new int[N];
-    size = new int[N];
+    this.id = new int[N];
+    this.size = new int[N];
     for(int i = 0; i < N; i++) {
       id[i] = i;
       size[i] = 1;
