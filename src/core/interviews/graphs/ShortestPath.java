@@ -3,6 +3,7 @@ package interviews.graphs;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
@@ -71,6 +72,41 @@ public class ShortestPath {
     return path;
   }
 
+  /**
+   * Assume a weighted DAG (potentially with negative weights).
+   * Run in O(E + V).
+   */
+  public void topological(int source) {
+    Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
+    Arrays.fill(parent, -1);                        // reset the parent table
+    this.distTo[source] = 0;
+    this.parent[source] = source;
+    this.source = source;
+
+    Iterable<Integer> vertices = (new Traversal(g)).topological();
+    Iterator<Integer> iter = vertices.iterator();
+    while(iter.hasNext() && !iter.next().equals(source)) {}  // loop until the source
+    for(Edge e: g.adjE(source)) {  // relax the source
+      relax(e);
+    }
+    while(iter.hasNext()) {  // relax the remaining reachable vertices
+      int v = iter.next();
+      for(Edge e: g.adjE(v)) {
+        relax(e);
+      }      
+    }
+  }
+
+
+  /**
+   * Internal subroutine that relaxes an edge.
+   */
+  private void relax(Edge e) {
+    if(distTo[e.w] > distTo[e.v] + e.weight) {
+      distTo[e.w] = distTo[e.v] + e.weight;
+      parent[e.w] = e.v;
+    }
+  }
 
   /**
    * Internal subroutine that relaxes an edge and insert it in the priority queue if necessary.
