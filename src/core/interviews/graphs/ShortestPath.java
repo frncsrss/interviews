@@ -23,6 +23,26 @@ public class ShortestPath {
   }
 
   /**
+   * Apply Bellman-Ford's algorithm. Work on any digraph without negative cycles.
+   * Run in O(E x V).
+   */
+  public void bellmanFord(int source) {
+    Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
+    Arrays.fill(parent, -1);                        // reset the parent table
+    this.distTo[source] = 0;
+    this.parent[source] = source;
+    this.source = source;
+
+    for(int v = 0; v < g.V; v++) {
+      for(int w = 0; w < g.V; w++) {
+        for(Edge e: g.adjE(w)) {
+          relax(e);
+        }
+      }
+    }
+  }
+
+  /**
    * Apply Dijkstra's algorithm. Assume a positively weighted digraph.
    * Lazy implementation (keep in the priority queue nodes with distances that have been overridden).
    * Run in O(ElogE).
@@ -93,7 +113,7 @@ public class ShortestPath {
       int v = iter.next();
       for(Edge e: g.adjE(v)) {
         relax(e);
-      }      
+      }
     }
   }
 
