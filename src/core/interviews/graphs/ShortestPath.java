@@ -24,7 +24,7 @@ public class ShortestPath {
   /**
    * Apply Dijkstra's algorithm. Assume a positively weighted digraph.
    * Lazy implementation (keep in the priority queue nodes with distances that have been overridden).
-   * Run in O(ElogV).
+   * Run in O(ElogE).
    */
   public void dijkstra(int source) {
     Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
@@ -48,6 +48,7 @@ public class ShortestPath {
 
   /**
    * Distance between the current source and the given vertex.
+   * Double.POSITIVE_INFINITY is no path.
    */
   public double distTo(int v) {
     return distTo[v];
@@ -55,16 +56,21 @@ public class ShortestPath {
 
   /**
    * Path from the current source to the given vertex.
+   * Null if no path.
    */
   public Iterable<Integer> pathTo(int v) {
     // better than java.util.Stack that relies on a Vector!
     Deque<Integer> path = new ArrayDeque<Integer>();
     for(int x = v; x != source; x = parent[x]) {
+      if(x == -1) {
+        return null;
+      }
       path.push(x);
     }
     path.push(source);
     return path;
   }
+
 
   /**
    * Internal subroutine that relaxes an edge and insert it in the priority queue if necessary.
