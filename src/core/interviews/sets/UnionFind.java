@@ -8,6 +8,14 @@ public abstract class UnionFind {
   protected int[] id;   // id[i] = parent of i
   protected int count;  // number of components
 
+  public UnionFind(final int N) {
+    this.count = N;
+    this.id = new int[N];
+    for(int i = 0; i < N; i++) {
+      id[i] = i;
+    }
+  }
+
   /**
    * Return the number of disjoint sets.
    */
@@ -23,7 +31,9 @@ public abstract class UnionFind {
   /**
    * Are objects p and q in the same set?
    */
-  public abstract boolean connected(int p, int q);
+  public boolean connected(int p, int q) {
+    return find(p) == find(q);
+  }
 
   /**
    * Replace sets containing p and q with their union.

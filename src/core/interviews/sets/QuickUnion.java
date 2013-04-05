@@ -1,5 +1,7 @@
 package interviews.sets;
 
+import java.util.Arrays;
+
 /**
  * Quick Union (one of the implementations of Union Find).
  * With weighting. Usually called union-by-size.
@@ -10,13 +12,9 @@ public class QuickUnion extends UnionFind {
   protected int[] size;  // sz[i] = number of objects in subtree rooted at i
 
   public QuickUnion(final int N) {
-    this.count = N;
-    this.id = new int[N];
+    super(N);
     this.size = new int[N];
-    for(int i = 0; i < N; i++) {
-      id[i] = i;
-      size[i] = 1;
-    }
+    Arrays.fill(size, 1);
   }
 
   @Override
@@ -28,19 +26,14 @@ public class QuickUnion extends UnionFind {
   }
 
   @Override
-  public boolean connected(int p, int q) {
-    return find(p) == find(q);
-  }
-
-  @Override
   public void union(int p, int q) {
     if(connected(p, q)) {
       return;
     }
-    final int i = find(p);
-    final int j = find(q);
+    final int i = find(p);  // root of p
+    final int j = find(q);  // root of q
     if(size[i] < size[j]) {
-      id[i] = j;  // root of p becomes root of q
+      id[i] = j;  // root of q becomes root of p
       size[j] += size[i];
     } else {
       id[j] = i;  // root of p becomes root of q

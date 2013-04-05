@@ -8,21 +8,12 @@ package interviews.sets;
 public class QuickFind extends UnionFind {
 
   public QuickFind(final int N) {
-    this.count = N;
-    this.id = new int[N];
-    for(int i = 0; i < N; i++) {
-      id[i] = i;
-    }
+    super(N);
   }
 
   @Override
   public int find(int p) {
     return id[p];
-  }
-
-  @Override
-  public boolean connected(int p, int q) {
-    return id[p] == id[q];
   }
 
   @Override
