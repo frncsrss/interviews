@@ -34,7 +34,7 @@ public class Mergesort {
 
   private static <E> void sort1(List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
-      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = (lo + hi) >>> 1;  // prevent possible overflow
       sort1(list, comparator, lo, mid);
       sort1(list, comparator, mid + 1, hi);
 
@@ -48,7 +48,7 @@ public class Mergesort {
 
   private static <E> void sort2(List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
-      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = (lo + hi) >>> 1;  // prevent possible overflow
       sort2(list, comparator, lo, mid);
       sort2(list, comparator, mid + 1, hi);
 
@@ -63,7 +63,7 @@ public class Mergesort {
   private static <E> void sort3(
       List<E> list, Comparator<E> comparator, List<E> aux, int lo, int hi) {
     if (lo < hi) {
-      final int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = (lo + hi) >>> 1;  // prevent possible overflow
       sort3(list, comparator, aux, lo, mid);
       sort3(list, comparator, aux, mid + 1, hi);
 
@@ -76,11 +76,11 @@ public class Mergesort {
   }
 
   private static <E> void sort4(List<E> list, Comparator<E> comparator) {
-    final int N = list.size();
-    final List<E> aux = new ArrayList<E>(list);
+    int N = list.size();
+    List<E> aux = new ArrayList<E>(list);
     for(int sz = 1; sz < N; sz <<= 1) {  // log(N) sizes of subarrays considered
-      for(int lo = 0; lo < N-sz; lo += sz+sz) {  // each subarray is of size sz+sz
-        merge3(list, comparator, aux, lo, Math.min(lo+sz+sz-1, N-1), lo+sz-1);
+      for(int lo = 0; lo < N - sz; lo += sz + sz) {  // each subarray is of size sz + sz
+        merge3(list, comparator, aux, lo, Math.min(lo + sz + sz - 1, N - 1), lo +sz - 1);
       }
     }
   }
@@ -90,7 +90,7 @@ public class Mergesort {
     assert Sorts.isSorted(list, comparator, lo, mid);
     assert Sorts.isSorted(list, comparator, mid+1, hi);
 
-    final List<E> aux = new ArrayList<E>(list.subList(lo, hi+1));
+    List<E> aux = new ArrayList<E>(list.subList(lo, hi+1));
     
     int left = lo;
     int right = mid + 1;
@@ -119,8 +119,8 @@ public class Mergesort {
     assert Sorts.isSorted(list, comparator, lo, mid);
     assert Sorts.isSorted(list, comparator, mid+1, hi);
 
-    final Queue<E> aux1 = new LinkedList<E>();
-    final Queue<E> aux2 = new LinkedList<E>();
+    Queue<E> aux1 = new LinkedList<E>();
+    Queue<E> aux2 = new LinkedList<E>();
 
     for(int i = lo; i <= mid; i++) {
       aux1.add(list.get(i));
