@@ -12,7 +12,7 @@ public abstract class UnionFind {
    * Return the number of disjoint sets.
    */
   public int count() {
-      return count;
+    return count;
   }
 
   /**

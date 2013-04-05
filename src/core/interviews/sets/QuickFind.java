@@ -27,7 +27,7 @@ public class QuickFind extends UnionFind {
 
   @Override
   public void union(int p, int q) {
-    if (connected(p, q)) {
+    if(connected(p, q)) {
       return;
     }
     final int pid = id[p];  // needs to store it before it gets changed in the loop!

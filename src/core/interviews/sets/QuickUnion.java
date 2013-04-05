@@ -21,8 +21,8 @@ public class QuickUnion extends UnionFind {
 
   @Override
   public int find(int p) {
-    while (p != id[p]) {
-        p = id[p];
+    while(p != id[p]) {
+      p = id[p];
     }
     return p;
   }
@@ -34,7 +34,7 @@ public class QuickUnion extends UnionFind {
 
   @Override
   public void union(int p, int q) {
-    if (connected(p, q)) {
+    if(connected(p, q)) {
       return;
     }
     final int i = find(p);
