@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
   ConnectedComponentTest.class,
   DigraphTest.class,
   GraphTest.class,
+  MaxFlowTest.class,
   MinimumSpanningTreeTest.class,
   ShortestPathTest.class,
   TraversalTest.class,
