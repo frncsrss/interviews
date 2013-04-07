@@ -5,8 +5,7 @@ package interviews.graphs;
  * @author Francois Rousseau
  */
 public class Edge implements Comparable<Edge> {
-  public final int v;
-  public final int w;
+  public final int v, w;
   public final double weight;
 
   public Edge(int v, int w, double weight) {
@@ -55,9 +54,10 @@ public class Edge implements Comparable<Edge> {
   /**
    * Return the other endpoint from v.
    */
-  public int other(int v) {
-    if(this.v == v) return w;
-    return this.v;
+  public int other(int vertex) {
+    if(vertex == v) return w;
+    if(vertex == w) return v;
+    throw new IllegalArgumentException("Wrong endpoint");
   }
 
   @Override

@@ -28,8 +28,8 @@ public class Traversal {
    * Set the given vertex as current source for subsequent methods.
    */
   public void bfs(int v) {
-    reset(parent);   // clear the parent table from previous traversals
-    reset(visited);  // clear the visited table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = v;      // set the source
     bfsHelper(v);
   }
@@ -39,8 +39,8 @@ public class Traversal {
    * Set the given vertex as current source for subsequent methods.
    */
   public void dfs(int v) {
-    reset(parent);   // clear the parent table from previous traversals
-    reset(visited);  // clear the visited table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = v;      // set the source
     dfsHelper(v);
   }
@@ -81,8 +81,8 @@ public class Traversal {
    * Return the topological order of the graph (should be directed).
    */
   public Iterable<Integer> topological() {
-    reset(parent);   // clear the parent table from previous traversals
-    reset(visited);  // clear the visited table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = -1;     // set the source
     // better than java.util.Stack that relies on a Vector!
     Deque<Integer> stack = new ArrayDeque<Integer>();
@@ -142,20 +142,5 @@ public class Traversal {
       }
     }
     stack.push(v);
-  }
-
-
-  /**
-   * Set all the values of an array to -1.
-   */
-  public static void reset(int[] arr) {
-    Arrays.fill(arr, -1);
-  }
-
-  /**
-   * Set all the values of an array to -1.
-   */
-  public static void reset(boolean[] arr) {
-    Arrays.fill(arr, false);
   }
 }

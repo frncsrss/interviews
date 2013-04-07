@@ -1,5 +1,7 @@
 package interviews.graphs;
 
+import java.util.Arrays;
+
 /**
  * Compute the connected components in linear time in number of edges/vertices.
  * 
@@ -13,7 +15,7 @@ public class ConnectedComponent {
 
   public ConnectedComponent(Graph g) {
     visited = new int[g.V];
-    Traversal.reset(visited);
+    Arrays.fill(visited, -1);
     count = 0;
     for(int v = 0; v < g.V; v++) {
       if(visited[v] == -1) {  // not already visited
@@ -25,7 +27,7 @@ public class ConnectedComponent {
 
   public ConnectedComponent(Digraph g) {
     visited = new int[g.V];
-    Traversal.reset(visited);
+    Arrays.fill(visited, -1);
     count = 0;
     Traversal reverseTraversal = new Traversal(g.reverse());
     for(int v: reverseTraversal.topological()) {
