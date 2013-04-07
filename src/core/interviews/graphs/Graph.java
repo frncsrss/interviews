@@ -26,23 +26,27 @@ public class Graph {
   }
 
   /**
-   * Add an edge between vertex v and vertex w (directed from v to w if it is a directed graph).
+   * Add an edge between vertex v and vertex w if not already present.
    * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(int v, int w) {
-    boolean ret = addEdge(new Edge(v, w));
-    if(ret) {
-      E++;  // we only want to increment it once for undirected edge
-    }
-    return ret;
+    return addEdge(new Edge(v, w));
   }
 
   /**
-   * Add a weighted edge between vertex v and vertex w.
+   * Add a weighted edge between vertex v and vertex w if not already present.
    * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(int v, int w, double weight) {
-    boolean ret = addEdge(new Edge(v, w, weight));
+    return addEdge(new Edge(v, w, weight));
+  }
+
+  /**
+   * Add an edge between vertex v and vertex w if not already present.
+   * Create the vertices if not already present in the graph.
+   */
+  public boolean addEdge(Edge e) {
+    boolean ret = addEdgeInternal(e);
     if(ret) {
       E++;  // we only want to increment it once for undirected edge
     }
@@ -103,7 +107,7 @@ public class Graph {
    * Add an edge between vertex v and vertex w.
    * Create the vertices if not already present in the graph.
    */
-  protected boolean addEdge(Edge edge) {
+  protected boolean addEdgeInternal(Edge edge) {
     edges.add(edge);
     return adjacencyLists[edge.v].add(edge) && adjacencyLists[edge.w].add(edge);
   }

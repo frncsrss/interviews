@@ -29,7 +29,7 @@ public class Digraph extends Graph {
    * Create the vertices if not already present in the graph.
    */
   @Override
-  protected boolean addEdge(Edge edge) {
+  protected boolean addEdgeInternal(Edge edge) {
     edges.add(edge);
     return adjacencyLists[edge.v].add(edge);
   }
