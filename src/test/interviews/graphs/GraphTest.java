@@ -47,6 +47,26 @@ public class GraphTest {
     return g;
   }
 
+  public static Graph setUpFlowNetwork() {
+    Graph g = new Graph(8);
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(0, 1, 10)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(0, 2,  5)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(0, 3, 15)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(1, 2,  4)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(2, 3,  4)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(1, 4,  9)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(1, 5, 15)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(2, 5,  8)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(3, 6, 16)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(4, 7, 10)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(4, 5, 15)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(5, 7, 10)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(5, 6, 15)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(6, 2,  6)));
+    Assert.assertEquals(true, g.addEdge(new FlowEdge(6, 7, 10)));
+    return g;
+  }
+
   @Test
   public void test_E() {
     Graph g = setUp();
@@ -54,6 +74,9 @@ public class GraphTest {
 
     g = setUpWeighted();
     Assert.assertEquals(16, g.E());
+
+    g = setUpFlowNetwork();
+    Assert.assertEquals(15, g.E());
   }
 
   @Test
@@ -62,6 +85,9 @@ public class GraphTest {
     Assert.assertEquals(13, g.V);
 
     g = setUpWeighted();
+    Assert.assertEquals(8, g.V);
+
+    g = setUpFlowNetwork();
     Assert.assertEquals(8, g.V);
   }
 }
