@@ -28,7 +28,7 @@ public class ShortestPath {
    */
   public void bellmanFord(int source) {
     Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
-    Arrays.fill(parent, -1);                        // reset the parent table
+    Arrays.fill(parent, -1);                        // reset the parent   table
     this.distTo[source] = 0;
     this.parent[source] = source;
     this.source = source;
@@ -49,7 +49,7 @@ public class ShortestPath {
    */
   public void dijkstra(int source) {
     Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
-    Arrays.fill(parent, -1);                        // reset the parent table
+    Arrays.fill(parent, -1);                        // reset the parent   table
     this.distTo[source] = 0;
     this.parent[source] = source;
     this.source = source;
@@ -98,7 +98,7 @@ public class ShortestPath {
    */
   public void topological(int source) {
     Arrays.fill(distTo, Double.POSITIVE_INFINITY);  // reset the distance table
-    Arrays.fill(parent, -1);                        // reset the parent table
+    Arrays.fill(parent, -1);                        // reset the parent   table
     this.distTo[source] = 0;
     this.parent[source] = source;
     this.source = source;

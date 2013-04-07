@@ -28,7 +28,7 @@ public class Traversal {
    * Set the given vertex as current source for subsequent methods.
    */
   public void bfs(int v) {
-    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
     Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = v;      // set the source
     bfsHelper(v);
@@ -39,7 +39,7 @@ public class Traversal {
    * Set the given vertex as current source for subsequent methods.
    */
   public void dfs(int v) {
-    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
     Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = v;      // set the source
     dfsHelper(v);
@@ -81,7 +81,7 @@ public class Traversal {
    * Return the topological order of the graph (should be directed).
    */
   public Iterable<Integer> topological() {
-    Arrays.fill(parent, -1);      // clear the parent table from previous traversals
+    Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
     Arrays.fill(visited, false);  // clear the visited table from previous traversals
     source = -1;     // set the source
     // better than java.util.Stack that relies on a Vector!
