@@ -10,6 +10,10 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test class.
+ * @author Francois Rousseau
+ */
 public class QuicksortTest {
   private static final Comparator<Integer> comparator = Sorts.getComparatorOfIntegers();
 
