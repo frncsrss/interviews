@@ -8,7 +8,6 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class RadixSortTest {
-
   @Test
   public void test()  {
     String[] actuals =
