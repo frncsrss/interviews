@@ -3,10 +3,11 @@ package interviews.sorts;
 /**
  * Key-Indexed Counting.
  * Sort an array a[] of N integers between 0 and R - 1:
- * 1. Count frequencies of each letter using key as index.
- * 2. Compute frequency cumulates which specify destinations.
- * 3. Access cumulates using key as index to move items.
- * 4. Copy back into original array.
+ *   1. Count frequencies of each letter using key as index.
+ *   2. Compute frequency cumulates which specify destinations.
+ *   3. Access cumulates using key as index to move items.
+ *   4. Copy back into original array.
+ * Run in O(N + R) time and O(N + R) space. Stable sort.
  * @author Francois Rousseau
  */
 public class KeyIndexedCounting {
