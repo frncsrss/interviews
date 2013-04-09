@@ -11,9 +11,14 @@ package interviews.sorts;
  * @author Francois Rousseau
  */
 public class KeyIndexedCounting {
+
+  /**
+   * Sort an array a[] of N integers between 0 and R - 1.
+   * @param R radix (size of the alphabet)
+   */
   public static void f(int[] arr, int R) {
     int N = arr.length;
-    int[] count = new int[R+1];
+    int[] count = new int[R + 1];
 
     // count frequencies of each letter using key as index
     for(int i = 0; i < N; i++) {
