@@ -29,4 +29,16 @@ public class RadixSortTest {
             "shells", "shore", "surely", "the", "the"},
         actuals);
   }
+
+  @Test
+  public void test_3WayQuicksort()  {
+    String[] actuals =
+        new String[]{"she", "sells", "seashells", "by", "the", "sea", "shore", "the", "shells",
+            "she", "sells", "are", "surely", "seashells"};
+    RadixSort.threeWayQuicksort(actuals, 256);
+    Assert.assertArrayEquals(
+        new String[]{"are", "by", "sea", "seashells", "seashells", "sells", "sells", "she", "she",
+            "shells", "shore", "surely", "the", "the"},
+        actuals);
+  }
 }
