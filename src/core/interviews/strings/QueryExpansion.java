@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 /**
  * Query expansion.
  * 
- * From an original phrase, returns the top-k expansions. Each word is mapped to set of weighted
+ * From an original phrase, returns the top-k expansions. Each word is mapped to a set of weighted
  * possible expansions. The top-k expansions correspond to the k greatest overall weights.
  * 
  * original phrase:
