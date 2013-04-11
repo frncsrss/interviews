@@ -9,9 +9,16 @@ import org.junit.Test;
  */
 public class LongestCommonSubstringTest {
   @Test
-  public void test_main1() {
+  public void test_f1() {
     Assert.assertEquals(
         " peter go",
-        LongestCommonSubstring.f("Please, peter go swimming!", "IÕm peter goliswi"));
+        LongestCommonSubstring.f1("Please, peter go swimming!", "IÕm peter goliswi"));
+  }
+
+  @Test
+  public void test_f2() {
+    Assert.assertEquals(
+        " peter go",
+        LongestCommonSubstring.f2("Please, peter go swimming!", "IÕm peter goliswi"));
   }
 }
