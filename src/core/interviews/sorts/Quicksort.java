@@ -136,9 +136,10 @@ public class Quicksort {
   private static <E> int partition3(
       List<E> list, Comparator<E> comparator, int lo, int hi) {
     // pivot is the last element
+    E pivot = list.get(hi);
     int firsthigh = lo;
     for(int i = lo; i < hi; i++) {
-      if(comparator.compare(list.get(i), list.get(hi)) < 0) {
+      if(comparator.compare(list.get(i), pivot) < 0) {
         Collections.swap(list, firsthigh, i);
         firsthigh++;
       }
