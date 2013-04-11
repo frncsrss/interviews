@@ -37,7 +37,7 @@ public class KeyIndexedCounting {
     }
 
     // copy back into original array
-    for (int i = 0; i < N; i++) {
+    for(int i = 0; i < N; i++) {
       arr[i] = aux[i];
     }
   }

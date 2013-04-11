@@ -14,25 +14,25 @@ public class RadixSort {
    * Run in O(W x N) time with O(N + R) space. Stable sort.
    * @param R radix (size of the alphabet)
    */
-  public static void lsd(String[] arr, int R) {
-    int N = arr.length;
-    int W = arr[0].length();
+  public static void lsd(String[] a, int R) {
+    int N = a.length;
+    int W = a[0].length();
     String[] aux = new String[N];
 
     // do key-indexed counting for each digit from right to left
     for (int d = W - 1; d >= 0; d--) {
       int[] count = new int[R + 1];
       for (int i = 0; i < N; i++) {
-        count[arr[i].charAt(d) + 1]++;
+        count[a[i].charAt(d) + 1]++;
       }
       for (int r = 0; r < R; r++) {
         count[r + 1] += count[r];
       }
       for (int i = 0; i < N; i++) {
-        aux[count[arr[i].charAt(d)]++] = arr[i];
+        aux[count[a[i].charAt(d)]++] = a[i];
       }
       for (int i = 0; i < N; i++) {
-        arr[i] = aux[i];
+        a[i] = aux[i];
       }
     }
   }
@@ -42,10 +42,10 @@ public class RadixSort {
    * Run in O(W x N) time with O(N + DR) space. Stable sort.
    * @param R radix (size of the alphabet)
    */
-  public static void msd(String[] arr, int R) {
-    String[] aux = new String[arr.length]; 
-    msd(arr, R, aux, 0, arr.length - 1, 0);
-    arr = aux;
+  public static void msd(String[] a, int R) {
+    String[] aux = new String[a.length]; 
+    msd(a, R, aux, 0, a.length - 1, 0);
+    a = aux;
   }
 
   /**
@@ -55,8 +55,8 @@ public class RadixSort {
    * compared to ~ 2N ln N string compares on average for random strings.
    * @param R radix (size of the alphabet)
    */
-  public static void threeWayQuicksort(String[] arr, int R) {
-    threeWayQuicksort(arr, R, 0, arr.length - 1, 0);
+  public static void threeWayQuicksort(String[] a, int R) {
+    threeWayQuicksort(a, R, 0, a.length - 1, 0);
   }
 
 
@@ -76,21 +76,21 @@ public class RadixSort {
 
     // key-indexed counting for the dth digit
     int[] count = new int[R + 2];
-    for (int i = lo; i <= hi; i++) {
+    for(int i = lo; i <= hi; i++) {
       count[charAt(a[i], d) + 2]++;
     }
-    for (int r = 0; r < R+1; r++) {
+    for(int r = 0; r < R+1; r++) {
       count[r + 1] += count[r];     
     }
-    for (int i = lo; i <= hi; i++) {
+    for(int i = lo; i <= hi; i++) {
       aux[count[charAt(a[i], d) + 1]++] = a[i];
     }
-    for (int i = lo; i <= hi; i++) {
+    for(int i = lo; i <= hi; i++) {
       a[i] = aux[i - lo];
     }
 
     // sort R subarrays recursively
-    for (int r = 0; r < R; r++) {
+    for(int r = 0; r < R; r++) {
       msd(a, R, aux, lo + count[r], lo + count[r + 1] - 1, d + 1);
     }
   }
