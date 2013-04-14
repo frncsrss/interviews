@@ -26,7 +26,7 @@ public class Trie {
    * Inserts a given string inside the trie.
    */
   public void add(String s) {
-    if (s == null) {
+    if(s == null) {
       return;
     }
     add(root, s.toCharArray(), 0);
@@ -61,7 +61,7 @@ public class Trie {
    * Valid or not.
    */
   public int frequency(String s) {
-    if (s == null) {
+    if(s == null) {
       return 0;
     }
     return frequency(root, s.toCharArray(), 0);
@@ -115,7 +115,7 @@ public class Trie {
   public String toString() {
     final Queue<Node> queue = new LinkedList<Node>();
     for (Node child : root.getChildrenValues()) {
-      if (child != null) {
+      if(child != null) {
         queue.add(child);
       }
     }
@@ -125,7 +125,7 @@ public class Trie {
       Node current = queue.poll();
       buffer.append(current.value);
       for (Node child : current.getChildrenValues()) {
-        if (child != null) {
+        if(child != null) {
           queue.add(child);
         }
       }
@@ -133,18 +133,19 @@ public class Trie {
     return buffer.toString();
   }
 
+
   /**
    * Add the ith index of the given array to the current node.
    */
   private void add(Node node, char[] arr, int i) {
-    if (i == arr.length) {
+    if(i == arr.length) {
       node.isValid = true;
       return;
     }
-    final char first = arr[i];
-    Node child = node.getChild(first);
-    if (child == null) {
-      child = node.setChild(first);
+    char c = arr[i];
+    Node child = node.getChild(c);
+    if(child == null) {
+      child = node.setChild(c);
     } 
     node.incrementFrequency(child);
     add(child, arr, i+1);
@@ -155,7 +156,7 @@ public class Trie {
    * Valid or not, depending on the argument isValid.
    */
   private boolean contains(String s, boolean isValid) {
-    if (s == null) {
+    if(s == null) {
       return false;
     }
     return contains(root, s.toCharArray(), 0, isValid);
@@ -166,11 +167,11 @@ public class Trie {
    * Valid or not, depending on the argument isValid.
    */
   private boolean contains(Node node, char[] arr, int i, boolean isValid) {
-    if (i == arr.length) {
+    if(i == arr.length) {
       return isValid ? node.isValid : true;
     }
     Node child = node.getChild(arr[i]);
-    if (child == null) {
+    if(child == null) {
       return false;
     }
     return contains(child, arr, i+1, isValid);
@@ -182,11 +183,11 @@ public class Trie {
    * @return frequency
    */
   private int frequency(Node node, char[] arr, int i) {
-    if (i == arr.length) {
+    if(i == arr.length) {
       return node.frequency;
     }
     Node child = node.getChild(arr[i]);
-    if (child == null) {
+    if(child == null) {
       return 0;
     } 
     return frequency(child, arr, i+1);
@@ -197,14 +198,14 @@ public class Trie {
    * @return boolean value indicating if the prefix is a valid word or not.
    */
   protected boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
-    if (i == arr.length) {
+    if(i == arr.length) {
       return node.isValid;
     }
     Node child = node.getChild(arr[i]);
-    if (child == null) {
+    if(child == null) {
       return node.isValid;
     }
-    if (longestPrefix(child, arr, i+1, buffer)) {
+    if(longestPrefix(child, arr, i+1, buffer)) {
       buffer.append(child.value);
       return true;
     }
@@ -250,7 +251,7 @@ public class Trie {
    * the node to remove because there is no child.
    */
   private Pair<Boolean, Node> remove(Node node, char[] arr, int i) {
-    if (i == arr.length) {  // we reached the end of the array
+    if(i == arr.length) {  // we reached the end of the array
       if(node.isValid) {  // if it is a valid word, we remove its validity
         node.isValid = false;
         if(!node.children.isEmpty()) {  // if there is no child, we tell the parent to remove the node
@@ -263,7 +264,7 @@ public class Trie {
       }
     }
     Node child = node.getChild(arr[i]);
-    if (child == null) {
+    if(child == null) {
       return new Pair<Boolean, Node>(false, node);
     }
     Pair<Boolean, Node> pair = remove(child, arr, i+1);
@@ -278,10 +279,11 @@ public class Trie {
     return new Pair<Boolean, Node>(pair.x(), node);
   }
 
+
   /**
    * Private inner class for an internal Trie node.
    */
-  private class Node {
+  private static class Node {
     private char value;
     private int frequency;
     private boolean isValid;
