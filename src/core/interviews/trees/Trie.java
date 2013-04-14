@@ -29,14 +29,14 @@ public class Trie {
     if(s == null) {
       return;
     }
-    add(root, s.toCharArray(), 0);
+    root = add(root, s.toCharArray(), 0);
   }
 
   /**
    * Delete every element inside the trie.
    */
   public void clear() {
-    root.clearChildren();
+    root.clear();
   }
 
   /**
@@ -114,20 +114,14 @@ public class Trie {
    */
   public String toString() {
     Queue<Node> queue = new LinkedList<Node>();
-    for(Node child : root.getChildrenValues()) {
-      if(child != null) {
-        queue.add(child);
-      }
-    }
     StringBuffer buffer = new StringBuffer();
-    
-    while (!queue.isEmpty()) {
-      Node current = queue.poll();
-      buffer.append(current.value);
-      for(Node child : current.getChildrenValues()) {
-        if(child != null) {
-          queue.add(child);
-        }
+
+    queue.add(root);
+    while(!queue.isEmpty()) {
+      Node node = queue.poll();
+      for(Character c: node.keys()) {
+        buffer.append(c);
+        queue.add(node.get(c));
       }
     }
     return buffer.toString();
@@ -137,18 +131,18 @@ public class Trie {
   /**
    * Add the ith index of the given array to the current node.
    */
-  private void add(Node node, char[] arr, int i) {
+  private Node add(Node node, char[] arr, int i) {
+    if(node == null) {
+      node = new Node();
+    }
     if(i == arr.length) {
       node.isValid = true;
-      return;
+      return node;
     }
     char c = arr[i];
-    Node child = node.getChild(c);
-    if(child == null) {
-      child = node.setChild(c);
-    } 
-    node.incrementFrequency(child);
-    add(child, arr, i+1);
+    node.put(c, add(node.get(c), arr, i+1));
+    node.updateFrequency(c);
+    return node;
   }
 
   /**
@@ -170,7 +164,7 @@ public class Trie {
     if(i == arr.length) {
       return isValid ? node.isValid : true;
     }
-    Node child = node.getChild(arr[i]);
+    Node child = node.get(arr[i]);
     if(child == null) {
       return false;
     }
@@ -186,7 +180,7 @@ public class Trie {
     if(i == arr.length) {
       return node.frequency;
     }
-    Node child = node.getChild(arr[i]);
+    Node child = node.get(arr[i]);
     if(child == null) {
       return 0;
     } 
@@ -201,12 +195,12 @@ public class Trie {
     if(i == arr.length) {
       return node.isValid;
     }
-    Node child = node.getChild(arr[i]);
+    Node child = node.get(arr[i]);
     if(child == null) {
       return node.isValid;
     }
     if(longestPrefix(child, arr, i+1, buffer)) {
-      buffer.append(child.value);
+      buffer.append(arr[i]);
       return true;
     }
     return node.isValid;
@@ -220,17 +214,18 @@ public class Trie {
    */
   protected String completion(Node node, String s, boolean force) {
     for(int i = 0; i < s.length(); i++) {  // loop until you get the last child
-      Node child = node.getChild(s.charAt(i));
+      Node child = node.get(s.charAt(i));
       if(child == null) {  // the string we want to complete is not even in the trie
         return null;
       }
       node = child;
     }
-    if((node.isValid && !force) || node.mostFrequentChild == null) {
+    if((node.isValid && !force) || node.mostFrequent == '\u0000') {
       return null;
     }
     StringBuffer buffer = new StringBuffer();
-    completion(node.mostFrequentChild, buffer);
+    buffer.append(node.mostFrequent);
+    completion(node.get(node.mostFrequent), buffer);
     return buffer.toString();
   }
   
@@ -238,11 +233,11 @@ public class Trie {
    * Fill a StringBuffer with the most frequent suffix. Ends with a valid one is reached.
    */
   private void completion(Node node, StringBuffer buffer) {
-    buffer.append(node.value);
     if(node.isValid) {
       return;
     }
-    completion(node.mostFrequentChild, buffer);
+    buffer.append(node.mostFrequent);
+    completion(node.get(node.mostFrequent), buffer);
   }
 
   /**
@@ -263,13 +258,13 @@ public class Trie {
         return new Pair<Boolean, Node>(false, node);
       }
     }
-    Node child = node.getChild(arr[i]);
+    Node child = node.get(arr[i]);
     if(child == null) {
       return new Pair<Boolean, Node>(false, node);
     }
     Pair<Boolean, Node> pair = remove(child, arr, i+1);
     if(pair.x() && pair.y() == null) {
-      node.removeChild(arr[i]);
+      node.remove(arr[i]);
       if(!node.children.isEmpty()) {
         return new Pair<Boolean, Node>(true, node);
       } else {
@@ -284,54 +279,37 @@ public class Trie {
    * Private inner class for an internal Trie node.
    */
   private static class Node {
-    private char value;
     private int frequency;
     private boolean isValid;
     private Map<Character, Node> children = new HashMap<Character, Node>(10);
-    private Node mostFrequentChild;
+    private char mostFrequent;
 
-    /**
-     * Private empty constructor used for the root.
-     */
-    private Node() {}
-    
-    /**
-     * Private non-empty public constructor used internally for the children.
-     */
-    private Node(char value) {
-      this.value = value;
-    }
-
-    private void clearChildren() {
+    private void clear() {
       children.clear();
     }
 
-    private void incrementFrequency(Node child) {
-      child.frequency++;
-      if(mostFrequentChild == null || mostFrequentChild.frequency < child.frequency) {
-        mostFrequentChild = child;
-      }
-    }
-
-    private Node getChild(char key) {
+    private Node get(char key) {
       return children.get(key);
     }
 
-    private Collection<Node> getChildrenValues() {
-      return children.values();
+    private Collection<Character> keys() {
+      return children.keySet();
     }
 
-    private Node removeChild(char key) {
+    private void put(char key, Node node) {
+      children.put(key, node);
+    }
+
+    private Node remove(char key) {
       return children.remove(key);
     }
-    
-    private Node setChild(char key) {
-      setChild(key, new Node(key));
-      return getChild(key);
-    }
 
-    private void setChild(char key, Node node) {
-      children.put(key, node);
+    private void updateFrequency(char c) {
+      Node child = get(c);
+      child.frequency++;
+      if(mostFrequent == '\u0000' || get(mostFrequent).frequency < child.frequency) {
+        mostFrequent = c;
+      }
     }
   }
 }
