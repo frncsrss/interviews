@@ -11,14 +11,7 @@ import java.util.Queue;
  * @author Francois Rousseau
  */
 public class Trie {
-  private Node root;
-
-  /**
-   * Public constructor that initializes the root. No character stored in the root.
-   */
-  public Trie() {
-    root = new Node();
-  }
+  private Node root = new Node();
 
   /**
    * Inserts a given string inside the trie.
@@ -189,7 +182,7 @@ public class Trie {
    * Appends to a StringBuffer the longest prefix in the trie for a given String.
    * @return boolean value indicating if the prefix is a valid word or not.
    */
-  protected boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
+  private boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
     if(i == arr.length) {
       return node.isValid;
     }
@@ -210,7 +203,7 @@ public class Trie {
    * even if the string is already a valid prefix.
    * @return the auto-completed suffix, null if there is none
    */
-  protected String completion(Node node, String s, boolean force) {
+  private String completion(Node node, String s, boolean force) {
     for(int i = 0; i < s.length(); i++) {  // loop until you get the last child
       Node child = node.get(s.charAt(i));
       if(child == null) {  // the string we want to complete is not even in the trie
