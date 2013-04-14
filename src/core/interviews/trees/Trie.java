@@ -113,18 +113,18 @@ public class Trie {
    * @return String
    */
   public String toString() {
-    final Queue<Node> queue = new LinkedList<Node>();
-    for (Node child : root.getChildrenValues()) {
+    Queue<Node> queue = new LinkedList<Node>();
+    for(Node child : root.getChildrenValues()) {
       if(child != null) {
         queue.add(child);
       }
     }
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     
     while (!queue.isEmpty()) {
       Node current = queue.poll();
       buffer.append(current.value);
-      for (Node child : current.getChildrenValues()) {
+      for(Node child : current.getChildrenValues()) {
         if(child != null) {
           queue.add(child);
         }
