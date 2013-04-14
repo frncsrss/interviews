@@ -71,23 +71,25 @@ public class TrieTest {
 
   @Test
   public void test_remove() {
-    Assert.assertEquals(true, trie.contains("0044"));
-    Assert.assertEquals(true, trie.isValid("0044"));
-    Assert.assertEquals(true, trie.remove("0044"));
-    Assert.assertEquals(true, trie.contains("0044"));
+    Assert.assertEquals( true, trie.contains("0044"));
+    Assert.assertEquals( true, trie.isValid("0044"));
+    trie.remove("0044");
+    Assert.assertEquals( true, trie.contains("0044"));
     Assert.assertEquals(false, trie.isValid("0044"));
+    trie.remove("0044");
 
-    Assert.assertEquals(false, trie.remove("0044"));
-
-    Assert.assertEquals(true, trie.contains("0039"));
-    Assert.assertEquals(true, trie.contains("003"));
-    Assert.assertEquals(true, trie.contains("00"));
-    Assert.assertEquals(true, trie.remove("0039"));
+    Assert.assertEquals( true, trie.contains("0039"));
+    Assert.assertEquals( true, trie.contains("003"));
+    Assert.assertEquals( true, trie.contains("00"));
+    trie.add("003");
+    trie.remove("0039");
+    Assert.assertEquals(false, trie.contains("0039"));
+    Assert.assertEquals( true, trie.contains("003"));
+    Assert.assertEquals( true, trie.contains("00"));
+    trie.remove("003");
     Assert.assertEquals(false, trie.contains("0039"));
     Assert.assertEquals(false, trie.contains("003"));
-    Assert.assertEquals(true, trie.contains("00"));
-
-    Assert.assertEquals(false, trie.remove("0039"));
+    Assert.assertEquals( true, trie.contains("00"));
   }
 
   @Test

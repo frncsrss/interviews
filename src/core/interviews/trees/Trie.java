@@ -1,7 +1,5 @@
 package interviews.trees;
 
-import interviews.lib.Pair;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -101,11 +99,11 @@ public class Trie {
    * Remove the given string from the trie.
    * @return boolean indicating if the operation was done or not.
    */
-  public boolean remove(String s) {
+  public void remove(String s) {
     if(s == null) {
-      return false;
+      return;
     }
-    return remove(root, s.toCharArray(), 0).x();
+    root = remove(root, s.toCharArray(), 0);
   }
 
   /**
@@ -245,33 +243,32 @@ public class Trie {
    * @return Pair<Boolean, TrieNode> the boolean indicating if it was remove and the TrieNode
    * the node to remove because there is no child.
    */
-  private Pair<Boolean, Node> remove(Node node, char[] arr, int i) {
+  private Node remove(Node node, char[] arr, int i) {
     if(i == arr.length) {  // we reached the end of the array
       if(node.isValid) {  // if it is a valid word, we remove its validity
         node.isValid = false;
-        if(!node.children.isEmpty()) {  // if there is no child, we tell the parent to remove the node
-          return new Pair<Boolean, Node>(true, node);
+        if(node.isEmpty()) {  // if there is no child, we tell the parent to remove the node
+          return null;
         } else {  // otherwise we don't
-          return new Pair<Boolean, Node>(true, null);
+          return node;
         }
-      } else {
-        return new Pair<Boolean, Node>(false, node);
       }
+      return node;  // the node is not valid so we don't delete it
     }
-    Node child = node.get(arr[i]);
-    if(child == null) {
-      return new Pair<Boolean, Node>(false, node);
+    char c = arr[i];
+    Node child = node.get(c);
+    if(child == null) {  // word is not in the trie, nothing to remove
+      return node;
     }
-    Pair<Boolean, Node> pair = remove(child, arr, i+1);
-    if(pair.x() && pair.y() == null) {
-      node.remove(arr[i]);
-      if(!node.children.isEmpty()) {
-        return new Pair<Boolean, Node>(true, node);
-      } else {
-        return new Pair<Boolean, Node>(true, null);
-      }
+    child = remove(child, arr, i + 1);
+    if(child == null) {  // the child is to be deleted
+      node.remove(c);
     }
-    return new Pair<Boolean, Node>(pair.x(), node);
+    // if there is no more child and the node is not valid, we tell the parent to remove the node
+    if(!node.isValid && node.isEmpty()) {
+      return null;
+    }
+    return node;
   }
 
 
@@ -292,6 +289,10 @@ public class Trie {
       return children.get(key);
     }
 
+    private boolean isEmpty() {
+      return children.isEmpty();
+    }
+ 
     private Collection<Character> keys() {
       return children.keySet();
     }
@@ -300,8 +301,8 @@ public class Trie {
       children.put(key, node);
     }
 
-    private Node remove(char key) {
-      return children.remove(key);
+    private void remove(char key) {
+      children.remove(key);
     }
 
     private void updateFrequency(char c) {
