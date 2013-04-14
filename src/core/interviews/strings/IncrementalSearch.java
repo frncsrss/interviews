@@ -11,6 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Incremental search.
+ * @author Francois Rousseau
+ */
 public class IncrementalSearch extends JFrame implements KeyListener {
   public static void main(String[] args) {
     Trie trie = new Trie();
@@ -24,13 +28,12 @@ public class IncrementalSearch extends JFrame implements KeyListener {
     new IncrementalSearch(trie);
   }
 
-  
+
   private static final long serialVersionUID = 1L;
 
   private Trie trie;
   private JTextField textField;
 
-  
   public IncrementalSearch(Trie trie) {
     this.trie = trie;
     init();
