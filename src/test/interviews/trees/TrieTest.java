@@ -102,4 +102,9 @@ public class TrieTest {
     Assert.assertEquals(
         "[0039, 0044, 004478, 0044566, 0044557, 0044558]", trie.words().toString());
   }
+
+  @Test
+  public void test_wordsWithPrefix() {
+    Assert.assertEquals("[0044566, 0044557, 0044558]", trie.wordsWithPrefix("00445").toString());
+  }
 }

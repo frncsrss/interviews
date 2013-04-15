@@ -127,6 +127,16 @@ public class Trie {
     return queue;
   }
 
+  /**
+   * Return all the valid words starting with prefix in the Trie.
+   */
+  public Iterable<String> wordsWithPrefix(String prefix) {
+    Queue<String> queue = new ArrayDeque<String>();
+    Node node = get(root, prefix.toCharArray(), 0);
+    collect(node, new StringBuffer(prefix), queue);
+    return queue;
+  }
+
 
   /**
    * Add the ith index of the given array to the current node.
@@ -146,7 +156,7 @@ public class Trie {
   }
 
   /**
-   * Collect recursively all the valid words in the Trie.
+   * Collect recursively all the valid words starting with prefix in the Trie.
    */
   private void collect(Node node, StringBuffer prefix, Queue<String> q) {
    if(node == null) return;
@@ -199,7 +209,13 @@ public class Trie {
     } 
     return frequency(child, arr, i+1);
   }
-  
+
+  private Node get(Node node, char[] arr, int i) {
+    if (node == null) return null;
+    if (i == arr.length) return node;
+    return get(node.get(arr[i]), arr, i + 1);
+  }
+
   /**
    * Appends to a StringBuffer the longest prefix in the trie for a given String.
    * @return boolean value indicating if the prefix is a valid word or not.
