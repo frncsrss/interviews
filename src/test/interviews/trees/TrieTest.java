@@ -96,4 +96,10 @@ public class TrieTest {
   public void test_toString() {
     Assert.assertEquals("00349475865678", trie.toString());
   }
+
+  @Test
+  public void test_words() {
+    Assert.assertEquals(
+        "[0039, 0044, 004478, 0044566, 0044557, 0044558]", trie.words().toString());
+  }
 }

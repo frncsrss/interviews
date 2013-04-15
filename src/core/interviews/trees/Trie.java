@@ -1,8 +1,8 @@
 package interviews.trees;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
@@ -104,7 +104,7 @@ public class Trie {
    * @return String
    */
   public String toString() {
-    Queue<Node> queue = new LinkedList<Node>();
+    Queue<Node> queue = new ArrayDeque<Node>();
     StringBuffer buffer = new StringBuffer();
 
     queue.add(root);
@@ -116,6 +116,15 @@ public class Trie {
       }
     }
     return buffer.toString();
+  }
+
+  /**
+   * Return all the valid words in the Trie.
+   */
+  public Iterable<String> words() {
+    Queue<String> queue = new ArrayDeque<String>();
+    collect(root, new StringBuffer(), queue);
+    return queue;
   }
 
 
@@ -134,6 +143,19 @@ public class Trie {
     node.put(c, add(node.get(c), arr, i+1));
     node.updateFrequency(c);
     return node;
+  }
+
+  /**
+   * Collect recursively all the valid words in the Trie.
+   */
+  private void collect(Node node, StringBuffer prefix, Queue<String> q) {
+   if(node == null) return;
+   if(node.isValid) q.add(prefix.toString());
+   for(Character c: node.keys()) {
+     prefix.append(c);
+     collect(node.get(c), prefix, q);
+     prefix.deleteCharAt(prefix.length() - 1);
+   }
   }
 
   /**
