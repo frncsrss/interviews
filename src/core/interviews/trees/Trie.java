@@ -169,6 +169,40 @@ public class Trie {
   }
 
   /**
+   * Returns the most frequent suffix to append to the given string.
+   * @param force a boolean indicating if we want to auto-complete
+   * even if the string is already a valid prefix.
+   * @return the auto-completed suffix, null if there is none
+   */
+  private String completion(Node node, String s, boolean force) {
+    for(int i = 0; i < s.length(); i++) {  // loop until you get the last child
+      Node child = node.get(s.charAt(i));
+      if(child == null) {  // the string we want to complete is not even in the trie
+        return null;
+      }
+      node = child;
+    }
+    if((node.isValid && !force) || node.mostFrequent == '\u0000') {
+      return null;
+    }
+    StringBuffer buffer = new StringBuffer();
+    buffer.append(node.mostFrequent);
+    completion(node.get(node.mostFrequent), buffer);
+    return buffer.toString();
+  }
+  
+  /**
+   * Fill a StringBuffer with the most frequent suffix. Ends with a valid one is reached.
+   */
+  private void completion(Node node, StringBuffer buffer) {
+    if(node.isValid) {
+      return;
+    }
+    buffer.append(node.mostFrequent);
+    completion(node.get(node.mostFrequent), buffer);
+  }
+
+  /**
    * Check whether a given string is in the trie.
    * Valid or not, depending on the argument isValid.
    */
@@ -233,40 +267,6 @@ public class Trie {
       return true;
     }
     return node.isValid;
-  }
-
-  /**
-   * Returns the most frequent suffix to append to the given string.
-   * @param force a boolean indicating if we want to auto-complete
-   * even if the string is already a valid prefix.
-   * @return the auto-completed suffix, null if there is none
-   */
-  private String completion(Node node, String s, boolean force) {
-    for(int i = 0; i < s.length(); i++) {  // loop until you get the last child
-      Node child = node.get(s.charAt(i));
-      if(child == null) {  // the string we want to complete is not even in the trie
-        return null;
-      }
-      node = child;
-    }
-    if((node.isValid && !force) || node.mostFrequent == '\u0000') {
-      return null;
-    }
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(node.mostFrequent);
-    completion(node.get(node.mostFrequent), buffer);
-    return buffer.toString();
-  }
-  
-  /**
-   * Fill a StringBuffer with the most frequent suffix. Ends with a valid one is reached.
-   */
-  private void completion(Node node, StringBuffer buffer) {
-    if(node.isValid) {
-      return;
-    }
-    buffer.append(node.mostFrequent);
-    completion(node.get(node.mostFrequent), buffer);
   }
 
   /**
