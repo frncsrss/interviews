@@ -234,9 +234,9 @@ public class Trie {
    * @return boolean value indicating if the prefix is a valid word or not.
    */
   private int longestPrefix(Node node, char[] arr, int i, int length) {
-    if(node == null)    return length;
-    if(node.isValid)    length = i;
-    if(i == arr.length) return length;
+    if(node == null)    return length;  // return the length of the longest valid word seen so far
+    if(node.isValid)    length = i;     // update the length of the longest valid word seen so far
+    if(i == arr.length) return length;  // return the length of the longest valid word seen so far
     return longestPrefix(node.get(arr[i]), arr, i + 1, length);
   }
 
