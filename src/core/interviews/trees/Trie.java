@@ -14,7 +14,7 @@ public class Trie {
   private Node root = new Node();
 
   /**
-   * Inserts a given string inside the trie.
+   * Insert a given string inside the trie.
    */
   public void add(String s) {
     if(s == null) return;
@@ -29,7 +29,7 @@ public class Trie {
   }
 
   /**
-   * Checks if the trie contains a given string.
+   * Check if the trie contains a given string.
    * Return true even if the string is not a valid word.
    */
   public boolean contains(String s) {
@@ -37,16 +37,15 @@ public class Trie {
   }
 
   /**
-   * Checks if a given string is a valid word.
-   * By valid, we mean once inserted as a string
-   * and not only as a substring in the trie.
+   * Check if a given string is a valid word.
+   * By valid, we mean once inserted as a string and not only as a substring in the trie.
    */
   public boolean isValid(String s) {
     return contains(s, true);
   }
 
   /**
-   * Returns the frequency of a given string in the trie.
+   * Return the frequency of a given string in the trie.
    * Valid or not.
    */
   public int frequency(String s) {
@@ -55,7 +54,7 @@ public class Trie {
   }
 
   /**
-   * Returns the longest valid prefix in the trie for a given string.
+   * Return the longest valid prefix in the trie for a given string.
    */
   public String longestPrefix(String s) {
     if(s == null) return null;
@@ -64,7 +63,7 @@ public class Trie {
   }
 
   /**
-   * Returns the most frequent suffix to append to the given string.
+   * Return the most frequent suffix to append to the given string.
    * Returns null if none exists or if the given string is already a valid prefix.
    */
   public String completion(String s) {
@@ -72,7 +71,7 @@ public class Trie {
   }
 
   /**
-   * Returns the most frequent suffix to append to the given string.
+   * Return the most frequent suffix to append to the given string.
    * Returns null if none exists.
    */
   public String completionForced(String s) {
@@ -230,8 +229,7 @@ public class Trie {
   }
 
   /**
-   * Append to a StringBuffer the longest prefix in the trie for a given String.
-   * @return boolean value indicating if the prefix is a valid word or not.
+   * Return the length of the longest valid word prefixing the given array of characters.
    */
   private int longestPrefix(Node node, char[] arr, int i, int length) {
     if(node == null)    return length;  // return the length of the longest valid word seen so far
