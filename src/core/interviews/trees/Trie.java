@@ -17,9 +17,7 @@ public class Trie {
    * Inserts a given string inside the trie.
    */
   public void add(String s) {
-    if(s == null) {
-      return;
-    }
+    if(s == null) return;
     root = add(root, s.toCharArray(), 0);
   }
 
@@ -52,9 +50,7 @@ public class Trie {
    * Valid or not.
    */
   public int frequency(String s) {
-    if(s == null) {
-      return 0;
-    }
+    if(s == null) return 0;
     return frequency(root, s.toCharArray(), 0);
   }
 
@@ -62,9 +58,7 @@ public class Trie {
    * Returns the longest valid prefix in the trie for a given string.
    */
   public String longestPrefix(String s) {
-    if(s == null) {
-      return null;
-    }
+    if(s == null) return null;
     StringBuffer buffer = new StringBuffer();
     if(longestPrefix(root, s.toCharArray(), 0, buffer)) {
       return buffer.reverse().toString();
@@ -93,9 +87,7 @@ public class Trie {
    * @return boolean indicating if the operation was done or not.
    */
   public void remove(String s) {
-    if(s == null) {
-      return;
-    }
+    if(s == null) return;
     root = remove(root, s.toCharArray(), 0);
   }
 
@@ -142,7 +134,9 @@ public class Trie {
    * Add the ith index of the given array to the current node.
    */
   private Node add(Node node, char[] arr, int i) {
-    if(node == null) node = new Node();
+    if(node == null) {
+      node = new Node();
+    }
     if(i == arr.length) {
       node.isValid = true;
       return node;
@@ -243,13 +237,9 @@ public class Trie {
    * @return boolean value indicating if the prefix is a valid word or not.
    */
   private boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
-    if(i == arr.length) {
-      return node.isValid;
-    }
+    if(i == arr.length) return node.isValid;
     Node child = node.get(arr[i]);
-    if(child == null) {
-      return node.isValid;
-    }
+    if(child == null)   return node.isValid;
     if(longestPrefix(child, arr, i+1, buffer)) {
       buffer.append(arr[i]);
       return true;
