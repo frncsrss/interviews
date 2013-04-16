@@ -1,5 +1,8 @@
 package interviews.strings;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Returns the first index where a pattern p appears in a string s.
  * @author Francois Rousseau
@@ -129,21 +132,21 @@ public class Substring {
    * @return the index of first match if it exists.
    */
   public static int strstrKMP2(char[] s, char[] p) {
-    final int[] t = getPrefixTable2(p);
+    int[] t = getPrefixTable2(p);
     int i = 0;  // position in text
     int j = 0;  // position in pattern
 
-    while(i+j < s.length) {  // iterate over the entire text - O(n)
+    while(i+j < s.length) {       // iterate over the entire text - O(n)
       if(s[i+j] == p[j]) {
         if (j == p.length - 1) {  // reached the end of the pattern - we got what we wanted
           return i;
         }
-        j++;  // otherwise move along to the next character
+        j++;            // otherwise move along to the next character
       } else {
         i += j - t[j];  // sliding in s by j - t[j]
         if(j > 0) {
-          j = t[j];  // starting at t[j] in p - prevents the matching of already seen characters
-        }  // for j==0, t[j] = -1 so we need j to remains equal to 0
+          j = t[j];     // starting at t[j] in p - prevents the matching of already seen characters
+        }               // for j==0, t[j] = -1 so we need j to remains equal to 0
       }
     }
     return -1;
@@ -160,21 +163,74 @@ public class Substring {
   protected static int[] getPrefixTable2(char[] p) {
     final int[] t = new int[p.length];
     t[0] = -1;  // special value for the KMP algorithm
-    t[1] = 0;  // we consider only proper prefix/suffix so p[0] doesn't contain any
+    t[1] = 0;   // we consider only proper prefix/suffix so p[0] doesn't contain any
 
-    int i = 2;  // position in pattern
+    int i = 2;   // position in pattern
     int len = 0; // length of the current prefix
 
-    while(i < p.length) {  // iterate over the entire pattern - O(m)
+    while(i < p.length) {     // iterate over the entire pattern - O(m)
       if(p[i-1] == p[len]) {  // we have one more match
         len++;
-        t[i++] = len;  // set the length and move along to the next character
-      } else if(len > 0) {  // mismatch but still smaller prefixes to try
-        len = t[len];  // rollback to the second longest prefix for the prefix and try again
-      } else {  // mismatch for the first character
-        t[i++] = 0;  // set the length and move along to the next character
+        t[i++] = len;         // set the length and move along to the next character
+      } else if(len > 0) {    // mismatch but still smaller prefixes to try
+        len = t[len];         // rollback to the second longest prefix for the prefix and try again
+      } else {                // mismatch for the first character
+        t[i++] = 0;           // set the length and move along to the next character
       }
     }
     return t;
+  }
+
+  /**
+   * Returns the first index where a pattern p appears in a string s in O(n + m).
+   * Rely on the Knutt-Morris-Pratt algorithm with Deterministic finite state automaton (DFA).
+   * @return the index of first match if it exists.
+   */
+  public static int strstrKMP3(String s, String p) {
+    return strstrKMP3(s.toCharArray(), p.toCharArray());
+  }
+
+  /**
+   * Returns the first index where a pattern p appears in a string s in O(n + m).
+   * Rely on the Knutt-Morris-Pratt algorithm with Deterministic finite state automaton (DFA).
+   * @return the index of first match if it exists.
+   */
+  public static int strstrKMP3(char[] s, char[] p) {
+    Map<Character, int[]> dfa = getDFA(p);
+
+    int i, j; 
+    for(i = 0, j = 0; i < s.length && j < p.length; i++) {
+      if(dfa.containsKey(s[i])) {
+        j = dfa.get(s[i])[j];
+      } else {
+        j = 0;
+      }
+    }
+    if(j == p.length) return i - j; 
+    else return -1; 
+  }
+
+  /**
+   * Build the Deterministic finite state automaton (DFA) from the pattern p.
+   *
+   * Match transition: if in state j and next char c == p[j], go to j + 1.
+   * Mismatch transition: if in state j and next char c != p[j],
+   *   then the last j-1 characters of input are pat[1..j-1], followed by c.
+   *   To compute dfa[c][j]: simulate p[1..j-1] (state X) on DFA and take transition c.
+   */
+  private static Map<Character, int[]> getDFA(char[] p) {
+    Map<Character, int[]> dfa = new HashMap<Character, int[]>();
+    for(int j = 0; j < p.length; j++) {  // initialize an empty dfa with the alphabet from p
+      dfa.put(p[j], new int[p.length]);
+    }
+    dfa.get(p[0])[0] = 1; 
+    for(int X = 0, j = 1; j < p.length; j++) { 
+      for(char c: dfa.keySet()) {  // copy mismatch cases
+        dfa.get(c)[j] = dfa.get(c)[X];
+      }
+      dfa.get(p[j])[j] = j+1;     // set match case
+      X = dfa.get(p[j])[X];       // update restart state
+    }
+    return dfa;
   }
 }
