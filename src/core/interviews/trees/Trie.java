@@ -59,11 +59,8 @@ public class Trie {
    */
   public String longestPrefix(String s) {
     if(s == null) return null;
-    StringBuffer buffer = new StringBuffer();
-    if(longestPrefix(root, s.toCharArray(), 0, buffer)) {
-      return buffer.reverse().toString();
-    }
-    return null;
+    int length = longestPrefix(root, s.toCharArray(), 0, 0);
+    return s.substring(0, length);
   }
 
   /**
@@ -236,15 +233,11 @@ public class Trie {
    * Append to a StringBuffer the longest prefix in the trie for a given String.
    * @return boolean value indicating if the prefix is a valid word or not.
    */
-  private boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
-    if(i == arr.length) return node.isValid;
-    Node child = node.get(arr[i]);
-    if(child == null)   return node.isValid;
-    if(longestPrefix(child, arr, i+1, buffer)) {
-      buffer.append(arr[i]);
-      return true;
-    }
-    return node.isValid;
+  private int longestPrefix(Node node, char[] arr, int i, int length) {
+    if(node == null)    return length;
+    if(node.isValid)    length = i;
+    if(i == arr.length) return length;
+    return longestPrefix(node.get(arr[i]), arr, i + 1, length);
   }
 
   /**
