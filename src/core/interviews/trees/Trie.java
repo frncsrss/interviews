@@ -142,15 +142,13 @@ public class Trie {
    * Add the ith index of the given array to the current node.
    */
   private Node add(Node node, char[] arr, int i) {
-    if(node == null) {
-      node = new Node();
-    }
+    if(node == null) node = new Node();
     if(i == arr.length) {
       node.isValid = true;
       return node;
     }
     char c = arr[i];
-    node.put(c, add(node.get(c), arr, i+1));
+    node.put(c, add(node.get(c), arr, i + 1));
     node.updateFrequency(c);
     return node;
   }
@@ -169,7 +167,7 @@ public class Trie {
   }
 
   /**
-   * Returns the most frequent suffix to append to the given string.
+   * Return the most frequent suffix to append to the given string.
    * @param force a boolean indicating if we want to auto-complete
    * even if the string is already a valid prefix.
    * @return the auto-completed suffix, null if there is none
@@ -195,9 +193,7 @@ public class Trie {
    * Fill a StringBuffer with the most frequent suffix. Ends with a valid one is reached.
    */
   private void completion(Node node, StringBuffer buffer) {
-    if(node.isValid) {
-      return;
-    }
+    if(node.isValid) return;
     buffer.append(node.mostFrequent);
     completion(node.get(node.mostFrequent), buffer);
   }
@@ -207,9 +203,7 @@ public class Trie {
    * Valid or not, depending on the argument isValid.
    */
   private boolean contains(String s, boolean isValid) {
-    if(s == null) {
-      return false;
-    }
+    if(s == null) return false;
     return contains(root, s.toCharArray(), 0, isValid);
   }
 
@@ -218,14 +212,9 @@ public class Trie {
    * Valid or not, depending on the argument isValid.
    */
   private boolean contains(Node node, char[] arr, int i, boolean isValid) {
-    if(i == arr.length) {
-      return isValid ? node.isValid : true;
-    }
-    Node child = node.get(arr[i]);
-    if(child == null) {
-      return false;
-    }
-    return contains(child, arr, i+1, isValid);
+    if(node == null)    return false;
+    if(i == arr.length) return isValid ? node.isValid : true;
+    return contains(node.get(arr[i]), arr, i + 1, isValid);
   }
 
   /**
@@ -234,24 +223,23 @@ public class Trie {
    * @return frequency
    */
   private int frequency(Node node, char[] arr, int i) {
-    if(i == arr.length) {
-      return node.frequency;
-    }
-    Node child = node.get(arr[i]);
-    if(child == null) {
-      return 0;
-    } 
-    return frequency(child, arr, i+1);
+    if(node == null)    return 0;
+    if(i == arr.length) return node.frequency;
+    return frequency(node.get(arr[i]), arr, i+1);
   }
 
+  /**
+   * Return the node corresponding to the array of characters.
+   * Null if none exists.
+   */
   private Node get(Node node, char[] arr, int i) {
-    if (node == null) return null;
-    if (i == arr.length) return node;
+    if(node == null)    return null;
+    if(i == arr.length) return node;
     return get(node.get(arr[i]), arr, i + 1);
   }
 
   /**
-   * Appends to a StringBuffer the longest prefix in the trie for a given String.
+   * Append to a StringBuffer the longest prefix in the trie for a given String.
    * @return boolean value indicating if the prefix is a valid word or not.
    */
   private boolean longestPrefix(Node node, char[] arr, int i, StringBuffer buffer) {
