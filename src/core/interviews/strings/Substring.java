@@ -8,19 +8,42 @@ import java.util.Map;
  * @author Francois Rousseau
  */
 public class Substring {
+
+  public static enum TYPE {
+    BRUTE_FORCE {
+      public int strstr(char[] s, char[] p) {
+        return strstrBruteForce(s, p);
+      }
+    }, KMP1 {
+      public int strstr(char[] s, char[] p) {
+        return strstrKMP1(s, p);
+      }
+    }, KMP2 {
+      public int strstr(char[] s, char[] p) {
+        return strstrKMP2(s, p);
+      }
+    }, KMP3 {
+      public int strstr(char[] s, char[] p) {
+        return strstrKMP3(s, p);
+      }
+    };
+
+    public abstract int strstr(char[] s, char[] p);
+  };
+
   /**
    * Returns the first index where a pattern p appears in a string s in O(n*m).
    * @return the index of first match if it exists.
    */
-  public static int strstrBruteForce(String s, String p) {
-    return strstrBruteForce(s.toCharArray(), p.toCharArray());
+  public static int strstr(String s, String p, TYPE type) {
+    return type.strstr(s.toCharArray(), p.toCharArray());
   }
 
   /**
    * Returns the first index where a pattern p appears in a string s in O(n*m).
    * @return the index of first match if it exists.
    */
-  public static int strstrBruteForce(char[] s, char[] p) {
+  private static int strstrBruteForce(char[] s, char[] p) {
     int i = 0;  // position in text
     int j = 0;  // position in pattern
 
@@ -40,17 +63,8 @@ public class Substring {
    * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
    * @return the index of first match if it exists.
    */
-  public static int strstrKMP(String s, String p) {
-    return strstrKMP(s.toCharArray(), p.toCharArray());
-  }
-
-  /**
-   * Returns the first index where a pattern p appears in a string s in O(n + m).
-   * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
-   * @return the index of first match if it exists.
-   */
-  public static int strstrKMP(char[] s, char[] p) {
-    final int[] t = getPrefixTable(p);
+  private static int strstrKMP1(char[] s, char[] p) {
+    int[] t = getPrefixTable1(p);
     int i = 0;  // position in text
     int j = 0;  // position in pattern
 
@@ -76,8 +90,8 @@ public class Substring {
    * 
    * @return the index of first match if it exists.
    */
-  protected static int[] getPrefixTable(char[] p) {
-    final int[] t = new int[p.length + 1];
+  protected static int[] getPrefixTable1(char[] p) {
+    int[] t = new int[p.length + 1];
     int i = 0;  // position in pattern
     int j = -1; // length of the current prefix
 
@@ -94,15 +108,6 @@ public class Substring {
       t[i] = j;
     }
     return t;
-  }
-
-  /**
-   * Returns the first index where a pattern p appears in a string s in O(n + m).
-   * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
-   * @return the index of first match if it exists.
-   */
-  public static int strstrKMP2(String s, String p) {
-    return strstrKMP2(s.toCharArray(), p.toCharArray());
   }
 
   /**
@@ -131,7 +136,7 @@ public class Substring {
    * 
    * @return the index of first match if it exists.
    */
-  public static int strstrKMP2(char[] s, char[] p) {
+  private static int strstrKMP2(char[] s, char[] p) {
     int[] t = getPrefixTable2(p);
     int i = 0;  // position in text
     int j = 0;  // position in pattern
@@ -186,16 +191,7 @@ public class Substring {
    * Rely on the Knutt-Morris-Pratt algorithm with Deterministic finite state automaton (DFA).
    * @return the index of first match if it exists.
    */
-  public static int strstrKMP3(String s, String p) {
-    return strstrKMP3(s.toCharArray(), p.toCharArray());
-  }
-
-  /**
-   * Returns the first index where a pattern p appears in a string s in O(n + m).
-   * Rely on the Knutt-Morris-Pratt algorithm with Deterministic finite state automaton (DFA).
-   * @return the index of first match if it exists.
-   */
-  public static int strstrKMP3(char[] s, char[] p) {
+  private static int strstrKMP3(char[] s, char[] p) {
     Map<Character, int[]> dfa = getDFA(p);
 
     int i, j; 
