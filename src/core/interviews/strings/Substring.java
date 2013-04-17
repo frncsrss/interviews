@@ -14,17 +14,21 @@ public class Substring {
       public int strstr(char[] s, char[] p) {
         return strstrBruteForce(s, p);
       }
-    }, KMP1 {
+    }, KNUTH_MORRIS_PRATT_1 {
       public int strstr(char[] s, char[] p) {
         return strstrKMP1(s, p);
       }
-    }, KMP2 {
+    }, KNUTH_MORRIS_PRATT_2 {
       public int strstr(char[] s, char[] p) {
         return strstrKMP2(s, p);
       }
-    }, KMP3 {
+    }, KNUTH_MORRIS_PRATT_3 {
       public int strstr(char[] s, char[] p) {
         return strstrKMP3(s, p);
+      }
+    }, BOYER_MOORE {
+      public int strstr(char[] s, char[] p) {
+        return strstrBM(s, p);
       }
     };
 
@@ -32,16 +36,15 @@ public class Substring {
   };
 
   /**
-   * Returns the first index where a pattern p appears in a string s in O(n*m).
-   * @return the index of first match if it exists.
+   * Return the first index where a pattern p appears in a string s in O(n*m).
    */
   public static int strstr(String s, String p, TYPE type) {
     return type.strstr(s.toCharArray(), p.toCharArray());
   }
 
+
   /**
-   * Returns the first index where a pattern p appears in a string s in O(n*m).
-   * @return the index of first match if it exists.
+   * Return the first index where a pattern p appears in a string s in O(n*m).
    */
   private static int strstrBruteForce(char[] s, char[] p) {
     int i = 0;  // position in text
@@ -57,6 +60,7 @@ public class Substring {
     }  // overall up to n*m times
     return -1;
   }
+
 
   /**
    * Returns the first index where a pattern p appears in a string s in O(n + m).
@@ -83,12 +87,10 @@ public class Substring {
   }
 
   /**
-   * Computes the length of the longest prefix matching a suffix for every substring of p
+   * Compute the length of the longest prefix matching a suffix for every substring of p
    * and returns a prefix table t as follows:
    * t[i] == length of the longest prefix matching a suffix in p[0..i-1]
    * with t[0] == -1 (see above).
-   * 
-   * @return the index of first match if it exists.
    */
   protected static int[] getPrefixTable1(char[] p) {
     int[] t = new int[p.length + 1];
@@ -110,8 +112,9 @@ public class Substring {
     return t;
   }
 
+
   /**
-   * Returns the first index where a pattern p appears in a string s in O(n + m).
+   * Return the first index where a pattern p appears in a string s in O(n + m).
    * 
    * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
    * For example, consider:
@@ -158,12 +161,10 @@ public class Substring {
   }
 
   /**
-   * Computes the length of the longest prefix matching a suffix for every substring of p
+   * Compute the length of the longest prefix matching a suffix for every substring of p
    * and returns a prefix table t as follows:
    * t[i] == length of the longest prefix matching a suffix in p[0..i-1]
    * with t[0] == -1 (see above).
-   * 
-   * @return the index of first match if it exists.
    */
   protected static int[] getPrefixTable2(char[] p) {
     final int[] t = new int[p.length];
@@ -186,10 +187,10 @@ public class Substring {
     return t;
   }
 
+
   /**
-   * Returns the first index where a pattern p appears in a string s in O(n + m).
+   * Return the first index where a pattern p appears in a string s in O(n + m).
    * Rely on the Knutt-Morris-Pratt algorithm with Deterministic finite state automaton (DFA).
-   * @return the index of first match if it exists.
    */
   private static int strstrKMP3(char[] s, char[] p) {
     Map<Character, int[]> dfa = getDFA(p);
@@ -228,5 +229,42 @@ public class Substring {
       X = dfa.get(p[j])[X];       // update restart state
     }
     return dfa;
+  }
+
+
+  /**
+   * Return the first index where a pattern p appears in a string s in O(n + m).
+   * Rely on the Boyer-Moore algorithm.
+   */
+  private static int strstrBM(char[] s, char[] p) {
+    Map<Character, Integer> right = getRight(p);
+
+    int skip; 
+    for(int i = 0; i <= s.length - p.length; i += skip) {
+      skip = 0;
+      for(int j = p.length - 1; j >= 0; j--) {
+        if(p[j] != s[i + j]) {
+          if(right.containsKey(s[i + j])) {  // character in pattern
+            skip = Math.max(1, j - right.get(s[i + j]));            
+          } else {
+            skip = Math.max(1, j + 1);
+          }
+          break;
+        }
+      }
+      if(skip == 0) return i;  // match
+    }
+    return -1;
+  }
+
+  /**
+   * Precompute index of rightmost occurrence of character c in pattern.
+   */
+  private static Map<Character, Integer> getRight(char[] p) {
+    Map<Character, Integer> right = new HashMap<Character, Integer>();
+    for(int j = 0; j < p.length; j++) { 
+      right.put(p[j], j);
+    }
+    return right;
   }
 }

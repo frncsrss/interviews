@@ -1,6 +1,6 @@
 package interviews.strings;
 
-import interviews.strings.Substring.TYPE;
+import static interviews.strings.Substring.TYPE.*;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,30 +16,30 @@ import static interviews.strings.Substring.strstr;
 public class SubstringTest {
   @Test
   public void test_strstrBruteForce() {
-    Assert.assertEquals(4,  strstr("ababaaab", "aaa", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(5,  strstr("ababaaab", "aab", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(-1, strstr("ababaaab", "aac", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", TYPE.BRUTE_FORCE));
-    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", TYPE.BRUTE_FORCE));
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", BRUTE_FORCE));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", BRUTE_FORCE));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", BRUTE_FORCE));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", BRUTE_FORCE));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", BRUTE_FORCE));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", BRUTE_FORCE));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", BRUTE_FORCE));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", BRUTE_FORCE));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", BRUTE_FORCE));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", BRUTE_FORCE));
   }
 
   @Test
   public void test_strstrKMP1() {
-    Assert.assertEquals(4,  strstr("ababaaab", "aaa", TYPE.KMP1));
-    Assert.assertEquals(5,  strstr("ababaaab", "aab", TYPE.KMP1));
-    Assert.assertEquals(-1, strstr("ababaaab", "aac", TYPE.KMP1));
-    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", TYPE.KMP1));
-    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", TYPE.KMP1));
-    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", TYPE.KMP1));
-    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", TYPE.KMP1));
-    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", TYPE.KMP1));
-    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", TYPE.KMP1));
-    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", TYPE.KMP1));
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", KNUTH_MORRIS_PRATT_1));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", KNUTH_MORRIS_PRATT_1));
   }
 
   @Test
@@ -57,16 +57,16 @@ public class SubstringTest {
 
   @Test
   public void test_strstrKMP2() {
-    Assert.assertEquals(4,  strstr("ababaaab", "aaa", TYPE.KMP2));
-    Assert.assertEquals(5,  strstr("ababaaab", "aab", TYPE.KMP2));
-    Assert.assertEquals(-1, strstr("ababaaab", "aac", TYPE.KMP2));
-    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", TYPE.KMP2));
-    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", TYPE.KMP2));
-    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", TYPE.KMP2));
-    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", TYPE.KMP2));
-    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", TYPE.KMP2));
-    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", TYPE.KMP2));
-    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", TYPE.KMP2));
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", KNUTH_MORRIS_PRATT_2));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", KNUTH_MORRIS_PRATT_2));
   }
 
   @Test
@@ -81,15 +81,29 @@ public class SubstringTest {
 
   @Test
   public void test_strstrKMP3() {
-    Assert.assertEquals(4,  strstr("ababaaab", "aaa", TYPE.KMP3));
-    Assert.assertEquals(5,  strstr("ababaaab", "aab", TYPE.KMP3));
-    Assert.assertEquals(-1, strstr("ababaaab", "aac", TYPE.KMP3));
-    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", TYPE.KMP3));
-    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", TYPE.KMP3));
-    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", TYPE.KMP3));
-    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", TYPE.KMP3));
-    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", TYPE.KMP3));
-    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", TYPE.KMP3));
-    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", TYPE.KMP3));
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", KNUTH_MORRIS_PRATT_3));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", KNUTH_MORRIS_PRATT_3));
+  }
+
+  @Test
+  public void test_strstrBM() {
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", BOYER_MOORE));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", BOYER_MOORE));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", BOYER_MOORE));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", BOYER_MOORE));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", BOYER_MOORE));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", BOYER_MOORE));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", BOYER_MOORE));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", BOYER_MOORE));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", BOYER_MOORE));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", BOYER_MOORE));
   }
 }
