@@ -36,7 +36,7 @@ public class Substring {
   };
 
   /**
-   * Return the first index where a pattern p appears in a string s in O(n*m).
+   * Return the first index where a pattern p appears in a string s.
    */
   public static int strstr(String s, String p, TYPE type) {
     return type.strstr(s.toCharArray(), p.toCharArray());
@@ -44,7 +44,7 @@ public class Substring {
 
 
   /**
-   * Return the first index where a pattern p appears in a string s in O(n*m).
+   * Return the first index where a pattern p appears in a string s in O(n x m).
    */
   private static int strstrBruteForce(char[] s, char[] p) {
     int i = 0;  // position in text
@@ -234,7 +234,10 @@ public class Substring {
 
   /**
    * Return the first index where a pattern p appears in a string s in O(n + m).
-   * Rely on the Boyer-Moore algorithm.
+   * Rely on the Boyer-Moore algorithm:
+   *   1. Scan characters in pattern from right to left.
+   *   2. Can skip as many as M text chars when finding one not in the pattern.
+   *   3. In practice, runs in O(n/m) time but worst case is O(n x m).
    */
   private static int strstrBM(char[] s, char[] p) {
     Map<Character, Integer> right = getRight(p);
