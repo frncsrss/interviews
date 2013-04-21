@@ -89,7 +89,9 @@ public class RegularExpression {
       // states reachable after scanning past s[i]
       List<Integer> match = new ArrayList<Integer>();
       for(int v : states) {
-        if(v == M) continue;
+        if(v == M) {
+          return true;  // prefix matching
+        }
         if((re[v] == s[i]) || re[v] == '.')
           match.add(v+1); 
       }

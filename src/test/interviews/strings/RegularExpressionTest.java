@@ -19,5 +19,7 @@ public class RegularExpressionTest {
     Assert.assertEquals( true, re.match("AAAABD"));
     Assert.assertEquals(false, re.match("AC"));
     Assert.assertEquals(false, re.match("ABCD"));
+    Assert.assertEquals(false, re.match("DACD"));
+    Assert.assertEquals( true, re.match("ACDD"));
   }
 }
