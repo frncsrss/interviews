@@ -62,8 +62,13 @@ public class RegularExpression {
         g.addEdge(i + 1, lp);
       }
 
+      // closure, needs 1-character lookahead
+      if(i < M-1 && re[i + 1] == '+') {
+        g.addEdge(i + 1, lp);
+      }
+
       // metasymbols
-      if(re[i] == '(' || re[i] == '*' || re[i] == ')') {
+      if(re[i] == '(' || re[i] == '*' || re[i] == ')' || re[i] == '+') {
         g.addEdge(i, i + 1);
       }
     } 
