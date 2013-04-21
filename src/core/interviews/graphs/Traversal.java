@@ -22,7 +22,7 @@ public class Traversal {
     this.visited = new boolean[g.V];
     this.source = -1;
   }
-  
+
   /**
    * Perform a breadth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
@@ -30,10 +30,10 @@ public class Traversal {
   public void bfs(int v) {
     Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
     Arrays.fill(visited, false);  // clear the visited table from previous traversals
-    source = v;      // set the source
+    source = v;                   // set the source
     bfsHelper(v);
   }
- 
+
   /**
    * Perform a depth-first search traversal of the graph from the given vertex.
    * Set the given vertex as current source for subsequent methods.
@@ -41,8 +41,21 @@ public class Traversal {
   public void dfs(int v) {
     Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
     Arrays.fill(visited, false);  // clear the visited table from previous traversals
-    source = v;      // set the source
+    source = v;                   // set the source
     dfsHelper(v);
+  }
+
+  /**
+   * Perform a depth-first search traversal of the graph from the given vertex.
+   * Set the given vertex as current source for subsequent methods.
+   */
+  public void dfs(Iterable<Integer> vs) {
+    Arrays.fill(parent, -1);      // clear the parent  table from previous traversals
+    Arrays.fill(visited, false);  // clear the visited table from previous traversals
+    source = -1;                  // not just one source
+    for(int v: vs) {
+      dfsHelper(v);
+    }
   }
 
   /**
@@ -102,12 +115,12 @@ public class Traversal {
   private void bfsHelper(int v) {
     Queue<Integer> queue = new LinkedList<Integer>();
     queue.add(v);
-    visited[v] = true;  // mark vertex as visited
+    visited[v] = true;                // mark vertex as visited
     while(!queue.isEmpty()) {
       int current = queue.poll();
       for(int w: g.adjV(current)) {
-        if(!visited[w]) {  // not already visited
-          parent[w] = current;  // store the parent (current) of edge.v
+        if(!visited[w]) {             // not already visited
+          parent[w] = current;        // store the parent (current) of edge.v
           queue.add(w);
           visited[w] = true;
         }
@@ -120,10 +133,10 @@ public class Traversal {
    * Use recursion (LIFO queue).
    */
   private void dfsHelper(int v) {
-    visited[v] = true;  // mark vertex as visited
+    visited[v] = true;        // mark vertex as visited
     for(int w: g.adjV(v)) {
-      if(!visited[w]) {  // not already visited
-        parent[w] = v;  // store the parent (current) of edge.v
+      if(!visited[w]) {       // not already visited
+        parent[w] = v;        // store the parent (current) of edge.v
         dfsHelper(w);
       }
     }

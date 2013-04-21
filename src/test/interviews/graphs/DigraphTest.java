@@ -21,7 +21,7 @@ public class DigraphTest {
     Assert.assertEquals(true, g.addEdge(12, 9));
     Assert.assertEquals(true, g.addEdge(9,  10));
     Assert.assertEquals(true, g.addEdge(9,  11));
-    Assert.assertEquals(true, g.addEdge(8,  9));
+    Assert.assertEquals(true, g.addEdge(7,  9));
     Assert.assertEquals(true, g.addEdge(10, 12));
     Assert.assertEquals(true, g.addEdge(11, 4));
     Assert.assertEquals(true, g.addEdge(4,  3));
