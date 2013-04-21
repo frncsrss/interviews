@@ -1,7 +1,9 @@
 package interviews.strings;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Returns the first index where a pattern p appears in a string s.
@@ -30,10 +32,15 @@ public class Substring {
       public int strstr(char[] s, char[] p) {
         return strstrBM(s, p);
       }
+    }, RABIN_KARP {
+      public int strstr(char[] s, char[] p) {
+        return strstrRK(s, p);
+      }
     };
 
     public abstract int strstr(char[] s, char[] p);
   };
+
 
   /**
    * Return the first index where a pattern p appears in a string s.
@@ -269,5 +276,78 @@ public class Substring {
       right.put(p[j], j);
     }
     return right;
+  }
+
+
+  private static final int R;
+  private static final long Q;
+
+  static {
+    R = 256;
+    Q = (new BigInteger(31, new Random())).longValue();
+  }
+
+  /**
+   * Return the first index where a pattern p appears in a string s in O(n + m).
+   * Rely on the Rabin-Karp algorithm:
+   *   1. Compute the hash of the p.
+   *   2. Compute a sliding hash for M consecutive characters of s.
+   *   3. Return match if hash values match (Monter-Carlo version, linear time).
+   *
+   * Note that the Monte-Carlo version always run in linear time while the Las Vegas version
+   * always return the correct answer (check strings when hash values match).
+   */
+  private static int strstrRK(char[] s, char[] p) {
+    int M = p.length;
+    long golden = hash(p, M);
+    long h = hash(s, M);
+
+    if(golden == h) {  // Monte-Carlo version, return match if hash values match.
+      return 0;
+    }
+
+    long RM = 1;  // pre-compute R^(M-1)
+    for (int i = 1; i <= M-1; i++) {
+      RM = (R * RM) % Q;
+    }
+
+    for(int i = M; i < s.length; i++) {
+      h = update(h, RM, s, M, i); 
+      if(golden == h) {  // Monte-Carlo version, return match if hash values match.
+        return i - M +  1;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Compute the hash of a character of arrays in linear time.
+   * Use the Horner's method.
+   * @param s the array of characters
+   * @param R the radix
+   * @param Q the prime number
+   * @return the hash value
+   */
+  private static long hash(char[] s, int M) {
+    long h = 0;
+    for(int i = 0; i < M; i++) {
+      h = (R * h + s[i]) % Q;
+    }
+    return h;
+  }
+
+  /**
+   * Update the hash value from s[i - M...i - 1] to s[i - M -2...i].
+   * @param h the previous hash value
+   * @param R the radix
+   * @param Q the prime number
+   * @param RM R^(M-1)
+   * @param s the array of characters
+   * @param i the next index to include
+   * @param M the length of the hash
+   * @return the new hash value
+   */
+  private static long update(long h, long RM, char[] s, int M, int i) {
+    return (((h + Q - s[i - M]*RM % Q) % Q) * R + s[i]) % Q;
   }
 }

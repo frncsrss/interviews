@@ -106,4 +106,18 @@ public class SubstringTest {
     Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", BOYER_MOORE));
     Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", BOYER_MOORE));
   }
+
+  @Test
+  public void test_strstrRK() {
+    Assert.assertEquals(4,  strstr("ababaaab", "aaa", RABIN_KARP));
+    Assert.assertEquals(5,  strstr("ababaaab", "aab", RABIN_KARP));
+    Assert.assertEquals(-1, strstr("ababaaab", "aac", RABIN_KARP));
+    Assert.assertEquals(-1, strstr("ababaaab", "aaaa", RABIN_KARP));
+    Assert.assertEquals(14, strstr("abacadabrabracabracadabrabrabracad", "abracadabra", RABIN_KARP));
+    Assert.assertEquals(8,  strstr("abacadabrabracabracadabrabrabracad", "rab", RABIN_KARP));
+    Assert.assertEquals(-1, strstr("abacadabrabracabracadabrabrabracad", "bcara", RABIN_KARP));
+    Assert.assertEquals(23, strstr("abacadabrabracabracadabrabrabracad", "rabrabracad", RABIN_KARP));
+    Assert.assertEquals(0,  strstr("abacadabrabracabracadabrabrabracad", "abacad", RABIN_KARP));
+    Assert.assertEquals(13, strstr("abra abracad abracadabra", "abracadabra", RABIN_KARP));
+  }
 }
