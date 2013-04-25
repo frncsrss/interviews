@@ -29,6 +29,22 @@ public class Trie {
   }
 
   /**
+   * Return the most frequent suffix to append to the given string.
+   * Returns null if none exists or if the given string is already a valid prefix.
+   */
+  public String completion(String s) {
+    return completion(root, s, false);
+  }
+
+  /**
+   * Return the most frequent suffix to append to the given string.
+   * Returns null if none exists.
+   */
+  public String completionForced(String s) {
+    return completion(root, s, true);
+  }
+
+  /**
    * Check if the trie contains a given string.
    * Return true even if the string is not a valid word.
    */
@@ -60,22 +76,6 @@ public class Trie {
     if(s == null) return null;
     int length = longestPrefix(root, s.toCharArray(), 0, 0);
     return s.substring(0, length);
-  }
-
-  /**
-   * Return the most frequent suffix to append to the given string.
-   * Returns null if none exists or if the given string is already a valid prefix.
-   */
-  public String completion(String s) {
-    return completion(root, s, false);
-  }
-
-  /**
-   * Return the most frequent suffix to append to the given string.
-   * Returns null if none exists.
-   */
-  public String completionForced(String s) {
-    return completion(root, s, true);
   }
 
   /**
@@ -127,7 +127,7 @@ public class Trie {
 
 
   /**
-   * Add the ith index of the given array to the current node.
+   * Create child node for the ith character of the array.
    */
   private Node add(Node node, char[] arr, int i) {
     if(node == null) {

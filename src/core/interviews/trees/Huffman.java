@@ -14,16 +14,16 @@ public class Huffman {
   private Map<Character, String> st;  // symbol table
 
   /**
-   * Decode a String s with the current trie.
+   * Decode the input String using the current trie.
    */
-  public String decode(String s) {
+  public String decode(String input) {
     StringBuilder builder = new StringBuilder();
     int i = 0;
-    int N = s.length();
+    int N = input.length();
     while(i < N) { 
       Node x = root;
       while(!x.isLeaf()) {
-        if(s.charAt(i++) == '0') {
+        if(input.charAt(i++) == '0') {
           x = x.left;
         }
         else {
@@ -36,15 +36,16 @@ public class Huffman {
   }
 
   /**
-   * Encode a String s, overwriting previous trie and symbol table.
+   * Encode the input String using Huffman algorithm.
+   * Overwriting previous trie and symbol table.
    */
-  public String encode(String s) {
+  public String encode(String input) {
     Map<Character, Integer> freq = new HashMap<Character, Integer>();
-    for(char c: s.toCharArray()) {
+    for(char c: input.toCharArray()) {
       if(!freq.containsKey(c)) {
         freq.put(c, 1);
       } else {
-        freq.put(c, freq.get(c) + 1);        
+        freq.put(c, freq.get(c) + 1);
       }
     }
     root = makeTrie(freq);
@@ -52,7 +53,7 @@ public class Huffman {
     makeTable(st, root, "");
 
     StringBuilder builder = new StringBuilder();
-    for(char c: s.toCharArray()) {
+    for(char c: input.toCharArray()) {
       builder.append(st.get(c));
     }
     return builder.toString();
