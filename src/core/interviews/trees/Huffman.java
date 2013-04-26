@@ -1,62 +1,84 @@
 package interviews.trees;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 /**
  * Huffman encoding (prefix-free).
  * @author Francois Rousseau
  */
 public class Huffman {
-  private Node root;  // root of the trie
-  private Map<Character, String> st;  // symbol table
+  private static Node root;  // root of the trie
+  private static Map<Character, String> st;  // symbol table
 
   /**
    * Decode the input String using the current trie.
+   * @throws IOException 
    */
-  public String decode(String input) {
-    StringBuilder builder = new StringBuilder();
+  public static void decode() throws IOException {
+    Scanner stdin = new Scanner(System.in);
+    PrintWriter stdout = new PrintWriter(System.out);
+
+    // read the input
+    String s = stdin.next();
+    char[] input = s.toCharArray();
+
     int i = 0;
-    int N = input.length();
-    while(i < N) { 
+    while(i < input.length) {
       Node x = root;
       while(!x.isLeaf()) {
-        if(input.charAt(i++) == '0') {
+        if(input[i++] == '0') {
           x = x.left;
         }
         else {
           x = x.right;
         }
       }
-      builder.append(x.ch);
+      stdout.write(x.ch);
     }
-    return builder.toString();
+    stdout.flush();
   }
 
   /**
    * Encode the input String using Huffman algorithm.
    * Overwriting previous trie and symbol table.
+   * @throws IOException 
    */
-  public String encode(String input) {
+  public static void encode() throws IOException {
+    Scanner stdin = new Scanner(System.in);
+    PrintWriter stdout = new PrintWriter(System.out);
+
+    // read the input
+    String s = stdin.next();
+    char[] input = s.toCharArray();
+
+    // tabulate frequency counts
     Map<Character, Integer> freq = new HashMap<Character, Integer>();
-    for(char c: input.toCharArray()) {
+    for(char c: input) {
       if(!freq.containsKey(c)) {
         freq.put(c, 1);
       } else {
         freq.put(c, freq.get(c) + 1);
       }
     }
+
+    // build Huffman trie
     root = makeTrie(freq);
+
+    // build code table
     st = new HashMap<Character, String>();
     makeTable(st, root, "");
 
-    StringBuilder builder = new StringBuilder();
-    for(char c: input.toCharArray()) {
-      builder.append(st.get(c));
+    // use Huffman code to encode input
+    for(char c: input) {
+      stdout.write(st.get(c));
     }
-    return builder.toString();
+    stdout.flush();
   }
 
 
