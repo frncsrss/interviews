@@ -9,7 +9,9 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
- * Huffman encoding (prefix-free).
+ * Huffman encoding.
+ * Lossless and prefix-free compression. 
+ * Represent fixed-length symbols with variable-length codes.
  * @author Francois Rousseau
  */
 public class Huffman {
