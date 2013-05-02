@@ -24,8 +24,8 @@ public class LZWTest {
     System.setIn(new ByteArrayInputStream(encode.getBytes()));
     LZW.encode();
     Assert.assertArrayEquals(decode, baos.toByteArray());
-    baos.reset();
 
+    baos.reset();
     System.setIn(new ByteArrayInputStream(decode));
     LZW.decode();
     Assert.assertEquals(encode, baos.toString());
