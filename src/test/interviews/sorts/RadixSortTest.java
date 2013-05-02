@@ -35,7 +35,7 @@ public class RadixSortTest {
     String[] actuals =
         new String[]{"she", "sells", "seashells", "by", "the", "sea", "shore", "the", "shells",
             "she", "sells", "are", "surely", "seashells"};
-    RadixSort.threeWayQuicksort(actuals, 256);
+    RadixSort.threeWayQuicksort(actuals);
     Assert.assertArrayEquals(
         new String[]{"are", "by", "sea", "seashells", "seashells", "sells", "sells", "she", "she",
             "shells", "shore", "surely", "the", "the"},

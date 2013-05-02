@@ -53,10 +53,9 @@ public class RadixSort {
    * Run in O(W x NlogN) time with O(log N + W) space.
    * ~ 2N ln N character compares on average for random strings
    * compared to ~ 2N ln N string compares on average for random strings.
-   * @param R radix (size of the alphabet)
    */
-  public static void threeWayQuicksort(String[] a, int R) {
-    threeWayQuicksort(a, R, 0, a.length - 1, 0);
+  public static void threeWayQuicksort(String[] a) {
+    threeWayQuicksort(a, 0, a.length - 1, 0);
   }
 
 
@@ -98,7 +97,7 @@ public class RadixSort {
   /**
    * Internal 3-way radix quicksort subroutine that recursively sort a subarray (range lo and hi).
    */
-  private static void threeWayQuicksort(String[] a, int R, int lo, int hi, int d) {
+  private static void threeWayQuicksort(String[] a, int lo, int hi, int d) {
     if (hi <= lo) return;
     int lt = lo, gt = hi;
     int v = charAt(a[lo], d);  // pivot character (not string)
@@ -109,8 +108,8 @@ public class RadixSort {
       else if (t > v) Swap.f(a, i, gt--);
       else i++;
     }
-    threeWayQuicksort(a, R, lo, lt - 1, d);
-    if (v >= 0) threeWayQuicksort(a, R, lt, gt, d + 1);
-    threeWayQuicksort(a, R, gt + 1, hi, d);
+    threeWayQuicksort(a, lo, lt - 1, d);
+    if (v >= 0) threeWayQuicksort(a, lt, gt, d + 1);
+    threeWayQuicksort(a, gt + 1, hi, d);
   }
 }
