@@ -6,18 +6,18 @@ package interviews.arrays;
  */
 public class ConsecutiveSubsequenceSummingToZero {
   /**
-   * O(n^3) time, O(n^2) space
+   * O(n^3) time, O(n) space
    */
   public static void f(int[] arr) {
     final int n = arr.length;
-    int[][] m = new int[n][n];  // we will only fill the top half of the matrix
+    int[] c = new int[n];  // current column of the "matrix"
 
-    m[0][0] = arr[0];
-    checkAndPrint(m[0][0], arr, 0, 0);
-    for(int j = 1; j < n; j++) {     // column of m, end of the interval
-      for(int i = 0; i <= j; i++) {  // row of m, start of the interval
-        m[i][j] = m[i][j - 1] + arr[j];
-        checkAndPrint(m[i][j], arr, i, j);
+    c[0] = arr[0];
+    checkAndPrint(c[0], arr, 0, 0);
+    for(int j = 1; j < n; j++) {     // column of the "matrix", end of the interval
+      for(int i = 0; i <= j; i++) {  // row of the "matrix", start of the interval
+        c[i] = c[i] + arr[j];
+        checkAndPrint(c[i], arr, i, j);
       }
     }
   }
