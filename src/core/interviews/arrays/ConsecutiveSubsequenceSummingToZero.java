@@ -5,6 +5,9 @@ package interviews.arrays;
  * @author Francois Rousseau
  */
 public class ConsecutiveSubsequenceSummingToZero {
+  /**
+   * O(n^3) time, O(n^2) space
+   */
   public static void f(int[] arr) {
     final int n = arr.length;
     int[][] m = new int[n][n];  // we will only fill the top half of the matrix
@@ -19,6 +22,9 @@ public class ConsecutiveSubsequenceSummingToZero {
     }
   }
 
+  /**
+   * O(n) time, O(1) space
+   */
   private static void checkAndPrint(int n, int[] arr, int i, int j) {
     if(n == 0) {
       for(int k = i; k <= j; k++) {
