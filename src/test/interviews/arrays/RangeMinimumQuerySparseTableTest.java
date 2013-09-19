@@ -1,12 +1,8 @@
 package interviews.arrays;
 
-import interviews.arrays.RangeMinimumQuerySparseTable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * Test class.
@@ -157,13 +153,13 @@ public class RangeMinimumQuerySparseTableTest {
     Assert.assertEquals(-1, obj.query(10, 10));
   }
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
-
-  @Test
-  public void test_exceptions() {
-    exception.expect(IndexOutOfBoundsException.class);
-    obj.query(2, 11);
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void test_exception1() {
     obj.query(-1, 10);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void test_exception2() {
+    obj.query(2, 11);
   }
 }
