@@ -1,17 +1,17 @@
 package interviews.arrays;
 
+import static interviews.arrays.ConsecutiveSubsequenceSummingToMax.f;
+
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import static interviews.arrays.MaximumConsecutiveSubsequence.f;
-
 /**
  * Test class.
  * @author Francois Rousseau
  */
-public class MaximumConsecutiveSubsequenceTest {
+public class ConsecutiveSubsequenceSummingToMaxTest {
   @Test
   public void test() {
     Assert.assertEquals(

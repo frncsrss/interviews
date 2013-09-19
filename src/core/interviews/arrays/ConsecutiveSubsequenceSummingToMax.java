@@ -8,7 +8,7 @@ import java.util.List;
  * Return the longest subsequence of a list with the maximum sum in O(n) time.
  * @author Francois Rousseau
  */
-public class MaximumConsecutiveSubsequence {
+public class ConsecutiveSubsequenceSummingToMax {
   public static List<Integer> f(List<Integer> list) {
     int i = 0;
     int max = Integer.MIN_VALUE;
