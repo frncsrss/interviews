@@ -6,7 +6,7 @@ package interviews.arrays;
  */
 public class ConsecutiveSubsequenceSummingToZero {
   /**
-   * O(n^3) time, O(n) space
+   * O(n^2 x k) time, O(n) space
    */
   public static void f(int[] arr) {
     final int n = arr.length;
@@ -23,7 +23,7 @@ public class ConsecutiveSubsequenceSummingToZero {
   }
 
   /**
-   * O(n) time, O(1) space
+   * O(k) time, O(1) space. Assuming average length of a consecutive subsequence is k.
    */
   private static void checkAndPrint(int n, int[] arr, int i, int j) {
     if(n == 0) {
