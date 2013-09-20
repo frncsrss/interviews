@@ -1,6 +1,5 @@
 ## Code related to technical interview questions
-=============================================
-
+------------------------------------------------
 Each package corresponds to the underlying data structure or problem of a technical interview question.
 
 ### Disclaimer
