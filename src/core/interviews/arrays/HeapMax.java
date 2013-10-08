@@ -17,7 +17,7 @@ public class HeapMax<E> extends Heap<E> {
   public HeapMax(Collection<E> collection, Comparator<E> comparator) {
     super(collection, comparator);
   }
-  
+
   @Override
   protected int bubbleUp(int index) {
     try {
@@ -25,7 +25,7 @@ public class HeapMax<E> extends Heap<E> {
       if(comparator.compare(get(index), get(parent)) > 0) {
         swap(index, parent);
         return bubbleUp(parent);
-      }     
+      }
     } catch(NoSuchElementException exc) {}
     return index;
   }
@@ -40,16 +40,15 @@ public class HeapMax<E> extends Heap<E> {
       }
       try {
         final int right = right(index);
-          if(comparator.compare(get(parent), get(right)) < 0) {
-            parent = right;  // we should swap with the right child
-          }
-        } catch(NoSuchElementException exc) {}  // no right child
+        if(comparator.compare(get(parent), get(right)) < 0) {
+          parent = right;  // we should swap with the right child
+        }
+      } catch(NoSuchElementException exc) {}  // no right child
       if(parent != index) {  // there is one child with a bigger value
         swap(index, parent);
         return bubbleDown(parent);
       }
     } catch(NoSuchElementException exc) {}  // no child
-    return index;   
+    return index;
   }
-
 }

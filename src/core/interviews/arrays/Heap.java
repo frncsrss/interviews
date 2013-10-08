@@ -14,74 +14,74 @@ import java.util.NoSuchElementException;
  */
 public abstract class Heap<E> implements Iterable<E> {
 
-  private List<E> heap;
+  private final List<E> heap;
   protected Comparator<E> comparator;
-  
+
   public Heap(Comparator<E> comparator) {
     this.comparator = comparator;
     heap = new ArrayList<E>();
   }
-  
-	public Heap(Collection<E> collection, Comparator<E> comparator) {
-	  this.comparator = comparator;
+
+  public Heap(Collection<E> collection, Comparator<E> comparator) {
+    this.comparator = comparator;
     heap = new ArrayList<E>();
     for(E e: collection) {
       heap.add(e);
     }
     heapify();
-	}
-
-	/**
-	 * Insert the specified element into this heap.
-	 */
-	public boolean add(E e) throws NullPointerException {
-	  if(e == null) {
-	    throw new NullPointerException();
-	  }
-	  heap.add(e);  // we add the element at the end of the array
-	  bubbleUp(size()-1);  // we "bubble it up" until it reaches its position in the heap
-	  return true;
-	}
-
-	 /**
-   * Remove all of the elements from this heap.
-   */
-	public void clear() {
-	  heap.clear();
-	}
-
-	/**
-	 * Return the comparator used to order the elements in this heap.
-	 */
-	public Comparator<E> comparator() {
-	  return comparator;
-	}
-
-	/**
-	 * Return true if this heap contains the specified element.
-	 */
-	public boolean contains(E e) {
-	  return contains(e, 0);
-	}
-
-	/**
-	 * Retrieve, but does not remove, the head of this heap.
-	 * @throws: NoSuchElementException if the heap is empty.
-	 */
-	public E element() {
-	  if(isEmpty()) {
-	    throw new NoSuchElementException();
-	  }
-	  return get(0);
-	}
+  }
 
   /**
-	 * Is the heap empty?
-	 */
+   * Insert the specified element into this heap.
+   */
+  public boolean add(E e) throws NullPointerException {
+    if(e == null) {
+      throw new NullPointerException();
+    }
+    heap.add(e);  // we add the element at the end of the array
+    bubbleUp(size()-1);  // we "bubble it up" until it reaches its position in the heap
+    return true;
+  }
+
+  /**
+   * Remove all of the elements from this heap.
+   */
+  public void clear() {
+    heap.clear();
+  }
+
+  /**
+   * Return the comparator used to order the elements in this heap.
+   */
+  public Comparator<E> comparator() {
+    return comparator;
+  }
+
+  /**
+   * Return true if this heap contains the specified element.
+   */
+  public boolean contains(E e) {
+    return contains(e, 0);
+  }
+
+  /**
+   * Retrieve, but does not remove, the head of this heap.
+   * @throws: NoSuchElementException if the heap is empty.
+   */
+  public E element() {
+    if(isEmpty()) {
+      throw new NoSuchElementException();
+    }
+    return get(0);
+  }
+
+  /**
+   * Is the heap empty?
+   */
   public boolean isEmpty() {
     return heap.size() == 0;
   }
-  
+
   /**
    * Return an iterator over the elements in this heap.
    */
@@ -90,9 +90,9 @@ public abstract class Heap<E> implements Iterable<E> {
     return heap.iterator();
   }
 
-	/**
-	 * Insert the specified element into this heap.
-	 */
+  /**
+   * Insert the specified element into this heap.
+   */
   public boolean offer(E e) throws NullPointerException {
     return add(e);
   }
@@ -109,9 +109,9 @@ public abstract class Heap<E> implements Iterable<E> {
     }
   }
 
-	/**
-	 * Retrieve and remove the head of this heap, or return null if this heap is empty.
-	 */
+  /**
+   * Retrieve and remove the head of this heap, or return null if this heap is empty.
+   */
   public E poll() {
     try {
       return remove();
@@ -120,10 +120,10 @@ public abstract class Heap<E> implements Iterable<E> {
     }
   }
 
-	/**
+  /**
    * Retrieve and remove the head of this heap.
    * @throws: NoSuchElementException if the heap is empty.
-	 */
+   */
   public E remove() throws NoSuchElementException {
     if(isEmpty()) {
       throw new NoSuchElementException();
@@ -136,42 +136,43 @@ public abstract class Heap<E> implements Iterable<E> {
     return head;
   }
 
-	/**
-	 * Remove a single instance of the specified element from this heap, if it is present.
-	 */
+  /**
+   * Remove a single instance of the specified element from this heap, if it is present.
+   */
   public boolean remove(E e) {
     return remove(e, 0);
   }
 
-	/**
-	 * Return the number of elements in this collection.
-	 */
+  /**
+   * Return the number of elements in this collection.
+   */
   public int size() {
     return heap.size();
   }
-  
-	/**
-	 * Return an array containing all of the elements in this heap.
-	 */
+
+  /**
+   * Return an array containing all of the elements in this heap.
+   */
   public Object[] toArray() {
     return heap.toArray();
   }
-  
-	/**
-	 * Return an array containing all of the elements in this heap.
-	 * The runtime type of the returned array is that of the specified array.
-	 */
+
+  /**
+   * Return an array containing all of the elements in this heap.
+   * The runtime type of the returned array is that of the specified array.
+   */
   public <T> T[] toArray(T[] a) throws ArrayStoreException, NullPointerException {
     return heap.toArray(a);
   }
-  
+
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     int power = 1;
     for (E e : heap) {
       buffer.append(e + " ");
       power++;
-      if((power & (power-1)) == 0) {  // power of 2;
+      if((power & power-1) == 0) {  // power of 2;
         buffer.deleteCharAt(buffer.length() - 1).append("\n");
       }
     }
@@ -181,10 +182,10 @@ public abstract class Heap<E> implements Iterable<E> {
   //////////////////
   // Private methods
   //////////////////
-  
-	abstract protected int bubbleUp(int index);
 
-	abstract protected int bubbleDown(int index);
+  abstract protected int bubbleUp(int index);
+
+  abstract protected int bubbleDown(int index);
 
   private boolean contains(E e, int index) {
     if(comparator.compare(e, get(index)) == 0) {
@@ -208,29 +209,29 @@ public abstract class Heap<E> implements Iterable<E> {
   protected E get(int index) {
     return heap.get(index);
   }
-  
-	protected int left(int index) throws NoSuchElementException {
-	  if(2*index + 1 > size()-1) {  // if its a node without left child
-	    throw new NoSuchElementException();
-	  }
-	  return 2*index + 1;
-	}
 
-	/**
-	 * Make the heap in linear time.
-	 * Bottom-up leads to linear time (O(N)) when top-down leads to linearitmic (O(NlogN)) time.
-	 * Thus we use this.bubbleDown(i) instead of this.add(e) in the inner loop.
-	 *
-	 * Linear time complexity comes from the number of bubbleDown necessary.
-	 * The last N/2 elements are leaves so 0 x N/2
-	 * The next N/4 elements are nodes with remaining depth 1 so 1 x N/4
-	 * The next N/8 elements are nodes with remaining depth 2 so 2 x N/8
-	 * ...
-	 * The root is a node with remaining depth logN so log(N) x 1
-	 * Overall it's 0 x N/2 + 1 x N/4 + 2 x N/8 + ... + log(N) x 1
-	 *
-	 * = N * sum_{i = 1}^{log(N)} (i-1)/2^i
-	 * = N * sum_{i = 1}^{log(N)} (i-1)*x^i           (x=1/2) variable x
+  protected int left(int index) throws NoSuchElementException {
+    if(2*index + 1 > size()-1) {  // if its a node without left child
+      throw new NoSuchElementException();
+    }
+    return 2*index + 1;
+  }
+
+  /**
+   * Make the heap in linear time.
+   * Bottom-up leads to linear time (O(N)) when top-down leads to linearitmic (O(NlogN)) time.
+   * Thus we use this.bubbleDown(i) instead of this.add(e) in the inner loop.
+   *
+   * Linear time complexity comes from the number of bubbleDown necessary.
+   * The last N/2 elements are leaves so 0 x N/2
+   * The next N/4 elements are nodes with remaining depth 1 so 1 x N/4
+   * The next N/8 elements are nodes with remaining depth 2 so 2 x N/8
+   * ...
+   * The root is a node with remaining depth logN so log(N) x 1
+   * Overall it's 0 x N/2 + 1 x N/4 + 2 x N/8 + ... + log(N) x 1
+   *
+   * = N * sum_{i = 1}^{log(N)} (i-1)/2^i
+   * = N * sum_{i = 1}^{log(N)} (i-1)*x^i           (x=1/2) variable x
    * = N * sum_{i = 0}^{log(N)-1} i*x^(i+1)         (x=1/2) index shifting
    * = N * x^2 * sum_{i = 0}^{log(N)-1} i*x^(i-1)   (x=1/2) index shifting
    * = N * x^2 * sum_{i = 0}^{log(N)-1} d(x^i)/dx   (x=1/2) derivation formula
@@ -238,10 +239,10 @@ public abstract class Heap<E> implements Iterable<E> {
    * = N * x^2 * d([x^log(N) - 1]/[x - 1])/dx       (x=1/2) sum of geometric series
    * = N * x^2 * (log(N)*x^{log(N)-1}*[x - 1] - [x^log(N) - 1])/(x - 1)^2  (x=1/2) derivation
    * = N * (log(N)*1/N - 1/N + 1)
-	 * = N - log(N) - 1
-	 * = O(N)
-	 */
-	private void heapify() {
+   * = N - log(N) - 1
+   * = O(N)
+   */
+  private void heapify() {
     for(int i = (size()-1)/2; i >= 0; i--) {  // the last N/2 elements are leaves
       bubbleDown(i);
     }
@@ -251,14 +252,14 @@ public abstract class Heap<E> implements Iterable<E> {
     if(index == 0) {  // the root has no parent
       throw new NoSuchElementException();
     }
-    return (int)((index - 1) / 2);  // there is a formula for the rest of the indices
+    return (index - 1) / 2;  // there is a formula for the rest of the indices
   }
 
   private boolean remove(E e, int index) {
     if(comparator.compare(e, get(index)) == 0) {
       swap(index, size()-1);  // swap the element at the end
       heap.remove(size()-1);  // remove it
-      heapify();  // much easier and guaranteed linear time 
+      heapify();  // much easier and guaranteed linear time
       return true;
     }
     try {
@@ -271,17 +272,17 @@ public abstract class Heap<E> implements Iterable<E> {
         }
       } catch(NoSuchElementException exc) {}
     } catch(NoSuchElementException exc) {}
-    return false;    
+    return false;
   }
-  
+
   protected int right(int index) throws NoSuchElementException {
     if(2*index + 2 > size()-1) {  // if its a node without right child
       throw new NoSuchElementException();
     }
     return 2*index + 2;
   }
-  
+
   protected void swap(int from, int with) {
-    Collections.swap(heap, from, with);   
+    Collections.swap(heap, from, with);
   }
 }
