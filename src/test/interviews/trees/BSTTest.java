@@ -1,9 +1,9 @@
 package interviews.trees;
 
+import interviews.sorts.Sorts;
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-
-import interviews.sorts.Sorts;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -47,7 +47,7 @@ public class BST<E> {
       throw new NullPointerException();
     }
     Node ceiling = ceiling(root, e);
-    return (ceiling == null) ? null : ceiling.e;
+    return ceiling == null ? null : ceiling.e;
   }
 
   /**
@@ -92,7 +92,7 @@ public class BST<E> {
       throw new NullPointerException();
     }
     Node floor = floor(root, e);
-    return (floor == null) ? null : floor.e;
+    return floor == null ? null : floor.e;
   }
 
   /**
@@ -122,7 +122,7 @@ public class BST<E> {
     if(root == null) {
       throw new NoSuchElementException();
     }
-   return min(root);
+    return min(root);
   }
 
   /**
@@ -207,7 +207,7 @@ public class BST<E> {
       return ceiling(node.right, e);
     } else {  // (result > 0)
       Node tmp = ceiling(node.left, e);
-      return (tmp == null) ? node : tmp;
+      return tmp == null ? node : tmp;
     }
   }
 
@@ -220,9 +220,9 @@ public class BST<E> {
       return true;
     }
     if(result > 0) {
-      return (node.right == null) ? false : contains(node.right, e);
+      return node.right == null ? false : contains(node.right, e);
     }
-    return (node.left == null) ? false : contains(node.left, e);
+    return node.left == null ? false : contains(node.left, e);
   }
 
   /**
@@ -267,7 +267,7 @@ public class BST<E> {
       return floor(node.left, e);
     } else {  // (result > 0)
       Node tmp = floor(node.right, e);
-      return (tmp == null) ? node : tmp;
+      return tmp == null ? node : tmp;
     }
   }
 
@@ -285,7 +285,7 @@ public class BST<E> {
     if(result == 0) {
       node.frequency++;
     } else if(result > 0) {
-      node.right = insert(node.right, e);          
+      node.right = insert(node.right, e);
     } else {  // (result < 0)
       node.left = insert(node.left, e);
     }
@@ -383,9 +383,9 @@ public class BST<E> {
           tmp.right = null;  // cut the right pointer of the current parent - no longer a parent
           collection.add(current.e);
           current = current.right;
-        } 
-      } 
-    } 
+        }
+      }
+    }
   }
 
 
