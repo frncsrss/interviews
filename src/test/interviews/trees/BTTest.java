@@ -1,5 +1,7 @@
 package interviews.trees;
 
+import interviews.sorts.Sorts;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,6 +10,20 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class BTTest {
+
+  @Test
+  public void test_isBST_true() {
+    final String s = "5(3()(4))(7)";
+    Assert.assertEquals(true, BT.isBST(
+        BT.deserialize(s), Sorts.getComparatorOfIntegers(), Integer.MIN_VALUE, Integer.MAX_VALUE));
+  }
+
+  @Test
+  public void test_isBST_false() {
+    final String s = "4(3()(5))(7)";
+    Assert.assertEquals(false, BT.isBST(
+        BT.deserialize(s), Sorts.getComparatorOfIntegers(), Integer.MIN_VALUE, Integer.MAX_VALUE));
+  }
 
   @Test
   public void test_serialize_me() {

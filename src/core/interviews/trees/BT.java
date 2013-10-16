@@ -1,10 +1,26 @@
 package interviews.trees;
 
+import java.util.Comparator;
+
 /**
  * Binary Tree.
  * @author Francois Rousseau
  */
 public class BT<E> {
+
+  /**
+   * Check is a given tree (through its root node) is a valid BST or not.
+   */
+  public static <E> boolean isBST(Node<E> node, Comparator<E> comparator, E min, E max) {
+    if(node == null) {
+      return true;
+    }
+    if(comparator.compare(node.e, min) < 0 || comparator.compare(node.e, max) > 0) {
+      return false;
+    }
+    return isBST(node.left, comparator, min, node.e) && isBST(node.right, comparator, node.e, max);
+  }
+
   public static <E> String serialize(Node<E> root) {
     StringBuilder builder = new StringBuilder();
     serialize(root, builder);
