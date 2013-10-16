@@ -11,11 +11,16 @@ public class BT<E> {
     return builder.toString();
   }
 
+  public static Node<Integer> deserialize(String s) {
+    return deserialize(s.toCharArray(), new int[]{-1});  // -1 to eat the non-existent (
+  }
+
+
   private static <E> void serialize(Node<E> node, StringBuilder builder) {
     if(node == null) {
       return;
     }
-    builder.append(node.value);
+    builder.append(node.e);
     if(node.left == null && node.right == null) {
       return;
     }
@@ -25,10 +30,6 @@ public class BT<E> {
     builder.append('(');
     serialize(node.right, builder);
     builder.append(')');
-  }
-
-  public static Node<Integer> deserialize(String s) {
-    return deserialize(s.toCharArray(), new int[]{-1});  // -1 to eat the non-existent (
   }
 
   private static Node<Integer> deserialize(char[] arr, int[] i) {  // int[] to pass it like a reference
@@ -43,7 +44,7 @@ public class BT<E> {
       i[0]++;
     }
     Node<Integer> node = new Node<Integer>();
-    node.value = Integer.parseInt(builder.toString());
+    node.e = Integer.parseInt(builder.toString());
     if(i[0] == arr.length) {  // single root
     } else if(arr[i[0]] == ')') {  // leaf
       node.left = null;
@@ -56,8 +57,9 @@ public class BT<E> {
     return node;
   }
 
+
   private static class Node<E> {
-    private E value;
+    private E e;
     private Node<E> left;
     private Node<E> right;
   }
