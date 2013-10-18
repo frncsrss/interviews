@@ -21,6 +21,13 @@ public class BT<E> {
     return isBST(node.left, comparator, min, node.e) && isBST(node.right, comparator, node.e, max);
   }
 
+  /**
+   * Check is a given tree (through its root node) is a valid BST or not using in-order traversal.
+   */
+  public static <E> boolean isBST(Node<E> node, Comparator<E> comparator) {
+    return isBST(node, comparator, new Node<E>(null));
+  }
+
   public static <E> String serialize(Node<E> root) {
     StringBuilder builder = new StringBuilder();
     serialize(root, builder);
@@ -31,6 +38,21 @@ public class BT<E> {
     return deserialize(s.toCharArray(), new int[]{-1});  // -1 to eat the non-existent (
   }
 
+
+  private static <E> boolean isBST(Node<E> node, Comparator<E> comparator, Node<E> prev) {
+    if(node == null) {
+      return true;
+    }
+    if(!isBST(node.left, comparator, prev)) {    // visit left node
+      return false;
+    }
+    // compare current value with previous one
+    if(prev.e != null && comparator.compare(node.e, prev.e) <= 0) {
+      return false;
+    }
+    prev.e = node.e;  // update previous value with current one
+    return isBST(node.right, comparator, prev);  // visit right node
+  }
 
   private static <E> void serialize(Node<E> node, StringBuilder builder) {
     if(node == null) {

@@ -12,17 +12,29 @@ import org.junit.Test;
 public class BTTest {
 
   @Test
-  public void test_isBST_true() {
+  public void test_isBST1_true() {
     final String s = "5(3()(4))(7)";
     Assert.assertEquals(true, BT.isBST(
         BT.deserialize(s), Sorts.getComparatorOfIntegers(), Integer.MIN_VALUE, Integer.MAX_VALUE));
   }
 
   @Test
-  public void test_isBST_false() {
+  public void test_isBST1_false() {
     final String s = "4(3()(5))(7)";
     Assert.assertEquals(false, BT.isBST(
         BT.deserialize(s), Sorts.getComparatorOfIntegers(), Integer.MIN_VALUE, Integer.MAX_VALUE));
+  }
+
+  @Test
+  public void test_isBST2_true() {
+    final String s = "5(3()(4))(7)";
+    Assert.assertEquals(true, BT.isBST(BT.deserialize(s), Sorts.getComparatorOfIntegers()));
+  }
+
+  @Test
+  public void test_isBST2_false() {
+    final String s = "4(3()(5))(7)";
+    Assert.assertEquals(false, BT.isBST(BT.deserialize(s), Sorts.getComparatorOfIntegers()));
   }
 
   @Test
