@@ -10,6 +10,7 @@ public class BT<E> {
 
   /**
    * Check is a given tree (through its root node) is a valid BST or not.
+   * O(n) time, O(1) space.
    */
   public static <E> boolean isBST(Node<E> node, Comparator<E> comparator, E min, E max) {
     if(node == null) {
@@ -23,6 +24,7 @@ public class BT<E> {
 
   /**
    * Check is a given tree (through its root node) is a valid BST or not using in-order traversal.
+   * O(n) time, O(1) space.
    */
   public static <E> boolean isBST(Node<E> node, Comparator<E> comparator) {
     return isBST(node, comparator, new Node<E>(null));
