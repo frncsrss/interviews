@@ -59,8 +59,7 @@ public class BT<E> {
       builder.append(arr[i[0]]);
       i[0]++;
     }
-    Node<Integer> node = new Node<Integer>();
-    node.e = Integer.parseInt(builder.toString());
+    Node<Integer> node = new Node<Integer>(Integer.parseInt(builder.toString()));
     if(i[0] == arr.length) {  // single root
     } else if(arr[i[0]] == ')') {  // leaf
       node.left = null;
@@ -78,5 +77,14 @@ public class BT<E> {
     private E e;
     private Node<E> left;
     private Node<E> right;
+
+    public Node(E e) {
+      this.e = e;
+    }
+
+    @Override
+    public String toString() {
+      return e == null ? null : e.toString();
+    }
   }
 }
