@@ -1,15 +1,15 @@
 package interviews.arrays;
 
+import static interviews.arrays.Rotation.blockSwap;
+import static interviews.arrays.Rotation.reversalAlgorithm1;
+import static interviews.arrays.Rotation.reversalAlgorithm2;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static interviews.arrays.Rotation.blockSwap;
-import static interviews.arrays.Rotation.reversalAlgorithm1;
-import static interviews.arrays.Rotation.reversalAlgorithm2;
 
 /**
  * Test class.
@@ -23,28 +23,28 @@ public class RotationTest {
         reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 0));
     Assert.assertEquals(
         Arrays.asList(0, 7, 1, 5, 2, 4, 3),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 1));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 1));
     Assert.assertEquals(
         Arrays.asList(3, 0, 7, 1, 5, 2, 4),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 2));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 2));
     Assert.assertEquals(
         Arrays.asList(4, 3, 0, 7, 1, 5, 2),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 3));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 3));
     Assert.assertEquals(
         Arrays.asList(2, 4, 3, 0, 7, 1, 5),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 4));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 4));
     Assert.assertEquals(
         Arrays.asList(5, 2, 4, 3, 0, 7, 1),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 5));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 5));
     Assert.assertEquals(
         Arrays.asList(1, 5, 2, 4, 3, 0, 7),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 6));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 6));
     Assert.assertEquals(
         Arrays.asList(7, 1, 5, 2, 4, 3, 0),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 7));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 7));
     Assert.assertEquals(
         Arrays.asList(0, 7, 1, 5, 2, 4, 3),
-				reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 8));
+        reversalAlgorithm1(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 8));
   }
 
   @Test
@@ -68,31 +68,31 @@ public class RotationTest {
   public void test_reversalAlgorithm2() {
     Assert.assertEquals(
         Arrays.asList(7, 1, 5, 2, 4, 3, 0),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 0));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 0));
     Assert.assertEquals(
         Arrays.asList(0, 7, 1, 5, 2, 4, 3),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 1));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 1));
     Assert.assertEquals(
         Arrays.asList(3, 0, 7, 1, 5, 2, 4),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 2));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 2));
     Assert.assertEquals(
         Arrays.asList(4, 3, 0, 7, 1, 5, 2),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 3));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 3));
     Assert.assertEquals(
         Arrays.asList(2, 4, 3, 0, 7, 1, 5),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 4));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 4));
     Assert.assertEquals(
         Arrays.asList(5, 2, 4, 3, 0, 7, 1),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 5));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 5));
     Assert.assertEquals(
         Arrays.asList(1, 5, 2, 4, 3, 0, 7),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 6));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 6));
     Assert.assertEquals(
         Arrays.asList(7, 1, 5, 2, 4, 3, 0),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 7));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 7));
     Assert.assertEquals(
         Arrays.asList(0, 7, 1, 5, 2, 4, 3),
-				reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 8));
+        reversalAlgorithm2(Arrays.asList(7, 1, 5, 2, 4, 3, 0), 8));
   }
 
   @Test
