@@ -7,6 +7,10 @@ import java.util.NoSuchElementException;
  * @author Francois Rousseau
  */
 public class MinInRotatedSortedArray {
+  /**
+   * O(n) time.
+   * @return
+   */
   public static int f(int[] arr) {
     if(arr == null || arr.length == 0) {
       throw new NoSuchElementException();
@@ -20,5 +24,29 @@ public class MinInRotatedSortedArray {
       }
     }
     return arr[0];
+  }
+
+  /**
+   * O(logn) time.
+   * @return
+   */
+  public static int f2(int[] arr) {
+    if(arr == null || arr.length == 0) {
+      throw new NoSuchElementException();
+    }
+    if(arr.length == 1) {
+      return arr[0];
+    }
+    int lo = 0;
+    int hi = arr.length - 1;
+    while(arr[lo] > arr[hi]) {
+      int mid = lo + hi >>> 1;
+      if(arr[mid] > arr[hi]) {
+        lo = mid + 1;
+      } else {
+        hi = mid;
+      }
+    }
+    return arr[lo];
   }
 }
