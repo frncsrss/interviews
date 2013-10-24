@@ -1,5 +1,7 @@
 package interviews.queues;
 
+import interviews.sorts.Sorts;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -54,5 +56,24 @@ public class LinkedListNodeTest {
 
     node1.setNext(null);
     Assert.assertEquals("1", node1.toStringInReverseOrderWithoutRecursion());
+  }
+
+  @Test
+  public void test_insertIntoCyclingSortedLinkedList() {
+    LinkedListNode<Integer> node = new LinkedListNode<Integer>(1);
+    node.setNext(node);
+    Assert.assertEquals("1->1*", node.toString());
+    node.insert(2, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->1*", node.toString());
+    node.insert(5, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->5->1*", node.toString());
+    node.insert(5, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->5->5->1*", node.toString());
+    node.insert(8, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->5->5->8->1*", node.toString());
+    node.insert(0, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->5->5->8->0->1*", node.toString());
+    node.insert(10, Sorts.getComparatorOfIntegers());
+    Assert.assertEquals("1->2->5->5->8->10->0->1*", node.toString());
   }
 }
