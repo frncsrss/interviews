@@ -1,5 +1,9 @@
 package interviews.numbers;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Roman numerals to integer converter.
  * @author Francois Rousseau
@@ -7,50 +11,55 @@ package interviews.numbers;
 public class RomanNumeralToInteger {
   /**
    * Does not complain if 3 is written iiv or 15 vvv for example.
+   * Goes from left to right (works with a stream of characters).
    */
   public static int f(String s) {
     if(s == null || s.isEmpty()) {
       throw new IllegalArgumentException();
     }
-
-    int[] arr = new int[s.length()];
-    for(int i = 0; i < s.length(); i++) {
-      arr[i] = letterToInt(s.charAt(i));
-    }
-
     int n = 0;
-    int acc = arr[0];
-    for(int i = 1; i < arr.length; i++) {
-      if(arr[i - 1] == arr[i]) {
-        acc += arr[i];
-      } else if(arr[i - 1] < arr[i]) {
-        acc = arr[i] - acc;
+    int acc = 0;
+    int prev = 0;
+    for(int i = 0; i < s.length(); i++) {
+      int val = letterToInt(s.charAt(i));
+      if(prev == val) {
+        acc += val;
+      } else if(prev < val) {
+        acc = val - acc;
       } else {
         n += acc;
-        acc = arr[i];
+        acc = val;
       }
+      prev = val;
     }
     n += acc;
     return n;
   }
 
+  private static final Map<Character, Integer> letterToInt;
+  static {
+    Map<Character, Integer> map = new HashMap<Character, Integer>();
+    map.put('i', 1);
+    map.put('I', 1);
+    map.put('v', 5);
+    map.put('V', 5);
+    map.put('x', 10);
+    map.put('X', 10);
+    map.put('l', 50);
+    map.put('L', 50);
+    map.put('c', 100);
+    map.put('C', 100);
+    map.put('d', 500);
+    map.put('D', 500);
+    map.put('m', 1000);
+    map.put('M', 1000);
+    letterToInt = Collections.unmodifiableMap(map);
+  }
+
   private static int letterToInt(char c) {
-    switch(c) {
-      case 'i':
-      case 'I': return 1;
-      case 'v':
-      case 'V': return 5;
-      case 'x':
-      case 'X': return 10;
-      case 'l':
-      case 'L': return 50;
-      case 'c':
-      case 'C': return 100;
-      case 'd':
-      case 'D': return 500;
-      case 'm':
-      case 'M': return 1000;
-      default: throw new NumberFormatException();
+    if(letterToInt.containsKey(c)) {
+      return letterToInt.get(c);
     }
+    throw new NumberFormatException();
   }
 }
