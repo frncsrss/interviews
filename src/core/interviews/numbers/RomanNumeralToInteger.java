@@ -11,7 +11,7 @@ import java.util.Map;
 public class RomanNumeralToInteger {
   /**
    * Does not complain if 3 is written iiv or 15 vvv for example.
-   * Goes from left to right (works with a stream of characters).
+   * Goes from left to right (works with a stream of characters, needs an accumulator).
    */
   public static int f(String s) {
     if(s == null || s.isEmpty()) {
@@ -33,6 +33,28 @@ public class RomanNumeralToInteger {
       prev = val;
     }
     n += acc;
+    return n;
+  }
+
+  /**
+   * Does not complain if 3 is written iiv or 15 vvv for example.
+   * Goes from right to left (does NOT work with a stream of characters, no need for an accumulator).
+   */
+  public static int f2(String s) {
+    if(s == null || s.isEmpty()) {
+      throw new IllegalArgumentException();
+    }
+    int n = 0;
+    int prev = 0;
+    for(int i = s.length() - 1; i >= 0; i--) {
+      int val = letterToInt(s.charAt(i));
+      if(val < prev) {
+        n -= val;
+      } else {
+        n += val;
+        prev = val;
+      }
+    }
     return n;
   }
 
