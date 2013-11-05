@@ -58,6 +58,7 @@ public class MinInRotatedSortedArrayTest {
     Assert.assertEquals(1, f(new int[]{4, 5, 6, 1, 1, 3}));
     Assert.assertEquals(1, f(new int[]{3, 4, 5, 6, 1, 1}));
     Assert.assertEquals(1, f(new int[]{1, 3, 4, 5, 6, 1}));
+    Assert.assertEquals(3, f(new int[]{8, 3, 4, 5, 6, 8}));
 
     Assert.assertEquals(1, f2(new int[]{1, 1}));
     Assert.assertEquals(1, f2(new int[]{1, 1, 2}));
@@ -67,5 +68,6 @@ public class MinInRotatedSortedArrayTest {
     Assert.assertEquals(1, f2(new int[]{4, 5, 6, 1, 1, 3}));
     Assert.assertEquals(1, f2(new int[]{3, 4, 5, 6, 1, 1}));
     Assert.assertEquals(1, f2(new int[]{1, 3, 4, 5, 6, 1}));
+    Assert.assertEquals(3, f2(new int[]{8, 3, 4, 5, 6, 8}));
   }
 }

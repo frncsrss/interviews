@@ -39,9 +39,9 @@ public class MinInRotatedSortedArray {
     }
     int lo = 0;
     int hi = arr.length - 1;
-    while(arr[lo] > arr[hi]) {
+    while(arr[lo] >= arr[hi] && lo < hi) {
       int mid = lo + hi >>> 1;
-      if(arr[mid] > arr[hi]) {
+      if(arr[mid] >= arr[hi]) {
         lo = mid + 1;
       } else {
         hi = mid;
