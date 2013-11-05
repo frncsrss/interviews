@@ -8,7 +8,6 @@ import org.junit.Test;
  * @author Francois Rousseau
  */
 public class SumTest {
-
   @Test
   public void test() {
     Assert.assertEquals(0, Sum.f(0, 0));
