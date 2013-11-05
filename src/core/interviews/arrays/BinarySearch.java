@@ -7,9 +7,9 @@ package interviews.arrays;
 public class BinarySearch {
   public static int f(int[] arr, int i) {
     int lo = 0;
-    int hi = arr.length;
+    int hi = arr.length - 1;
     while(lo <= hi) {
-      int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = lo + hi >>> 1;  // prevent possible overflow
       int midVal = arr[mid];
       if(midVal < i) {
         lo = mid + 1;

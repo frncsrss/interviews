@@ -1,9 +1,9 @@
 package interviews.arrays;
 
+import static interviews.arrays.BinarySearch.f;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import static interviews.arrays.BinarySearch.f;
 
 /**
  * Test class.
@@ -17,5 +17,13 @@ public class BinarySearchTest {
     Assert.assertEquals(4, f(input, 33));
     Assert.assertEquals(5, -f(input, 34) - 1);
     Assert.assertEquals(0, -f(input, 1) - 1);
+  }
+
+  @Test
+  public void test2() {
+    Assert.assertEquals(1, -f(new int[] {1, 3}, 2) - 1);
+    Assert.assertEquals(2, -f(new int[] {1, 1}, 2) - 1);
+    Assert.assertEquals(1, f(new int[] {1, 1, 2, 3}, 1));
+    Assert.assertEquals(2, f(new int[] {1, 1, 2, 3}, 2));
   }
 }
