@@ -13,26 +13,32 @@ public class Substring {
 
   public static enum TYPE {
     BRUTE_FORCE {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrBruteForce(s, p);
       }
     }, KNUTH_MORRIS_PRATT_1 {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrKMP1(s, p);
       }
     }, KNUTH_MORRIS_PRATT_2 {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrKMP2(s, p);
       }
     }, KNUTH_MORRIS_PRATT_3 {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrKMP3(s, p);
       }
     }, BOYER_MOORE {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrBM(s, p);
       }
     }, RABIN_KARP {
+      @Override
       public int strstr(char[] s, char[] p) {
         return strstrRK(s, p);
       }
@@ -59,7 +65,7 @@ public class Substring {
 
     for(; i < s.length - p.length + 1; i++) {  // up to n-m+1 times
       j = 0;
-      while(s[i+j] == p[j++]) {  // up to m times
+      while(s[i + j] == p[j++]) {  // up to m times
         if(j == p.length) {
           return i;
         }
@@ -122,28 +128,28 @@ public class Substring {
 
   /**
    * Return the first index where a pattern p appears in a string s in O(n + m).
-   * 
+   *
    * Rely on the Knutt-Morris-Pratt algorithm. Explained below.
    * For example, consider:
    * i   0123456789
    * s = abcdab abc (i = 0)
-   * p = abcdabd    (j=0)
+   * p = abcdabd    (j = 0)
    * j   0123456
-   * 
+   *
    * The first mismatch occurs at j==6.
    * Considering p[0..5], the length of the longest prefix matching a suffix is 2 ("ab").
    * Therefore, you should move i from 0 to 4 (6-2) but start j at 2 since we already know that the
    * first 2 characters are matching (this is why the complexity is O(n) and not O(n*m)).
    * i   0123456789
    * s = abcdab abc  (i = 4)
-   * p =     abcdabd (j=2)
+   * p =     abcdabd (j = 2)
    * j       0123456
-   * 
+   *
    * Computing the length of the longest prefix matching a suffix for every substring of p doesn't
    * depend on s and is therefore pre-computed and stored in a prefix table t as follows:
    * t[i] == length of the longest prefix matching a suffix in p[0..i-1]
    * with t[0] == -1 to increment i if mismatch at first character (we slide by j - t[j]).
-   * 
+   *
    * @return the index of first match if it exists.
    */
   private static int strstrKMP2(char[] s, char[] p) {
@@ -202,7 +208,7 @@ public class Substring {
   private static int strstrKMP3(char[] s, char[] p) {
     Map<Character, int[]> dfa = getDFA(p);
 
-    int i, j; 
+    int i, j;
     for(i = 0, j = 0; i < s.length && j < p.length; i++) {
       if(dfa.containsKey(s[i])) {
         j = dfa.get(s[i])[j];
@@ -210,8 +216,10 @@ public class Substring {
         j = 0;
       }
     }
-    if(j == p.length) return i - j; 
-    else return -1; 
+    if(j == p.length) {
+      return i - j;
+    }
+    else return -1;
   }
 
   /**
@@ -227,8 +235,8 @@ public class Substring {
     for(int j = 0; j < p.length; j++) {  // initialize an empty dfa with the alphabet from p
       dfa.put(p[j], new int[p.length]);
     }
-    dfa.get(p[0])[0] = 1; 
-    for(int X = 0, j = 1; j < p.length; j++) { 
+    dfa.get(p[0])[0] = 1;
+    for(int X = 0, j = 1; j < p.length; j++) {
       for(char c: dfa.keySet()) {  // copy mismatch cases
         dfa.get(c)[j] = dfa.get(c)[X];
       }
@@ -249,13 +257,13 @@ public class Substring {
   private static int strstrBM(char[] s, char[] p) {
     Map<Character, Integer> right = getRight(p);
 
-    int skip; 
+    int skip;
     for(int i = 0; i <= s.length - p.length; i += skip) {
       skip = 0;
       for(int j = p.length - 1; j >= 0; j--) {
         if(p[j] != s[i + j]) {
           if(right.containsKey(s[i + j])) {  // character in pattern
-            skip = Math.max(1, j - right.get(s[i + j]));            
+            skip = Math.max(1, j - right.get(s[i + j]));
           } else {
             skip = Math.max(1, j + 1);
           }
@@ -272,7 +280,7 @@ public class Substring {
    */
   private static Map<Character, Integer> getRight(char[] p) {
     Map<Character, Integer> right = new HashMap<Character, Integer>();
-    for(int j = 0; j < p.length; j++) { 
+    for(int j = 0; j < p.length; j++) {
       right.put(p[j], j);
     }
     return right;
@@ -284,7 +292,7 @@ public class Substring {
 
   static {
     R = 256;
-    Q = (new BigInteger(31, new Random())).longValue();
+    Q = new BigInteger(31, new Random()).longValue();
   }
 
   /**
@@ -308,11 +316,11 @@ public class Substring {
 
     long RM = 1;  // pre-compute R^(M-1)
     for (int i = 1; i <= M-1; i++) {
-      RM = (R * RM) % Q;
+      RM = R * RM % Q;
     }
 
     for(int i = M; i < s.length; i++) {
-      h = update(h, RM, s, M, i); 
+      h = update(h, RM, s, M, i);
       if(golden == h) {  // Monte-Carlo version, return match if hash values match.
         return i - M +  1;
       }
@@ -348,6 +356,6 @@ public class Substring {
    * @return the new hash value
    */
   private static long update(long h, long RM, char[] s, int M, int i) {
-    return (((h + Q - s[i - M]*RM % Q) % Q) * R + s[i]) % Q;
+    return ((h + Q - s[i - M]*RM % Q) % Q * R + s[i]) % Q;
   }
 }
