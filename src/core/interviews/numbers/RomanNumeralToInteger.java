@@ -13,7 +13,7 @@ public class RomanNumeralToInteger {
    * Does not complain if 3 is written iiv or 15 vvv for example.
    * Goes from left to right (works with a stream of characters, needs an accumulator).
    */
-  public static int f(String s) {
+  public static int f(String s) throws IllegalArgumentException, NumberFormatException {
     if(s == null || s.isEmpty()) {
       throw new IllegalArgumentException();
     }
@@ -36,14 +36,22 @@ public class RomanNumeralToInteger {
     return n;
   }
 
+  private static final String regex = "M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})";
+
   /**
-   * Does not complain if 3 is written iiv or 15 vvv for example.
+   * Complains if 3 is written iiv or 15 vvv for example.
    * Goes from right to left (does NOT work with a stream of characters, no need for an accumulator).
    */
-  public static int f2(String s) {
+  public static int f2(String s) throws IllegalArgumentException, NumberFormatException {
     if(s == null || s.isEmpty()) {
       throw new IllegalArgumentException();
     }
+
+    s = s.toUpperCase();
+    if(!s.matches(regex)) {
+      throw new NumberFormatException();
+    }
+
     int n = 0;
     int prev = 0;
     for(int i = s.length() - 1; i >= 0; i--) {
@@ -78,7 +86,7 @@ public class RomanNumeralToInteger {
     letterToInt = Collections.unmodifiableMap(map);
   }
 
-  private static int letterToInt(char c) {
+  private static int letterToInt(char c) throws NumberFormatException {
     if(letterToInt.containsKey(c)) {
       return letterToInt.get(c);
     }

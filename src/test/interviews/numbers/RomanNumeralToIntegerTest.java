@@ -49,6 +49,7 @@ public class RomanNumeralToIntegerTest {
     Assert.assertEquals(1954, RomanNumeralToInteger.f("MCMLIV"));
     Assert.assertEquals(1990, RomanNumeralToInteger.f("mcmxc"));
     Assert.assertEquals(2008, RomanNumeralToInteger.f("mmviii"));
+    Assert.assertEquals(3999, RomanNumeralToInteger.f("mmmcmxcix"));
   }
 
   @Test
@@ -84,12 +85,21 @@ public class RomanNumeralToIntegerTest {
     Assert.assertEquals(1954, RomanNumeralToInteger.f2("MCMLIV"));
     Assert.assertEquals(1990, RomanNumeralToInteger.f2("mcmxc"));
     Assert.assertEquals(2008, RomanNumeralToInteger.f2("mmviii"));
+    Assert.assertEquals(3999, RomanNumeralToInteger.f2("mmmcmxcix"));
   }
 
-  @Test
-  public void test_f2_weird() {
-    Assert.assertEquals(3,    RomanNumeralToInteger.f2("iiv"));
-    Assert.assertEquals(15,   RomanNumeralToInteger.f2("vvv"));
+  @Test(expected = NumberFormatException.class)
+  public void test_f2_weird1() {
+    Assert.assertEquals(3, RomanNumeralToInteger.f2("iiv"));
+  }
+
+  @Test(expected = NumberFormatException.class)
+  public void test_f2_weird2() {
+    Assert.assertEquals(15, RomanNumeralToInteger.f2("vvv"));
+  }
+
+  @Test(expected = NumberFormatException.class)
+  public void test_f2_weird3() {
     Assert.assertEquals(1910, RomanNumeralToInteger.f2("MDCCCCX"));
   }
 }
