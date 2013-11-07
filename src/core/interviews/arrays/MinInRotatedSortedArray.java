@@ -15,9 +15,6 @@ public class MinInRotatedSortedArray {
     if(arr == null || arr.length == 0) {
       throw new NoSuchElementException();
     }
-    if(arr.length == 1) {
-      return arr[0];
-    }
     for(int i = 0; i < arr.length - 1; i++) {
       if(arr[i + 1] < arr[i]) {
         return arr[i + 1];
@@ -33,9 +30,6 @@ public class MinInRotatedSortedArray {
   public static int f2(int[] arr) {
     if(arr == null || arr.length == 0) {
       throw new NoSuchElementException();
-    }
-    if(arr.length == 1) {
-      return arr[0];
     }
     int lo = 0;
     int hi = arr.length - 1;
