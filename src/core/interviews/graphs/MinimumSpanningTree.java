@@ -12,8 +12,8 @@ import java.util.PriorityQueue;
  * @author Francois Rousseau
  */
 public class MinimumSpanningTree {
-  private Graph g;
-  private List<Edge> edges;
+  private final Graph g;
+  private final List<Edge> edges;
 
   public MinimumSpanningTree(Graph g) {
     this.g = g;
@@ -71,8 +71,12 @@ public class MinimumSpanningTree {
         continue;
       }
       edges.add(e);
-      if(!visited[e.v]) visit(e.v, visited, pq);
-      if(!visited[e.w]) visit(e.w, visited, pq);
+      if(!visited[e.v]) {
+        visit(e.v, visited, pq);
+      }
+      if(!visited[e.w]) {
+        visit(e.w, visited, pq);
+      }
     }
   }
 

@@ -23,7 +23,7 @@ public class Digraph extends Graph {
     return reverse;
   }
 
-  
+
   /**
    * Add a (directed) edge between vertex v and vertex w.
    * Create the vertices if not already present in the graph.
@@ -33,5 +33,4 @@ public class Digraph extends Graph {
     edges.add(edge);
     return adjacencyLists[edge.v].add(edge);
   }
-
 }
