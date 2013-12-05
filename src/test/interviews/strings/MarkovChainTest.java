@@ -39,8 +39,7 @@ public class MarkovChainTest {
     Assert.assertEquals("worst", mc.nextWord("the"));
     Assert.assertEquals("best",  mc.nextWord("the"));
 
-    int b = 0;
-    int w = 0;
+    int b = 0, w = 0;
     for(int i = 0; i < 1000000; i++) {
       String next = mc.nextWord("the");
       if(next.equals("best")) {
@@ -51,5 +50,35 @@ public class MarkovChainTest {
     }
     Assert.assertEquals(499648, b);
     Assert.assertEquals(500352, w);
+
+    mc.addWord("the");
+    mc.addWord("butcher");
+    mc.addWord("the");
+    mc.addWord("grocer");
+    mc.addWord("and");
+    mc.addWord("the");
+    mc.addWord("fisherman");
+
+    b = 0; w = 0;
+    int bu = 0, gr = 0, fi = 0;
+    for(int i = 0; i < 1000000; i++) {
+      String next = mc.nextWord("the");
+      if(next.equals("best")) {
+        b++;
+      } else if(next.equals("worst")) {
+        w++;
+      } else if(next.equals("butcher")) {
+        bu++;
+      } else if(next.equals("grocer")) {
+        gr++;
+      } else if(next.equals("fisherman")) {
+        fi++;
+      }
+    }
+    Assert.assertEquals(199967, b);
+    Assert.assertEquals(200403, w);
+    Assert.assertEquals(200144, bu);
+    Assert.assertEquals(199547, gr);
+    Assert.assertEquals(199939, fi);
   }
 }
