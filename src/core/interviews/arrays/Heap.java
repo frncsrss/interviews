@@ -23,8 +23,7 @@ public class Heap<E> implements Iterable<E> {
   }
 
   public Heap(Collection<E> collection, Comparator<E> comparator) {
-    this.comparator = comparator;
-    heap = new ArrayList<E>();
+    this(comparator);
     for(E e: collection) {
       heap.add(e);
     }
@@ -39,7 +38,7 @@ public class Heap<E> implements Iterable<E> {
       throw new NullPointerException();
     }
     heap.add(e);  // we add the element at the end of the array
-    bubbleUp(size()-1);  // we "bubble it up" until it reaches its position in the heap
+    bubbleUp(size() - 1);  // we "bubble it up" until it reaches its position in the heap
     return true;
   }
 
