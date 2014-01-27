@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   BSTTraversalSortTest.class,
   BubbleSortTest.class,
+  HeapsortTest.class,
   InsertionSortTest.class,
   KeyIndexedCountingTest.class,
   MergesortTest.class,

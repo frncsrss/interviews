@@ -12,10 +12,10 @@ import java.util.NoSuchElementException;
  * Heap.
  * @author Francois Rousseau
  */
-public abstract class Heap<E> implements Iterable<E> {
+public class Heap<E> implements Iterable<E> {
 
   private final List<E> heap;
-  protected Comparator<E> comparator;
+  private final Comparator<E> comparator;
 
   public Heap(Comparator<E> comparator) {
     this.comparator = comparator;
@@ -183,9 +183,37 @@ public abstract class Heap<E> implements Iterable<E> {
   // Private methods
   //////////////////
 
-  abstract protected int bubbleUp(int index);
+  private int bubbleUp(int index) {
+    try {
+      final int parent = parent(index);
+      if(comparator.compare(get(index), get(parent)) < 0) {
+        swap(index, parent);
+        return bubbleUp(parent);
+      }
+    } catch(NoSuchElementException exc) {}
+    return index;
+  }
 
-  abstract protected int bubbleDown(int index);
+  private int bubbleDown(int index) {
+    try {
+      int parent = index;
+      final int left = left(index);
+      if(comparator.compare(get(parent), get(left)) > 0) {
+        parent = left;  // we should at least swap with the left child
+      }
+      try {
+        final int right = right(index);
+        if(comparator.compare(get(parent), get(right)) > 0) {
+          parent = right;  // we should swap with the right child
+        }
+      } catch(NoSuchElementException exc) {}  // no right child
+      if(parent != index) {  // there is one child with a bigger value
+        swap(index, parent);
+        return bubbleDown(parent);
+      }
+    } catch(NoSuchElementException exc) {}  // no child
+    return index;
+  }
 
   private boolean contains(E e, int index) {
     if(comparator.compare(e, get(index)) == 0) {
@@ -206,11 +234,11 @@ public abstract class Heap<E> implements Iterable<E> {
     return false;
   }
 
-  protected E get(int index) {
+  private E get(int index) {
     return heap.get(index);
   }
 
-  protected int left(int index) throws NoSuchElementException {
+  private int left(int index) throws NoSuchElementException {
     if(2*index + 1 > size()-1) {  // if its a node without left child
       throw new NoSuchElementException();
     }
@@ -248,7 +276,7 @@ public abstract class Heap<E> implements Iterable<E> {
     }
   }
 
-  protected int parent(int index) throws NoSuchElementException {
+  private int parent(int index) throws NoSuchElementException {
     if(index == 0) {  // the root has no parent
       throw new NoSuchElementException();
     }
@@ -275,14 +303,14 @@ public abstract class Heap<E> implements Iterable<E> {
     return false;
   }
 
-  protected int right(int index) throws NoSuchElementException {
+  private int right(int index) throws NoSuchElementException {
     if(2*index + 2 > size()-1) {  // if its a node without right child
       throw new NoSuchElementException();
     }
     return 2*index + 2;
   }
 
-  protected void swap(int from, int with) {
+  private void swap(int from, int with) {
     Collections.swap(heap, from, with);
   }
 }

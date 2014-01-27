@@ -2,6 +2,8 @@ package interviews.arrays;
 
 import interviews.sorts.Sorts;
 
+import java.util.Comparator;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,17 +11,24 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class HeapMaxTest {
+public class HeapTest {
+  private static Comparator<Integer> getDecreasingComparatorOfIntegers =
+      new Comparator<Integer>() {
+    @Override
+    public int compare(Integer o1, Integer o2) {
+      return -o1.compareTo(o2);
+    }
+  };
 
   @Test(expected = NullPointerException.class)
   public void test_add() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(Sorts.getComparatorOfIntegers());
     heap.add(null);
   }
 
   @Test
   public void test_isEmpty() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(Sorts.getComparatorOfIntegers());
     Assert.assertEquals(true, heap.isEmpty());
     heap.add(1);
     Assert.assertEquals(false, heap.isEmpty());
@@ -29,7 +38,7 @@ public class HeapMaxTest {
 
   @Test
   public void test_poll() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(getDecreasingComparatorOfIntegers);
     heap.add(1);
     heap.add(2);
     heap.add(3);
@@ -55,7 +64,7 @@ public class HeapMaxTest {
 
   @Test
   public void test_remove() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(getDecreasingComparatorOfIntegers);
     heap.add(1);
     heap.add(2);
     heap.add(3);
@@ -75,7 +84,7 @@ public class HeapMaxTest {
 
   @Test
   public void test_size() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(getDecreasingComparatorOfIntegers);
     Assert.assertEquals(0, heap.size());
     heap.add(1);
     Assert.assertEquals(1, heap.size());
@@ -85,7 +94,7 @@ public class HeapMaxTest {
 
   @Test
   public void test_toArray() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(getDecreasingComparatorOfIntegers);
     heap.add(1);
     Assert.assertArrayEquals(new Integer[] {1}, heap.toArray());
     heap.add(2);
@@ -110,7 +119,7 @@ public class HeapMaxTest {
 
   @Test
   public void test_toString() {
-    Heap<Integer> heap = new HeapMax<Integer>(Sorts.getComparatorOfIntegers());
+    Heap<Integer> heap = new Heap<Integer>(getDecreasingComparatorOfIntegers);
     heap.add(1);
     Assert.assertEquals("1", heap.toString());
     heap.add(2);
