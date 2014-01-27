@@ -11,7 +11,8 @@ public class UpdatableHeapTest {
   @Test
   public void test() {
     UpdatableHeap<Integer> heap = new UpdatableHeap<Integer>();
-    heap.add(0, 10);
+    heap.add(0, 8);
+    Assert.assertEquals(true, heap.increaseKey(0, 2));
     heap.add(1, 20);
     heap.add(2, 30);
     heap.add(3, 15);

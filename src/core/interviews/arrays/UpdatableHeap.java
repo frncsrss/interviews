@@ -29,6 +29,7 @@ public class UpdatableHeap<K> {
       return false;
     }
     heap.add(new Node(key, value));  // we add the element at the end of the array
+    pos.put(key, size() - 1);
     bubbleUp(size() - 1);  // we "bubble it up" until it reaches its position in the heap
     return true;
   }
