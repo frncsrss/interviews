@@ -99,4 +99,32 @@ public class GraphTest {
     g = setUpFlowNetwork();
     Assert.assertEquals(8, g.V);
   }
+
+  @Test
+  public void test_degree() {
+    Graph g = setUp();
+    Assert.assertEquals(4, g.degree(0), 0.1);
+    Assert.assertEquals(1, g.degree(1), 0.1);
+    Assert.assertEquals(1, g.degree(2), 0.1);
+    Assert.assertEquals(2, g.degree(3), 0.1);
+    Assert.assertEquals(2, g.degree(4), 0.1);
+    Assert.assertEquals(2, g.degree(5), 0.1);
+    Assert.assertEquals(2, g.degree(6), 0.1);
+    Assert.assertEquals(1, g.degree(7), 0.1);
+    Assert.assertEquals(1, g.degree(8), 0.1);
+    Assert.assertEquals(3, g.degree(9), 0.1);
+    Assert.assertEquals(1, g.degree(10), 0.1);
+    Assert.assertEquals(2, g.degree(11), 0.1);
+    Assert.assertEquals(2, g.degree(12), 0.1);
+
+    g = setUpWeighted();
+    Assert.assertEquals(.16 + .26 + .38 + .58, g.degree(0), 0.001);
+    Assert.assertEquals(.19 + .29 + .32 + .36, g.degree(1), 0.001);
+    Assert.assertEquals(.17 + .26 + .34 + .36 + .40, g.degree(2), 0.001);
+    Assert.assertEquals(.17 + .29 + .52, g.degree(3), 0.001);
+    Assert.assertEquals(.35 + .37 + .38 + .93, g.degree(4), 0.001);
+    Assert.assertEquals(.28 + .32 + .35, g.degree(5), 0.001);
+    Assert.assertEquals(.40 + .52 + .58 + .93, g.degree(6), 0.001);
+    Assert.assertEquals(.16 + .19 + .28 + .34 + .37, g.degree(7), 0.001);
+  }
 }

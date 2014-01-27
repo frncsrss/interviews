@@ -19,7 +19,7 @@ public class Edge implements Comparable<Edge> {
   }
 
   public Edge(int v, int w) {
-    this(v, w, -1);
+    this(v, w, 1);
   }
 
   @Override
@@ -58,18 +58,11 @@ public class Edge implements Comparable<Edge> {
   @Override
   public int hashCode() {
     if(hash == 0) {
-      if(weight == -1) {
-        hash = new HashCodeBuilder(17, 37)
-        .append(v)
-        .append(w)
-        .toHashCode();
-      } else {
-        hash = new HashCodeBuilder(17, 37)
-        .append(v)
-        .append(w)
-        .append(weight)
-        .toHashCode();
-      }
+      hash = new HashCodeBuilder(17, 37)
+      .append(v)
+      .append(w)
+      .append(weight)
+      .toHashCode();
     }
     return hash;
   }
@@ -85,9 +78,6 @@ public class Edge implements Comparable<Edge> {
 
   @Override
   public String toString() {
-    if(weight > 0) {
-      return v + "->" + w + "(" + weight + ")";
-    }
-    return v + "->" + w;
+    return v + "->" + w + "(" + weight + ")";
   }
 }

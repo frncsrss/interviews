@@ -14,15 +14,17 @@ public class Graph {
   protected int E;
   protected List<Edge>[] adjacencyLists;
   protected Set<Edge> edges;
+  protected double[] degree;
 
   @SuppressWarnings("unchecked")
   public Graph(int V) {
     this.V = V;
-    this.adjacencyLists = (List<Edge>[]) new List[V];
+    this.adjacencyLists = new List[V];
     for (int v = 0; v < V; v++) {
       adjacencyLists[v] = new ArrayList<Edge>();
     }
     this.edges = new HashSet<Edge>(V);
+    this.degree = new double[V];
   }
 
   /**
@@ -43,12 +45,15 @@ public class Graph {
 
   /**
    * Add an edge between vertex v and vertex w if not already present.
-   * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(Edge e) {
-    boolean isNew = addEdgeInternal(e);
+    boolean isNew = edges.add(e);
     if(isNew) {
+      adjacencyLists[e.v].add(e);
+      adjacencyLists[e.w].add(e);
       E++;
+      degree[e.v] += e.weight;
+      degree[e.w] += e.weight;
     }
     return isNew;
   }
@@ -69,6 +74,13 @@ public class Graph {
       adjacents.add(edge.other(v));
     }
     return adjacents;
+  }
+
+  /**
+   * Degree of v.
+   */
+  public double degree(int v) {
+    return degree[v];
   }
 
   /**
@@ -100,19 +112,5 @@ public class Graph {
       builder.append("]\n");
     }
     return builder.toString();
-  }
-
-
-  /**
-   * Add an edge between vertex v and vertex w.
-   * Create the vertices if not already present in the graph.
-   */
-  protected boolean addEdgeInternal(Edge edge) {
-    boolean isNew = edges.add(edge);
-    if(isNew) {
-      adjacencyLists[edge.v].add(edge);
-      adjacencyLists[edge.w].add(edge);
-    }
-    return isNew;
   }
 }

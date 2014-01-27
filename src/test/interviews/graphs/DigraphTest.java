@@ -80,4 +80,74 @@ public class DigraphTest {
     g = setUpWeighted();
     Assert.assertEquals(8, g.V);
   }
+
+  @Test
+  public void test_degree() {
+    Digraph g = setUp();
+    Assert.assertEquals(4, g.degree(0), 0.1);
+    Assert.assertEquals(2, g.indegree(0), 0.1);
+    Assert.assertEquals(2, g.outdegree(0), 0.1);
+    Assert.assertEquals(1, g.degree(1), 0.1);
+    Assert.assertEquals(1, g.indegree(1), 0.1);
+    Assert.assertEquals(0, g.outdegree(1), 0.1);
+    Assert.assertEquals(4, g.degree(2), 0.1);
+    Assert.assertEquals(2, g.indegree(2), 0.1);
+    Assert.assertEquals(2, g.outdegree(2), 0.1);
+    Assert.assertEquals(4, g.degree(3), 0.1);
+    Assert.assertEquals(2, g.indegree(3), 0.1);
+    Assert.assertEquals(2, g.outdegree(3), 0.1);
+    Assert.assertEquals(5, g.degree(4), 0.1);
+    Assert.assertEquals(3, g.indegree(4), 0.1);
+    Assert.assertEquals(2, g.outdegree(4), 0.1);
+    Assert.assertEquals(3, g.degree(5), 0.1);
+    Assert.assertEquals(2, g.indegree(5), 0.1);
+    Assert.assertEquals(1, g.outdegree(5), 0.1);
+    Assert.assertEquals(6, g.degree(6), 0.1);
+    Assert.assertEquals(2, g.indegree(6), 0.1);
+    Assert.assertEquals(4, g.outdegree(6), 0.1);
+    Assert.assertEquals(2, g.degree(7), 0.1);
+    Assert.assertEquals(0, g.indegree(7), 0.1);
+    Assert.assertEquals(2, g.outdegree(7), 0.1);
+    Assert.assertEquals(2, g.degree(8), 0.1);
+    Assert.assertEquals(1, g.indegree(8), 0.1);
+    Assert.assertEquals(1, g.outdegree(8), 0.1);
+    Assert.assertEquals(5, g.degree(9), 0.1);
+    Assert.assertEquals(3, g.indegree(9), 0.1);
+    Assert.assertEquals(2, g.outdegree(9), 0.1);
+    Assert.assertEquals(2, g.degree(10), 0.1);
+    Assert.assertEquals(1, g.indegree(10), 0.1);
+    Assert.assertEquals(1, g.outdegree(10), 0.1);
+    Assert.assertEquals(3, g.degree(11), 0.1);
+    Assert.assertEquals(1, g.indegree(11), 0.1);
+    Assert.assertEquals(2, g.outdegree(11), 0.1);
+    Assert.assertEquals(3, g.degree(12), 0.1);
+    Assert.assertEquals(2, g.indegree(12), 0.1);
+    Assert.assertEquals(1, g.outdegree(12), 0.1);
+
+    g = setUpWeighted();
+    Assert.assertEquals(22, g.degree(0), 0.1);
+    Assert.assertEquals(0,  g.indegree(0), 0.1);
+    Assert.assertEquals(22, g.outdegree(0), 0.1);
+    Assert.assertEquals(36, g.degree(1), 0.1);
+    Assert.assertEquals(5,  g.indegree(1), 0.1);
+    Assert.assertEquals(31, g.outdegree(1), 0.1);
+    Assert.assertEquals(34, g.degree(2), 0.1);
+    Assert.assertEquals(20, g.indegree(2), 0.1);
+    Assert.assertEquals(14, g.outdegree(2), 0.1);
+    Assert.assertEquals(27, g.degree(3), 0.1);
+    Assert.assertEquals(18, g.indegree(3), 0.1);
+    Assert.assertEquals(9,  g.outdegree(3), 0.1);
+    Assert.assertEquals(38, g.degree(4), 0.1);
+    Assert.assertEquals(9,  g.indegree(4), 0.1);
+    Assert.assertEquals(29, g.outdegree(4), 0.1);
+    Assert.assertEquals(24, g.degree(5), 0.1);
+    Assert.assertEquals(10, g.indegree(5), 0.1);
+    Assert.assertEquals(14, g.outdegree(5), 0.1);
+    Assert.assertEquals(53, g.degree(6), 0.1);
+    Assert.assertEquals(53, g.indegree(6), 0.1);
+    Assert.assertEquals(0,  g.outdegree(6), 0.1);
+    Assert.assertEquals(30, g.degree(7), 0.1);
+    Assert.assertEquals(17, g.indegree(7), 0.1);
+    Assert.assertEquals(13, g.outdegree(7), 0.1);
+  }
 }
