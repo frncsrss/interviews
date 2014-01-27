@@ -1,5 +1,8 @@
 package interviews.graphs;
 
+import interviews.arrays.UpdatableHeap;
+import interviews.lib.Pair;
+
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -87,6 +90,46 @@ public class CoreDegeneracy {
 
     LinkedHashMap<Integer, Set<Integer>> decomposition = new LinkedHashMap<Integer, Set<Integer>>();
     for(i = 0; i <= k; i++) {     // init decomposition
+      decomposition.put(i, new HashSet<Integer>());
+    }
+
+    for(int v = 0; v < n; v++) {  // fill decomposition
+      decomposition.get(deg[v]).add(v);
+    }
+
+    return decomposition;
+  }
+
+
+  /**
+   * k-core decomposition of a weighted undirected graph, aka p5-core or f-core. Runs in O(ElogV).
+   */
+  public LinkedHashMap<Integer, Set<Integer>> fcore() {
+    int n, k;
+    int[] deg;
+
+    UpdatableHeap<Integer> heap = new UpdatableHeap<Integer>();
+    n = g.V;
+    deg = new int[n];
+    for(int v = 0; v < n; v++) {  // fill the degrees (will hold the core number in the end)
+      deg[v] = (int)g.degree(v);
+      heap.add(v, deg[v]);
+    }
+
+    k = 0;
+    while(!heap.isEmpty()) {
+      Pair<Integer, Integer> min = heap.poll();
+      int v = min.x;
+      k = Math.max(k, min.y);
+      deg[v] = k;
+      for(Edge e : g.adjE(v)) {   // visit each edge (twice in total)
+        int u = e.other(v);
+        heap.decreaseKey(u, (int)e.weight);
+      }
+    }
+
+    LinkedHashMap<Integer, Set<Integer>> decomposition = new LinkedHashMap<Integer, Set<Integer>>();
+    for(int i = 0; i <= k; i++) {  // init decomposition
       decomposition.put(i, new HashSet<Integer>());
     }
 

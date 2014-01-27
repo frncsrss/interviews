@@ -1,5 +1,7 @@
 package interviews.arrays;
 
+import interviews.lib.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -72,7 +74,7 @@ public class UpdatableHeap<K> {
   /**
    * Retrieve and remove the head of this heap, or return null if this heap is empty.
    */
-  public K poll() {
+  public Pair<K, Integer> poll() {
     if(isEmpty()) {
       return null;
     }
@@ -82,7 +84,7 @@ public class UpdatableHeap<K> {
     if(size() > 0) {  // if the heap is not empty
       bubbleDown(0);  // we bubble down the element previously at the end
     }
-    return head.k;
+    return new Pair<K, Integer>(head.k, head.v);
   }
 
   /**
