@@ -5,21 +5,15 @@ package interviews.lib;
  * @author Francois Rousseau
  */
 public class Pair<X,Y> {
-  private X x;
-  private Y y;
-  
+  public final X x;
+  public final Y y;
+
   public Pair(X x, Y y) {
     this.x = x;
     this.y = y;
   }
 
-  public X x() {
-    return x;
-  }
-  public Y y() {
-    return y;
-  }
-
+  @Override
   public String toString() {
     return "(" + x + ", " + y + ")";
   }

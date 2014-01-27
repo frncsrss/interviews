@@ -1,5 +1,6 @@
 package interviews.scalability;
 
+import static interviews.scalability.MyFileReader.findMissingNumber;
 import interviews.lib.Pair;
 
 import java.io.FileWriter;
@@ -14,8 +15,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import static interviews.scalability.MyFileReader.findMissingNumber;
-
 /**
  * Test class.
  * @author Francois Rousseau
@@ -25,8 +24,8 @@ public class MyFileReaderTest {
   @Test
   public void test_basic() throws NoMissingNumberFoundException {
     Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(1 << 16);
-    List<Integer> list = pair.x();
-    int golden = Collections.min(pair.y());
+    List<Integer> list = pair.x;
+    int golden = Collections.min(pair.y);
     int res = findMissingNumber(list, 1 << 12, 1 << 4, false);  // max_value = 1 << 16;
     Assert.assertEquals(golden, res);
   }
@@ -34,8 +33,8 @@ public class MyFileReaderTest {
   @Test
   public void test_enoughMemory() throws NoMissingNumberFoundException {
     Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(1 << 16);
-    List<Integer> list = pair.x();
-    int golden = Collections.min(pair.y());
+    List<Integer> list = pair.x;
+    int golden = Collections.min(pair.y);
     int res = findMissingNumber(list, 1 << 12, 1 << 4, true);  // max_value = 1 << 16;
     Assert.assertEquals(golden, res);
   }
@@ -60,7 +59,7 @@ public class MyFileReaderTest {
     final String filename = tmp_dir.getRoot() + "/file.txt";
     Pair<List<Integer>, List<Integer>> pair =
         generateMissingNumberFile(filename, 1 << 16);  // max_value = 1 << 16;
-    int golden = Collections.min(pair.y());
+    int golden = Collections.min(pair.y);
     int res = findMissingNumber(filename, 1 << 12, 1 << 4, false);
     Assert.assertEquals(golden, res);
   }
@@ -70,7 +69,7 @@ public class MyFileReaderTest {
     final String filename = tmp_dir.getRoot() + "/file.txt";
     Pair<List<Integer>, List<Integer>> pair =
         generateMissingNumberFile(filename, 1 << 16);  // max_value = 1 << 16;
-    int golden = Collections.min(pair.y());
+    int golden = Collections.min(pair.y);
     int res = findMissingNumber(filename, 1 << 12, 1 << 4, true);
     Assert.assertEquals(golden, res);
   }
@@ -79,8 +78,8 @@ public class MyFileReaderTest {
       String filename, int max_value) throws IOException {
     PrintWriter out = new PrintWriter(new FileWriter(filename));
     Pair<List<Integer>, List<Integer>> pair = generateMissingNumber(max_value);
-    for(int i = 0; i < pair.x().size(); i++) {
-      out.println(pair.x().get(i));
+    for(int i = 0; i < pair.x.size(); i++) {
+      out.println(pair.x.get(i));
     }
     out.close();
     return pair;
