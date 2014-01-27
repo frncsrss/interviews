@@ -23,14 +23,16 @@ public class Digraph extends Graph {
     return reverse;
   }
 
-
   /**
    * Add a (directed) edge between vertex v and vertex w.
    * Create the vertices if not already present in the graph.
    */
   @Override
   protected boolean addEdgeInternal(Edge edge) {
-    edges.add(edge);
-    return adjacencyLists[edge.v].add(edge);
+    boolean isNew = edges.add(edge);
+    if(isNew) {
+      adjacencyLists[edge.v].add(edge);
+    }
+    return isNew;
   }
 }

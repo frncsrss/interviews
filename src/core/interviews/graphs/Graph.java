@@ -46,11 +46,11 @@ public class Graph {
    * Create the vertices if not already present in the graph.
    */
   public boolean addEdge(Edge e) {
-    boolean ret = addEdgeInternal(e);
-    if(ret) {
-      E++;  // we only want to increment it once for undirected edge
+    boolean isNew = addEdgeInternal(e);
+    if(isNew) {
+      E++;
     }
-    return ret;
+    return isNew;
   }
 
   /**
@@ -108,7 +108,11 @@ public class Graph {
    * Create the vertices if not already present in the graph.
    */
   protected boolean addEdgeInternal(Edge edge) {
-    edges.add(edge);
-    return adjacencyLists[edge.v].add(edge) && adjacencyLists[edge.w].add(edge);
+    boolean isNew = edges.add(edge);
+    if(isNew) {
+      adjacencyLists[edge.v].add(edge);
+      adjacencyLists[edge.w].add(edge);
+    }
+    return isNew;
   }
 }

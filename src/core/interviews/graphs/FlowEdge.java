@@ -24,7 +24,7 @@ public class FlowEdge extends Edge {
   public double residualCapacityTo(int vertex) {
     if(vertex == w) return weight - flow;  // forward edge
     if(vertex == v) return flow;           // backward edge
-    throw new IllegalArgumentException("Wrong endpoint");    
+    throw new IllegalArgumentException("Wrong endpoint");
   }
 
   /**
@@ -32,8 +32,8 @@ public class FlowEdge extends Edge {
    */
   public void addResidualFlowTo(int vertex, double delta) {
     if     (vertex == w) flow += delta;  // forward edge
-    else if(vertex == v) flow -= delta;  // backward edge    
-    else throw new IllegalArgumentException("Wrong endpoint");    
+    else if(vertex == v) flow -= delta;  // backward edge
+    else throw new IllegalArgumentException("Wrong endpoint");
   }
 
   @Override

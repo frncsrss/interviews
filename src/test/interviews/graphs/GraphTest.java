@@ -71,11 +71,20 @@ public class GraphTest {
   public void test_E() {
     Graph g = setUp();
     Assert.assertEquals(12, g.E());
+    // add an already existing edge
+    Assert.assertEquals(false, g.addEdge(0, 1));
+    Assert.assertEquals(12, g.E());
 
     g = setUpWeighted();
     Assert.assertEquals(16, g.E());
+    // add an already existing edge
+    Assert.assertEquals(false, g.addEdge(0, 7, 0.16));
+    Assert.assertEquals(16, g.E());
 
     g = setUpFlowNetwork();
+    Assert.assertEquals(15, g.E());
+    // add an already existing edge
+    Assert.assertEquals(false, g.addEdge(new FlowEdge(0, 1, 10)));
     Assert.assertEquals(15, g.E());
   }
 

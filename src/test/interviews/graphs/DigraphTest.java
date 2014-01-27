@@ -61,8 +61,14 @@ public class DigraphTest {
   public void test_E() {
     Digraph g = setUp();
     Assert.assertEquals(22, g.E());
+    // add an already existing edge
+    Assert.assertEquals(false, g.addEdge(4, 2));
+    Assert.assertEquals(22, g.E());
 
     g = setUpWeighted();
+    Assert.assertEquals(16, g.E());
+    // add an already existing edge
+    Assert.assertEquals(false, g.addEdge(0, 1, 5.0));
     Assert.assertEquals(16, g.E());
   }
 

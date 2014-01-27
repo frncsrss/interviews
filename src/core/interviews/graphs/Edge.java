@@ -1,5 +1,7 @@
 package interviews.graphs;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Edge.
  * @author Francois Rousseau
@@ -7,6 +9,8 @@ package interviews.graphs;
 public class Edge implements Comparable<Edge> {
   public final int v, w;
   public final double weight;
+  /** Cache the hash code for the edge */
+  private int hash; // Default to 0
 
   public Edge(int v, int w, double weight) {
     this.v = v;
@@ -37,8 +41,8 @@ public class Edge implements Comparable<Edge> {
     if(edge.weight != this.weight) {
       return false;
     }
-    if((edge.v == this.v && edge.w == this.w)
-       || (edge.v == this.w && edge.w == this.v)) {
+    if(edge.v == this.v && edge.w == this.w
+        || edge.v == this.w && edge.w == this.v) {
       return true;
     }
     return false;
@@ -49,6 +53,25 @@ public class Edge implements Comparable<Edge> {
    */
   public int either() {
     return v;
+  }
+
+  @Override
+  public int hashCode() {
+    if(hash == 0) {
+      if(weight == -1) {
+        hash = new HashCodeBuilder(17, 37)
+        .append(v)
+        .append(w)
+        .toHashCode();
+      } else {
+        hash = new HashCodeBuilder(17, 37)
+        .append(v)
+        .append(w)
+        .append(weight)
+        .toHashCode();
+      }
+    }
+    return hash;
   }
 
   /**
