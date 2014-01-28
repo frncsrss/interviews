@@ -237,13 +237,6 @@ public class Heap<E> implements Iterable<E> {
     return heap.get(index);
   }
 
-  private int left(int index) throws NoSuchElementException {
-    if(2*index + 1 > size()-1) {  // if its a node without left child
-      throw new NoSuchElementException();
-    }
-    return 2*index + 1;
-  }
-
   /**
    * Make the heap in linear time.
    * Bottom-up leads to linear time (O(N)) when top-down leads to linearitmic (O(NlogN)) time.
@@ -273,6 +266,13 @@ public class Heap<E> implements Iterable<E> {
     for(int i = (size()-1)/2; i >= 0; i--) {  // the last N/2 elements are leaves
       bubbleDown(i);
     }
+  }
+
+  private int left(int index) throws NoSuchElementException {
+    if(2*index + 1 > size()-1) {  // if its a node without left child
+      throw new NoSuchElementException();
+    }
+    return 2*index + 1;
   }
 
   private int parent(int index) throws NoSuchElementException {
