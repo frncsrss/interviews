@@ -10,8 +10,9 @@ import org.junit.Test;
 public class CompresserTest {
   @Test
   public void test() {
-    Assert.assertEquals("a2b1c5a3", Compresser.f("aabcccccaaa"));
+    Assert.assertEquals("2a1b5c3a", Compresser.f("aabcccccaaa"));
     Assert.assertEquals("abc", Compresser.f("abc"));
+    Assert.assertEquals("abcc", Compresser.f("abcc"));
     Assert.assertEquals("aabbcc", Compresser.f("aabbcc"));
   }
 }
