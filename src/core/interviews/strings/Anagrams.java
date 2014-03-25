@@ -28,7 +28,7 @@ public class Anagrams {
   public enum METHOD {
     SORT() {
       /**
-       * O(mlogm) time, O(m) if bin sort for ASCII for example.
+       * O(mlogm) time, O(m) if bin sort.
        */
       @Override
       String getKey(String s) {
@@ -54,7 +54,9 @@ public class Anagrams {
   };
 
   /**
-   * Solution in O(nm) time and O(nm) space.
+   * Let n = number of strings and m = average length of a string.
+   * Time complexity:  O(nm)
+   * Space complexity: O(nm)
    *
    * Uses an hashmap with keys computed using the specified method and values the list of words
    * sharing the same key, i.e. begin anagrams.
