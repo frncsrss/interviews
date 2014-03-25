@@ -315,7 +315,7 @@ public class Substring {
     }
 
     long RM = 1;  // pre-compute R^(M-1)
-    for (int i = 1; i <= M-1; i++) {
+    for(int i = 1; i <= M - 1; i++) {
       RM = R * RM % Q;
     }
 
@@ -329,12 +329,8 @@ public class Substring {
   }
 
   /**
-   * Compute the hash of a character of arrays in linear time.
+   * Compute the hash of an array s of characters (M first symbols) in linear time.
    * Use the Horner's method.
-   * @param s the array of characters
-   * @param R the radix
-   * @param Q the prime number
-   * @return the hash value
    */
   private static long hash(char[] s, int M) {
     long h = 0;
@@ -345,17 +341,15 @@ public class Substring {
   }
 
   /**
-   * Update the hash value from s[i - M...i - 1] to s[i - M -2...i].
+   * Update the hash value from s[i - M...i - 1] to s[i - M + 1...i].
    * @param h the previous hash value
-   * @param R the radix
-   * @param Q the prime number
    * @param RM R^(M-1)
    * @param s the array of characters
-   * @param i the next index to include
    * @param M the length of the hash
+   * @param i the next index to include
    * @return the new hash value
    */
   private static long update(long h, long RM, char[] s, int M, int i) {
-    return ((h + Q - s[i - M]*RM % Q) % Q * R + s[i]) % Q;
+    return ((h + Q - s[i - M] * RM % Q) % Q * R + s[i]) % Q;
   }
 }
