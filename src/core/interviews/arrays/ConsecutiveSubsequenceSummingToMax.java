@@ -1,93 +1,37 @@
 package interviews.arrays;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
- * Return the longest subsequence of a list with the maximum sum in O(n) time.
+ * Given an array of integers, return the subarray with maximum sum (start and end indexes).
+ * Known as the maximum subarray problem.
  * @author Francois Rousseau
  */
 public class ConsecutiveSubsequenceSummingToMax {
-  public static List<Integer> f(List<Integer> list) {
-    int i = 0;
-    int max = Integer.MIN_VALUE;
-    for(; i < list.size(); i++) {  // we loop until we find a positive value
-      final int e = list.get(i);
-      if(e > 0) {
-        break;
+  /**
+   * Kadane's algorithm.
+   *
+   * Let n = length(arr).
+   * Time complexity:  O(n)
+   * Space complexity: O(1)
+   */
+  public static int[] f(int[] arr) {
+    int current_sum = 0, current_start = 0;
+    int best_sum = Integer.MIN_VALUE, best_start = -1, best_end = -1;
+    for(int i = 0; i < arr.length; i++) {
+      current_sum += arr[i];
+      // we only update the best sum if the current sum is greater than it
+      if(current_sum > best_sum) {
+        best_sum = current_sum;
+        best_start = current_start;
+        best_end = i;
       }
-      if(e > max) {
-        max = e;
-      }
-    }
-    if(i == list.size()) {  // there were only negative numbers
-      return Arrays.asList(max);  // the maximum sum is obtained with the highest value only
-    }
-
-    int current_sum = list.get(i);  // first positive value
-    List<Integer> current_list = new ArrayList<Integer>();
-    current_list.add(current_sum);
-    int best_sum = current_sum;
-    List<Integer> best_list = new ArrayList<Integer>(current_list);
-    for(i++; i < list.size(); i++) {
-      final int e = list.get(i);
-      current_sum += e;
       // when the current sum becomes negative, there is no need to take it into account anymore
       // we flush and move on
       if(current_sum <= 0) {
         current_sum = 0;
-        current_list.clear();
-        continue;
+        current_start = i + 1;
       }
-      current_list.add(e);
-      // we only update the best sum if the current sum is greater than it
-      if(current_sum > best_sum) {
-        best_sum = current_sum;
-        best_list = new ArrayList<Integer>(current_list);
-      }
-    }
-    return best_list;
-  }
-
-  public static List<Integer> f(int[] arr) {
-    int i = 0;
-    int max = Integer.MIN_VALUE;
-    for(; i < arr.length; i++) {  // we loop until we find a positive value
-      final int e = arr[i];
-      if(e > 0) {
-        break;
-      }
-      if(e > max) {
-        max = e;
-      }
-    }
-    if(i == arr.length) {  // there were only negative numbers
-      return Arrays.asList(max);  // the maximum sum is obtained with the highest value only
     }
 
-    int current_sum = arr[i];  // first positive value
-    List<Integer> current_list = new ArrayList<Integer>();
-    current_list.add(current_sum);
-    int best_sum = current_sum;
-    List<Integer> best_list = new ArrayList<Integer>(current_list);
-    for(i++; i < arr.length; i++) {
-      final int e = arr[i];
-      current_sum += e;
-      // when the current sum becomes negative, there is no need to take it into account anymore
-      // we flush and move on
-      if(current_sum <= 0) {
-        current_sum = 0;
-        current_list.clear();
-        continue;
-      }
-      current_list.add(e);
-      // we only update the best sum if the current sum is greater than it
-      if(current_sum > best_sum) {
-        best_sum = current_sum;
-        best_list = new ArrayList<Integer>(current_list);
-      }
-    }
-    return best_list;
+    return new int[]{best_start, best_end};
   }
 }

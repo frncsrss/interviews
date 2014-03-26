@@ -2,8 +2,6 @@ package interviews.arrays;
 
 import static interviews.arrays.ConsecutiveSubsequenceSummingToMax.f;
 
-import java.util.Arrays;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,23 +12,19 @@ import org.junit.Test;
 public class ConsecutiveSubsequenceSummingToMaxTest {
   @Test
   public void test() {
-    Assert.assertEquals(
-        Arrays.asList(5, -2, 9), f(Arrays.asList(1, -3, 5, -2, 9, -8, -6, 4)));
-    Assert.assertEquals(
-        Arrays.asList(4, -3, 5, -2, 9), f(Arrays.asList(4, -3, 5, -2, 9, -8, -6, 4)));
-    Assert.assertEquals(
-        Arrays.asList(5, -2, 9), f(Arrays.asList(1, -3, 5, -2, 9, -8, 6, 1)));
-    Assert.assertEquals(
-        Arrays.asList(5, -2, 9, -8, 6, 4), f(Arrays.asList(1, -3, 5, -2, 9, -8, 6, 4)));
-    Assert.assertEquals(
-        Arrays.asList(2), f(Arrays.asList(-3, 2)));
-    Assert.assertEquals(
-        Arrays.asList(2, 5), f(Arrays.asList(-3, 2, 5)));
-    Assert.assertEquals(
-        Arrays.asList(-2), f(Arrays.asList(-3, -2, -5)));
-    Assert.assertEquals(
-        Arrays.asList(-3), f(Arrays.asList(-3)));
-    Assert.assertEquals(
-        Arrays.asList(2), f(Arrays.asList(2)));
+    Assert.assertArrayEquals(new int[]{0, 0}, f(new int[]{2}));
+    Assert.assertArrayEquals(new int[]{0, 0}, f(new int[]{-3}));
+    Assert.assertArrayEquals(new int[]{0, 0}, f(new int[]{3, -2}));
+    Assert.assertArrayEquals(new int[]{1, 1}, f(new int[]{-3, 2}));
+    Assert.assertArrayEquals(new int[]{1, 1}, f(new int[]{-3, -2, -5}));
+    Assert.assertArrayEquals(new int[]{1, 2}, f(new int[]{-3, 2, 5}));
+    Assert.assertArrayEquals(new int[]{1, 2}, f(new int[]{-1, 1, 5}));
+    Assert.assertArrayEquals(new int[]{0, 4}, f(new int[]{4, -3, 5, -2, 9, -8, -6, 4}));
+    Assert.assertArrayEquals(new int[]{0, 7}, f(new int[]{1, 3, 5, -2, 9, -8, 6, 4}));
+    Assert.assertArrayEquals(new int[]{2, 4}, f(new int[]{1, -3, 5, -2, 9, -8, -6, 4}));
+    Assert.assertArrayEquals(new int[]{2, 4}, f(new int[]{1, -3, 5, -2, 9, -8, 6, 1}));
+    Assert.assertArrayEquals(new int[]{2, 7}, f(new int[]{1, -3, 5, -2, 9, -8, 6, 4}));
+    Assert.assertArrayEquals(new int[]{1, 8}, f(new int[]{0, 1, 3, 5, -2, 9, -8, 6, 4}));
+    Assert.assertArrayEquals(new int[]{0, 7}, f(new int[]{1, 3, 5, -2, 9, -8, 6, 4, 0}));
   }
 }
