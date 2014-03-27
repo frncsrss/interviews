@@ -5,7 +5,7 @@ package interviews.arrays;
  * Known as the maximum subarray problem.
  * @author Francois Rousseau
  */
-public class ConsecutiveSubsequenceSummingToMax {
+public class MaximumSubarray {
   /**
    * Kadane's algorithm.
    *

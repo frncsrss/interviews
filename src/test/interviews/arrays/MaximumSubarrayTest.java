@@ -1,6 +1,6 @@
 package interviews.arrays;
 
-import static interviews.arrays.ConsecutiveSubsequenceSummingToMax.f;
+import static interviews.arrays.MaximumSubarray.f;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class ConsecutiveSubsequenceSummingToMaxTest {
+public class MaximumSubarrayTest {
   @Test
   public void test() {
     Assert.assertArrayEquals(new int[]{0, 0}, f(new int[]{2}));
