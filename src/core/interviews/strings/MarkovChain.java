@@ -27,7 +27,7 @@ public class MarkovChain {
   }
 
   public String nextWord(String word) {
-    if(!map.containsKey(word)) {
+    if(!map.containsKey(word)) {  // could be improved with a source node pointing to all the nodes
       throw new NoSuchElementException();
     }
     return map.get(word).nextWord();
@@ -35,7 +35,10 @@ public class MarkovChain {
 
   private static class Node {
     private final Map<String, Integer> map = new HashMap<String, Integer>();
-    private int count = 0;
+    private int count = 0;  // total number of calls to addWord
+    private boolean hasChanged = true;  // do we need to re-compute the cumulative frequencies
+    private String[] words;  // same as map.keySet(), in sync with the cumulative frequencies
+    private int[] cumulativeFrequencies;
 
     public void addWord(String word) {
       if(map.containsKey(word)) {
@@ -44,6 +47,7 @@ public class MarkovChain {
         map.put(word, 1);
       }
       count++;
+      hasChanged = true;
     }
 
     public String nextWord() {
@@ -53,14 +57,25 @@ public class MarkovChain {
       if(map.size() == 1) {
         return map.keySet().iterator().next();
       }
-      String[] words = new String[map.size()];
+      if(hasChanged) {
+        updateFrequencies();
+        hasChanged = false;
+      }
+      return which(r.nextInt(count));
+    }
+
+    /**
+     * Recompute the words and cumulativeFrequencies arrays. Needed whenever a word was upserted.
+     */
+    private void updateFrequencies() {
+      words = new String[map.size()];
       // one cumulative frequency per word. the first cumulative frequency will be 0 and the next
       // the previous one + the frequency of the previous word
       // for example if the frequencies are 7 5 11 then the array will look like 0 7 12
-      int[] cumulativeFrequencies = new int[map.size()];
+      cumulativeFrequencies = new int[map.size()];
       int i = 0;
-      for(String word : map.keySet()) {
-        words[i] = word;
+      for(String s : map.keySet()) {
+        words[i] = s;
         if(i == 0) {
           cumulativeFrequencies[0] = 0;
         } else {
@@ -68,8 +83,12 @@ public class MarkovChain {
         }
         i++;
       }
-      int p = r.nextInt(count);
-      // binary search in cumulativeFrequencies to find the range where p falls in
+    }
+
+    /**
+     * Binary search in cumulativeFrequencies to find the range where p falls in.
+     */
+    private String which(int p) {
       int lo = 0;
       int hi = cumulativeFrequencies.length - 1;
       while(lo < hi) {
