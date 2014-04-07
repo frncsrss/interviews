@@ -103,12 +103,19 @@ public class LinkedListNode<E> {
     return builder.toString();
   }
 
+  /**
+   * Given a sorted circular linked list, insert an element at the right place.
+   *
+   * Let n be the number of elements in the linked list.
+   * Time complexity:  O(n)
+   * Space complexity: O(1)
+   */
   public static <E> void insert(E value, LinkedListNode<E> node, Comparator<E> comparator) {
     if(value == null || node == null) {
       return;
     }
 
-    // look for pivot
+    // look for pivot (highest value)
     LinkedListNode<E> pivot = node.next;
     while(!pivot.equals(node)  // to avoid cycling indefinitely over a linked list with constant values
         && comparator.compare(pivot.e, pivot.next.e) <= 0) {  // find when the next value is smaller
