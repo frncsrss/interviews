@@ -150,4 +150,15 @@ public class DigraphTest {
     Assert.assertEquals(17, g.indegree(7), 0.1);
     Assert.assertEquals(13, g.outdegree(7), 0.1);
   }
+
+  @Test
+  public void test_removeEdge() {
+    Digraph g = setUp();
+    Assert.assertTrue( g.removeEdge(new Edge(4, 2)));
+    Assert.assertFalse(g.removeEdge(new Edge(4, 2)));
+    Assert.assertTrue( g.removeEdge(new Edge(2, 3)));
+    Assert.assertFalse(g.removeEdge(new Edge(2, 3)));
+    Assert.assertFalse(g.removeEdge(new Edge(0, 2)));
+    Assert.assertEquals(20, g.E());
+  }
 }

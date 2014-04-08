@@ -19,16 +19,16 @@ public class Digraph extends Graph {
    */
   @Override
   public boolean addEdge(Edge e) {
-    boolean isNew = edges.add(e);
-    if(isNew) {
-      adjacencyLists[e.v].add(e);
-      E++;
-      degree[e.v] += e.weight;
-      degree[e.w] += e.weight;
-      outdegree[e.v] += e.weight;
-      indegree[e.w] += e.weight;
+    if(!edges.add(e)) {
+      return false;
     }
-    return isNew;
+    adjacencyLists[e.v].add(e);
+    E++;
+    degree[e.v] += e.weight;
+    degree[e.w] += e.weight;
+    outdegree[e.v] += e.weight;
+    indegree[e.w] += e.weight;
+    return true;
   }
 
   /**
@@ -43,6 +43,21 @@ public class Digraph extends Graph {
    */
   public double outdegree(int v) {
     return outdegree[v];
+  }
+
+  @Override
+  public boolean removeEdge(Edge e) {
+    if(!edges.contains(e)) {
+      return false;
+    }
+    edges.remove(e);
+    adjacencyLists[e.v].remove(e);
+    E--;
+    degree[e.v] -= e.weight;
+    degree[e.w] -= e.weight;
+    outdegree[e.v] -= e.weight;
+    indegree[e.w] -= e.weight;
+    return true;
   }
 
   /**

@@ -47,15 +47,15 @@ public class Graph {
    * Add an edge between vertex v and vertex w if not already present.
    */
   public boolean addEdge(Edge e) {
-    boolean isNew = edges.add(e);
-    if(isNew) {
-      adjacencyLists[e.v].add(e);
-      adjacencyLists[e.w].add(e);
-      E++;
-      degree[e.v] += e.weight;
-      degree[e.w] += e.weight;
+    if(!edges.add(e)) {
+      return false;
     }
-    return isNew;
+    adjacencyLists[e.v].add(e);
+    adjacencyLists[e.w].add(e);
+    E++;
+    degree[e.v] += e.weight;
+    degree[e.w] += e.weight;
+    return true;
   }
 
   /**
@@ -77,6 +77,25 @@ public class Graph {
   }
 
   /**
+   * Does the graph contains the edge?
+   */
+  public boolean contains(Edge e) {
+    return edges.contains(e);
+  }
+
+  /**
+   * Does the graph contains the edge?
+   */
+  public boolean containsEdge(int v, int w) {
+    for(Edge edge: adjacencyLists[v]) {
+      if(edge.other(v) == w) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Degree of v.
    */
   public double degree(int v) {
@@ -95,6 +114,22 @@ public class Graph {
    */
   public Iterable<Edge> edges() {
     return edges;
+  }
+
+  /**
+   * Remove the edge if inside the graph.
+   */
+  public boolean removeEdge(Edge e) {
+    if(!edges.contains(e)) {
+      return false;
+    }
+    edges.remove(e);
+    adjacencyLists[e.v].remove(e);
+    adjacencyLists[e.w].remove(e);
+    E--;
+    degree[e.v] -= e.weight;
+    degree[e.w] -= e.weight;
+    return true;
   }
 
   /**

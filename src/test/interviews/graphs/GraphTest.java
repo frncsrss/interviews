@@ -127,4 +127,15 @@ public class GraphTest {
     Assert.assertEquals(.40 + .52 + .58 + .93, g.degree(6), 0.001);
     Assert.assertEquals(.16 + .19 + .28 + .34 + .37, g.degree(7), 0.001);
   }
+
+  @Test
+  public void test_removeEdge() {
+    Graph g = setUp();
+    Assert.assertTrue( g.removeEdge(new Edge(0, 1)));
+    Assert.assertFalse(g.removeEdge(new Edge(0, 1)));
+    Assert.assertTrue( g.removeEdge(new Edge(0, 2)));
+    Assert.assertFalse(g.removeEdge(new Edge(0, 2)));
+    Assert.assertFalse(g.removeEdge(new Edge(0, 4)));
+    Assert.assertEquals(10, g.E());
+  }
 }
