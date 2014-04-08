@@ -183,34 +183,32 @@ public class Heap<E> implements Iterable<E> {
   //////////////////
 
   private int bubbleUp(int index) {
-    try {
-      final int parent = parent(index);
-      if(comparator.compare(get(index), get(parent)) < 0) {
-        swap(index, parent);
-        return bubbleUp(parent);
-      }
-    } catch(NoSuchElementException exc) {}
+    final int parent = parent(index);
+    if(comparator.compare(get(index), get(parent)) < 0) {
+      swap(index, parent);
+      return bubbleUp(parent);
+    }
     return index;
   }
 
   private int bubbleDown(int index) {
-    try {
-      int parent = index;
-      final int left = left(index);
-      if(comparator.compare(get(parent), get(left)) > 0) {
-        parent = left;  // we should at least swap with the left child
+    int child = index;
+    final int left = left(index);
+    if(left < size()) {  // there is a left child
+      if(comparator.compare(get(child), get(left)) > 0) {
+        child = left;  // we should at least swap with the left child
       }
-      try {
-        final int right = right(index);
-        if(comparator.compare(get(parent), get(right)) > 0) {
-          parent = right;  // we should swap with the right child
+      final int right = left + 1;
+      if(right < size()) {  // there is a right child
+        if(comparator.compare(get(child), get(right)) > 0) {
+          child = right;  // we should swap with the right child
         }
-      } catch(NoSuchElementException exc) {}  // no right child
-      if(parent != index) {  // there is one child with a bigger value
-        swap(index, parent);
-        return bubbleDown(parent);
       }
-    } catch(NoSuchElementException exc) {}  // no child
+      if(child != index) {  // there is one child with a bigger value
+        swap(index, child);
+        return bubbleDown(child);
+      }
+    }
     return index;
   }
 
@@ -218,17 +216,17 @@ public class Heap<E> implements Iterable<E> {
     if(comparator.compare(e, get(index)) == 0) {
       return true;
     }
-    try {
-      if(contains(e, left(index))) {
+    final int left = left(index);
+    if(left < size()) {  // there is a left child
+      if(contains(e, left)) {
         return true;
       }
-      try {
-        if(contains(e, right(index))) {
+      final int right = left + 1;
+      if(right < size()) {  // there is a right child
+        if(contains(e, right)) {
           return true;
         }
-      } catch(NoSuchElementException exc) {
       }
-    } catch(NoSuchElementException exc) {
     }
     return false;
   }
@@ -263,50 +261,39 @@ public class Heap<E> implements Iterable<E> {
    * = O(N)
    */
   private void heapify() {
-    for(int i = (size()-1)/2; i >= 0; i--) {  // the last N/2 elements are leaves
+    for(int i = (size() - 1)/2; i >= 0; i--) {  // the last N/2 elements are leaves
       bubbleDown(i);
     }
   }
 
-  private int left(int index) throws NoSuchElementException {
-    if(2*index + 1 > size()-1) {  // if its a node without left child
-      throw new NoSuchElementException();
-    }
-    return 2*index + 1;
+  private int left(int index) {
+    return 2 * index + 1;
   }
 
-  private int parent(int index) throws NoSuchElementException {
-    if(index == 0) {  // the root has no parent
-      throw new NoSuchElementException();
-    }
-    return (index - 1) / 2;  // there is a formula for the rest of the indices
+  private int parent(int index) {
+    return (index - 1) / 2;  // if index == 0 (root), return 0
   }
 
   private boolean remove(E e, int index) {
     if(comparator.compare(e, get(index)) == 0) {
-      swap(index, size()-1);  // swap the element at the end
-      heap.remove(size()-1);  // remove it
+      swap(index, size() - 1);  // swap the element at the end
+      heap.remove(size() - 1);  // remove it
       heapify();  // much easier and guaranteed linear time
       return true;
     }
-    try {
-      if(remove(e, left(index))) {
+    final int left = left(index);
+    if(left < size()) {  // there is a left child
+      if(remove(e, left)) {
         return true;
       }
-      try {
-        if(remove(e, right(index))) {
+      final int right = left + 1;
+      if(right < size()) {  // there is a right child
+        if(remove(e, right)) {
           return true;
         }
-      } catch(NoSuchElementException exc) {}
-    } catch(NoSuchElementException exc) {}
-    return false;
-  }
-
-  private int right(int index) throws NoSuchElementException {
-    if(2*index + 2 > size()-1) {  // if its a node without right child
-      throw new NoSuchElementException();
+      }
     }
-    return 2*index + 2;
+    return false;
   }
 
   private void swap(int from, int with) {
