@@ -3,14 +3,14 @@ package interviews.graphs;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * Edge.
+ * Edge class.
  * @author Francois Rousseau
  */
 public class Edge implements Comparable<Edge> {
   public final int v, w;
   public final double weight;
   /** Cache the hash code for the edge */
-  private int hash; // Default to 0
+  protected int hash; // Default to 0
 
   public Edge(int v, int w, double weight) {
     this.v = v;
@@ -58,9 +58,11 @@ public class Edge implements Comparable<Edge> {
   @Override
   public int hashCode() {
     if(hash == 0) {
+      int x = Math.min(v, w);
+      int y = Math.max(v, w);
       hash = new HashCodeBuilder(17, 37)
-      .append(v)
-      .append(w)
+      .append(x)
+      .append(y)
       .append(weight)
       .toHashCode();
     }
@@ -78,6 +80,6 @@ public class Edge implements Comparable<Edge> {
 
   @Override
   public String toString() {
-    return v + "->" + w + "(" + weight + ")";
+    return v + "<->" + w + "(" + weight + ")";
   }
 }

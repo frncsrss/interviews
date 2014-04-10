@@ -11,17 +11,19 @@ import java.util.Set;
  */
 public class Graph {
   public final int V;
-  protected int E;
-  protected List<Edge>[] adjacencyLists;
-  protected Set<Edge> edges;
-  protected double[] degree;
+  protected final List<Edge>[] adjacencyListsEdges;
+  protected final Set<Integer>[] adjacencyListsVertices;
+  protected final Set<Edge> edges;
+  protected final double[] degree;
 
   @SuppressWarnings("unchecked")
   public Graph(int V) {
     this.V = V;
-    this.adjacencyLists = new List[V];
+    this.adjacencyListsEdges = new List[V];
+    this.adjacencyListsVertices = new Set[V];
     for (int v = 0; v < V; v++) {
-      adjacencyLists[v] = new ArrayList<Edge>();
+      adjacencyListsEdges[v] = new ArrayList<Edge>();
+      adjacencyListsVertices[v] = new HashSet<Integer>();
     }
     this.edges = new HashSet<Edge>(V);
     this.degree = new double[V];
@@ -46,13 +48,15 @@ public class Graph {
   /**
    * Add an edge between vertex v and vertex w if not already present.
    */
-  public boolean addEdge(Edge e) {
-    if(!edges.add(e)) {
+  protected boolean addEdge(Edge e) {
+    if(adjacencyListsVertices[e.v].contains(e.w)) {
       return false;
     }
-    adjacencyLists[e.v].add(e);
-    adjacencyLists[e.w].add(e);
-    E++;
+    adjacencyListsEdges[e.v].add(e);
+    adjacencyListsVertices[e.v].add(e.w);
+    adjacencyListsEdges[e.w].add(e);
+    adjacencyListsVertices[e.w].add(e.v);
+    edges.add(e);
     degree[e.v] += e.weight;
     degree[e.w] += e.weight;
     return true;
@@ -62,37 +66,28 @@ public class Graph {
    * Adjacent edges of v.
    */
   public Iterable<Edge> adjE(int v) {
-    return adjacencyLists[v];
+    return adjacencyListsEdges[v];
   }
 
   /**
    * Adjacent vertices of v.
    */
   public Iterable<Integer> adjV(int v) {
-    List<Integer> adjacents = new ArrayList<Integer>();
-    for(Edge edge: adjacencyLists[v]) {
-      adjacents.add(edge.other(v));
-    }
-    return adjacents;
+    return adjacencyListsVertices[v];
   }
 
   /**
    * Does the graph contains the edge?
    */
   public boolean contains(Edge e) {
-    return edges.contains(e);
+    return containsEdge(e.v, e.w);
   }
 
   /**
    * Does the graph contains the edge?
    */
   public boolean containsEdge(int v, int w) {
-    for(Edge edge: adjacencyLists[v]) {
-      if(edge.other(v) == w) {
-        return true;
-      }
-    }
-    return false;
+    return adjacencyListsVertices[v].contains(w);
   }
 
   /**
@@ -106,7 +101,7 @@ public class Graph {
    * Number of edges.
    */
   public int E() {
-    return E;
+    return edges.size();
   }
 
   /**
@@ -120,13 +115,14 @@ public class Graph {
    * Remove the edge if inside the graph.
    */
   public boolean removeEdge(Edge e) {
-    if(!edges.contains(e)) {
+    if(!adjacencyListsVertices[e.v].contains(e.w)) {
       return false;
     }
     edges.remove(e);
-    adjacencyLists[e.v].remove(e);
-    adjacencyLists[e.w].remove(e);
-    E--;
+    adjacencyListsEdges[e.v].remove(e);
+    adjacencyListsVertices[e.v].remove(e.w);
+    adjacencyListsEdges[e.w].remove(e);
+    adjacencyListsVertices[e.w].remove(e.v);
     degree[e.v] -= e.weight;
     degree[e.w] -= e.weight;
     return true;

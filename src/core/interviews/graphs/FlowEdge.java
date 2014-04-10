@@ -4,7 +4,7 @@ package interviews.graphs;
  * Flow edge.
  * @author Francois Rousseau
  */
-public class FlowEdge extends Edge {
+public class FlowEdge extends DirectedEdge {
   private double flow;  // flow
 
   public FlowEdge(int v, int w, int capacity) {

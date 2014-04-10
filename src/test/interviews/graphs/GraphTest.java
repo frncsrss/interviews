@@ -135,7 +135,10 @@ public class GraphTest {
     Assert.assertFalse(g.removeEdge(new Edge(0, 1)));
     Assert.assertTrue( g.removeEdge(new Edge(0, 2)));
     Assert.assertFalse(g.removeEdge(new Edge(0, 2)));
+    Assert.assertTrue( g.removeEdge(new Edge(5, 0)));
+    Assert.assertFalse(g.removeEdge(new Edge(5, 0)));
+    Assert.assertFalse(g.removeEdge(new Edge(0, 5)));
     Assert.assertFalse(g.removeEdge(new Edge(0, 4)));
-    Assert.assertEquals(10, g.E());
+    Assert.assertEquals(9, g.E());
   }
 }

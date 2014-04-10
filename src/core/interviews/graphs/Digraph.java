@@ -14,16 +14,30 @@ public class Digraph extends Graph {
     this.outdegree = new double[V];
   }
 
+  @Override
+  public boolean addEdge(int v, int w) {
+    return addEdge(new DirectedEdge(v, w));
+  }
+
+  @Override
+  public boolean addEdge(int v, int w, double weight) {
+    return addEdge(new DirectedEdge(v, w, weight));
+  }
+
   /**
    * Add a directed edge between vertex v and vertex w.
    */
   @Override
   public boolean addEdge(Edge e) {
-    if(!edges.add(e)) {
+    if(!(e instanceof DirectedEdge)) {
+      throw new IllegalArgumentException("The edge must be an instance of DirectedEdge");
+    }
+    if(adjacencyListsVertices[e.v].contains(e.w)) {
       return false;
     }
-    adjacencyLists[e.v].add(e);
-    E++;
+    adjacencyListsEdges[e.v].add(e);
+    adjacencyListsVertices[e.v].add(e.w);
+    edges.add(e);
     degree[e.v] += e.weight;
     degree[e.w] += e.weight;
     outdegree[e.v] += e.weight;
@@ -47,12 +61,15 @@ public class Digraph extends Graph {
 
   @Override
   public boolean removeEdge(Edge e) {
-    if(!edges.contains(e)) {
+    if(!(e instanceof DirectedEdge)) {
+      throw new IllegalArgumentException("The edge must be an instance of DirectedEdge");
+    }
+    if(!adjacencyListsVertices[e.v].contains(e.w)) {
       return false;
     }
+    adjacencyListsEdges[e.v].remove(e);
+    adjacencyListsVertices[e.v].remove(e.w);
     edges.remove(e);
-    adjacencyLists[e.v].remove(e);
-    E--;
     degree[e.v] -= e.weight;
     degree[e.w] -= e.weight;
     outdegree[e.v] -= e.weight;

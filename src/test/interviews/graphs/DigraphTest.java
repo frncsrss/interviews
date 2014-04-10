@@ -154,11 +154,13 @@ public class DigraphTest {
   @Test
   public void test_removeEdge() {
     Digraph g = setUp();
-    Assert.assertTrue( g.removeEdge(new Edge(4, 2)));
-    Assert.assertFalse(g.removeEdge(new Edge(4, 2)));
-    Assert.assertTrue( g.removeEdge(new Edge(2, 3)));
-    Assert.assertFalse(g.removeEdge(new Edge(2, 3)));
-    Assert.assertFalse(g.removeEdge(new Edge(0, 2)));
-    Assert.assertEquals(20, g.E());
+    Assert.assertTrue( g.removeEdge(new DirectedEdge(4, 2)));
+    Assert.assertFalse(g.removeEdge(new DirectedEdge(4, 2)));
+    Assert.assertTrue( g.removeEdge(new DirectedEdge(2, 3)));
+    Assert.assertFalse(g.removeEdge(new DirectedEdge(2, 3)));
+    Assert.assertFalse(g.removeEdge(new DirectedEdge(0, 2)));
+    Assert.assertTrue( g.removeEdge(new DirectedEdge(2, 0)));
+    Assert.assertFalse(g.removeEdge(new DirectedEdge(2, 0)));
+    Assert.assertEquals(19, g.E());
   }
 }
