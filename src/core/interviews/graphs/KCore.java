@@ -3,6 +3,9 @@ package interviews.graphs;
 import interviews.arrays.UpdatableHeap;
 import interviews.lib.Pair;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The k-core of a graph corresponds to the maximal subgraph whose vertices are at least of degree k
  * within the subgraph.
@@ -127,6 +130,112 @@ public class KCore {
     for(int v = 0; v < V; v++) {
       effectiveDegree[v] = effectiveDegree(v);
     }
+  }
+
+  /**
+   * Add the edge if it leaves the core number sequence unchanged.
+   */
+  public boolean addEdge(Edge e) {
+    int v = e.v;
+    int w = e.w;
+    int core_v = core[v];
+    int core_w = core[w];
+    if(core_v < core_w) {
+      if(isAdditionValid(v, w, new HashSet<Integer>(), new HashSet<Integer>())) {
+        g.addEdge(e);
+        effectiveDegree[v]++;
+        return true;
+      }
+      return false;
+    } else if(core_v > core_w) {
+      if(isAdditionValid(w, v, new HashSet<Integer>(), new HashSet<Integer>())) {
+        g.addEdge(e);
+        effectiveDegree[w]++;
+        return true;
+      }
+      return false;
+    }
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * Remove the edge if it leaves the core number sequence unchanged.
+   */
+  public boolean removeEdge(Edge e) {
+    int v = e.v;
+    int w = e.w;
+    int core_v = core[v];
+    int core_w = core[w];
+    if(core_v < core_w) {
+      if(core[v] < effectiveDegree[v]) {
+        g.removeEdge(e);
+        effectiveDegree[v]--;
+        return true;
+      }
+      return false;
+    } else if(core_v > core_w) {
+      if(core[w] < effectiveDegree[w]) {
+        g.removeEdge(e);
+        effectiveDegree[w]--;
+        return true;
+      }
+      return false;
+    } else {
+      if(core[v] < effectiveDegree[v] && core[w] < effectiveDegree[w]) {
+        g.removeEdge(e);
+        effectiveDegree[v]--;
+        effectiveDegree[w]--;
+        return true;
+      }
+      return false;
+    }
+  }
+
+  /**
+   * 1. v is in the k-shell, i.e. k is the core number of v
+   * 2. we do NOT want v to be in the (k+1)-core
+   * 3. to be in the (k+1)-core, v needs at least k neighbors (in the k-core) with at least k other
+   *    neighbors (in the k-core).
+   */
+  private boolean isAdditionValid(int v, int parent, Set<Integer> visited, Set<Integer> invalid) {
+    visited.add(v);
+    int k = core[v];
+    int new_core_number = 1;  // incoming edge
+    Set<Integer> toVisit = new HashSet<Integer>();
+    for(int w : g.adjV(v)) {
+      if(w == parent) {  // incoming edge already counted
+        continue;
+      }
+      if(invalid.contains(w)) {  // previously discarded
+        continue;
+      }
+      if(visited.contains(w)) {  // visited and not discarded
+        new_core_number++;
+        continue;
+      }
+      if(core[w] < k) {  // not in k-shell, discard
+        continue;
+      }
+      if(core[w] > k) {  // already in (k+1)-core
+        new_core_number++;
+        continue;
+      }
+      if(effectiveDegree[w] < k + 1) {  // in k-shell but definitely not in (k+1)-core
+        invalid.add(w);
+        continue;
+      }
+      toVisit.add(w);
+    }
+    if(new_core_number + toVisit.size() < k + 1) {  // v does NOT meet 3. for sure
+      invalid.add(v);
+      return true;
+    }
+    for(int w : toVisit) {
+      if(!isAdditionValid(w, v, visited, invalid)) {
+        new_core_number++;
+      }
+    }
+    return k == new_core_number;
   }
 
   private int effectiveDegree(int v) {

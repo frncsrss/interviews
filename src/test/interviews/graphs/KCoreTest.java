@@ -1,7 +1,13 @@
 package interviews.graphs;
 
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -77,5 +83,112 @@ public class KCoreTest {
     kc.computeWeighted();
     assertArrayEquals(new int[]{0, 2, 2, 2, 2, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 1, 1},
         kc.core());
+  }
+
+  @Test
+  public void test_addEdge() {
+    Graph g = setUp();
+    KCore kc = new KCore(g);
+    kc.computeUnweighted();
+    int[] golden = Arrays.copyOf(kc.core(), g.V);
+    kc.computeEffectiveDegree();
+    for(int i = 0; i < 10000; i++) {
+      Edge e = newRandomEdge(g);
+      try {
+        if(kc.addEdge(e)) {
+          kc.computeUnweighted();
+          assertArrayEquals(golden, kc.core());
+        } else {
+          g.addEdge(e);
+          kc.computeUnweighted();
+          assertThat(golden, not(equalTo(kc.core())));
+          g.removeEdge(e);
+          kc.computeUnweighted();
+        }
+      } catch(UnsupportedOperationException uoe) {}
+    }
+  }
+
+  @Test
+  public void test_removeEdge() {
+    Graph g = setUp();
+    KCore kc = new KCore(g);
+    kc.computeUnweighted();
+    int[] golden = Arrays.copyOf(kc.core(), g.V);
+    kc.computeEffectiveDegree();
+    for(int i = 0; i < 10000; i++) {
+      Edge e = alreadyExistingRandomEdge(g);
+      if(kc.removeEdge(e)) {
+        kc.computeUnweighted();
+        assertArrayEquals(golden, kc.core());
+      } else {
+        g.removeEdge(e);
+        kc.computeUnweighted();
+        assertThat(golden, not(equalTo(kc.core())));
+        g.addEdge(e);
+        kc.computeUnweighted();
+      }
+    }
+  }
+
+  @Test
+  public void test_addAndRemoveEdge() {
+    Graph g = setUp();
+    KCore kc = new KCore(g);
+    kc.computeUnweighted();
+    int[] golden = Arrays.copyOf(kc.core(), g.V);
+    kc.computeEffectiveDegree();
+    for(int i = 0; i < 10000; i++) {
+      if(i % 2 == 0){
+        Edge e = newRandomEdge(g);
+        try {
+          if(kc.addEdge(e)) {
+            kc.computeUnweighted();
+            assertArrayEquals(golden, kc.core());
+          } else {
+            g.addEdge(e);
+            kc.computeUnweighted();
+            assertThat(golden, not(equalTo(kc.core())));
+            g.removeEdge(e);
+            kc.computeUnweighted();
+          }
+        } catch(UnsupportedOperationException uoe) {}
+      } else {
+        Edge e = alreadyExistingRandomEdge(g);
+        if(kc.removeEdge(e)) {
+          kc.computeUnweighted();
+          assertArrayEquals(golden, kc.core());
+        } else {
+          g.removeEdge(e);
+          kc.computeUnweighted();
+          assertThat(golden, not(equalTo(kc.core())));
+          g.addEdge(e);
+          kc.computeUnweighted();
+        }
+      }
+    }
+  }
+
+  private static Random r = new Random(1234);
+  private static Edge newRandomEdge(Graph g) {
+    int v, w;
+    do {
+      v = r.nextInt(g.V);
+      do {
+        w = r.nextInt(g.V);
+      } while(v == w);
+    } while(g.containsEdge(v, w));
+    return new Edge(v, w);
+  }
+
+  private static Edge alreadyExistingRandomEdge(Graph g) {
+    int v, w;
+    do {
+      v = r.nextInt(g.V);
+      do {
+        w = r.nextInt(g.V);
+      } while(v == w);
+    } while(!g.containsEdge(v, w));
+    return new Edge(v, w);
   }
 }
