@@ -117,28 +117,28 @@ public class SortsTest {
   @Test
   public void test_shuffled_10000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_10000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(sorted_10000, test);
   }
 
@@ -230,28 +230,28 @@ public class SortsTest {
   @Test
   public void test_shuffled_1000000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(shuffled_1000000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -329,28 +329,28 @@ public class SortsTest {
   @Test
   public void test_sorted_1000000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(sorted_1000000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -421,28 +421,28 @@ public class SortsTest {
   @Test
   public void test_reverse_1000000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(reverse_1000000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -513,28 +513,28 @@ public class SortsTest {
   @Test
   public void test_duplicated_10000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated_10000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(duplicated_10000, test);
   }
 
@@ -612,28 +612,28 @@ public class SortsTest {
   @Test
   public void test_duplicated2_10000_mergesort1()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.TYPE.AUX_ARRAY);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.METHOD.AUX_ARRAY);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_mergesort2()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.TYPE.AUX_QUEUE);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.METHOD.AUX_QUEUE);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_mergesort3()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.TYPE.TOP_DOWN);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.METHOD.TOP_DOWN);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_mergesort4()  {
     List<Integer> test;
-    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.TYPE.BOTTOM_UP);
+    Sorts.mergesort(test = new ArrayList<Integer>(duplicated2_10000), comparator, Mergesort.METHOD.BOTTOM_UP);
     Assert.assertEquals(sorted2_10000, test);
   }
 

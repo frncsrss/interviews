@@ -11,9 +11,9 @@ import java.util.Queue;
  * @author Francois Rousseau
  */
 public class Mergesort {
-  public static enum TYPE {AUX_ARRAY, AUX_QUEUE, TOP_DOWN, BOTTOM_UP};
+  public static enum METHOD {AUX_ARRAY, AUX_QUEUE, TOP_DOWN, BOTTOM_UP};
 
-  public static <E> void f(List<E> list, Comparator<E> comparator, TYPE type) {
+  public static <E> void f(List<E> list, Comparator<E> comparator, METHOD type) {
     switch(type) {
       case AUX_ARRAY:
         sort1(list, comparator, 0, list.size()-1);
@@ -34,7 +34,7 @@ public class Mergesort {
 
   private static <E> void sort1(List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
-      int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = lo + hi >>> 1;  // prevent possible overflow
       sort1(list, comparator, lo, mid);
       sort1(list, comparator, mid + 1, hi);
 
@@ -48,7 +48,7 @@ public class Mergesort {
 
   private static <E> void sort2(List<E> list, Comparator<E> comparator, int lo, int hi) {
     if (lo < hi) {
-      int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = lo + hi >>> 1;  // prevent possible overflow
       sort2(list, comparator, lo, mid);
       sort2(list, comparator, mid + 1, hi);
 
@@ -63,7 +63,7 @@ public class Mergesort {
   private static <E> void sort3(
       List<E> list, Comparator<E> comparator, List<E> aux, int lo, int hi) {
     if (lo < hi) {
-      int mid = (lo + hi) >>> 1;  // prevent possible overflow
+      int mid = lo + hi >>> 1;  // prevent possible overflow
       sort3(list, comparator, aux, lo, mid);
       sort3(list, comparator, aux, mid + 1, hi);
 
@@ -91,17 +91,17 @@ public class Mergesort {
     assert Sorts.isSorted(list, comparator, mid+1, hi);
 
     List<E> aux = new ArrayList<E>(list.subList(lo, hi+1));
-    
+
     int left = lo;
     int right = mid + 1;
     int current = lo;
-    
+
     while (left <= mid && right <= hi) {
       if(comparator.compare(aux.get(left - lo), aux.get(right - lo)) <= 0) {
         list.set(current++, aux.get(left - lo));
         left++;
       } else {
-        list.set(current++, aux.get(right - lo));  
+        list.set(current++, aux.get(right - lo));
         right++;
       }
     }
@@ -113,7 +113,7 @@ public class Mergesort {
 
     assert Sorts.isSorted(list, comparator, lo, hi);
   }
-  
+
   private static <E> void merge2(
       List<E> list, Comparator<E> comparator, int lo, int hi, int mid) {
     assert Sorts.isSorted(list, comparator, lo, mid);
@@ -133,7 +133,7 @@ public class Mergesort {
       if(comparator.compare(aux1.peek(), aux2.peek()) <= 0) {
         list.set(lo++, aux1.poll());
       } else {
-        list.set(lo++, aux2.poll());        
+        list.set(lo++, aux2.poll());
       }
     }
 
@@ -156,13 +156,13 @@ public class Mergesort {
     int left = lo;
     int right = mid + 1;
     int current = lo;
-    
+
     while (left <= mid && right <= hi) {
       if(comparator.compare(aux.get(left), aux.get(right)) <= 0) {
         list.set(current++, aux.get(left));
         left++;
       } else {
-        list.set(current++, aux.get(right));  
+        list.set(current++, aux.get(right));
         right++;
       }
     }

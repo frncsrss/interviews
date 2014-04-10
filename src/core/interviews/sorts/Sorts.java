@@ -34,7 +34,7 @@ public class Sorts {
     InsertionSort.f(list, comparator);
   }
 
-  public static <E> void mergesort(List<E> list, Comparator<E> comparator, Mergesort.TYPE type) {
+  public static <E> void mergesort(List<E> list, Comparator<E> comparator, Mergesort.METHOD type) {
     Mergesort.f(list, comparator, type);
   }
 

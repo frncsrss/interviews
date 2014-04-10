@@ -1,6 +1,6 @@
 package interviews.sorts;
 
-import interviews.sorts.Mergesort.TYPE;
+import interviews.sorts.Mergesort.METHOD;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,13 +16,13 @@ public class MergesortTest {
   @Test
   public void test_10()  {
     List<Integer> actuals = Arrays.asList(7, 2, 1, 4, 5, 0, 3, 4, 7, 6);
-    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), TYPE.AUX_ARRAY);
+    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.AUX_ARRAY);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), TYPE.AUX_QUEUE);
+    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.AUX_QUEUE);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), TYPE.TOP_DOWN);
+    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.TOP_DOWN);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), TYPE.BOTTOM_UP);
+    Mergesort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.BOTTOM_UP);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
   }
 }
