@@ -13,18 +13,20 @@ public class KCore {
   private final Graph g;
   private final int V;
   private final int[] core;
+  private final int[] effectiveDegree;  // degree of a vertex in the last core it belongs to
 
   public KCore(Graph g) {
     this.g = g;
     this.V = g.V;
     this.core = new int[V];
+    this.effectiveDegree = new int[V];
   }
 
   /**
    * Core number sequence of an unweighted undirected graph. Runs in O(max(|V|, |E|)).
    */
   public void computeUnweighted() {
-    int md, i, start, k;
+    int md, i, start;
     int[] bin, pos, vert;
 
     md = 0;                         // max degree
@@ -80,13 +82,6 @@ public class KCore {
         }
       }
     }  // deg[] now contains the core number of each vertex
-
-    k = 0;  // will hold the graph core number (max vertex core number)
-    for(int v = 0; v < V; v++) {
-      if(core[v] > k) {
-        k = core[v];
-      }
-    }
   }
 
   /**
@@ -126,5 +121,22 @@ public class KCore {
    */
   public int core(int v) {
     return core[v];
+  }
+
+  public void computeEffectiveDegree() {
+    for(int v = 0; v < V; v++) {
+      effectiveDegree[v] = effectiveDegree(v);
+    }
+  }
+
+  private int effectiveDegree(int v) {
+    int deg = 0;
+    int k = core[v];
+    for(int w : g.adjV(v)) {
+      if(core[w] >= k) {
+        deg++;
+      }
+    }
+    return deg;
   }
 }
