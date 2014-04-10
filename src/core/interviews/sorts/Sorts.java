@@ -11,6 +11,7 @@ public class Sorts {
 
   public static Comparator<Integer> getComparatorOfIntegers() {
     return new Comparator<Integer>() {
+      @Override
       public int compare(Integer o1, Integer o2) {
         return o1.compareTo(o2);
       }
@@ -24,7 +25,7 @@ public class Sorts {
   public static <E> void bucketsort(List<E> list, Selector<E> selector) {
     BucketSort.f(list, selector);
   }
-  
+
   public static <E> void heapsort(List<E> list, Comparator<E> comparator) {
     Heapsort.f(list, comparator);
   }
@@ -37,8 +38,8 @@ public class Sorts {
     Mergesort.f(list, comparator, type);
   }
 
-  public static <E> void quicksort(List<E> list, Comparator<E> comparator, int type) {
-    Quicksort.f(list, comparator, type);
+  public static <E> void quicksort(List<E> list, Comparator<E> comparator, Quicksort.METHOD m) {
+    Quicksort.f(list, comparator, m);
   }
 
   public static <E> void selectionSort(List<E> list, Comparator<E> comparator) {

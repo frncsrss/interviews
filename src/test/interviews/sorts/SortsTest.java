@@ -1,5 +1,7 @@
 package interviews.sorts;
 
+import interviews.sorts.Quicksort.METHOD;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,42 +75,42 @@ public class SortsTest {
   @Test
   public void test_shuffled_10000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.SKIENA);
     Assert.assertEquals(sorted_10000, test);
   }
 
   @Test
   public void test_shuffled_10000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_10000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(sorted_10000, test);
   }
 
@@ -186,42 +188,42 @@ public class SortsTest {
   @Test
   public void test_shuffled_1000000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.SKIENA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_shuffled_1000000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(shuffled_1000000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -285,42 +287,42 @@ public class SortsTest {
   @Test
   public void test_sorted_1000000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.SKIENA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_sorted_1000000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(sorted_1000000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -377,42 +379,42 @@ public class SortsTest {
   @Test
   public void test_reverse_1000000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.SKIENA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
   @Test
   public void test_reverse_1000000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(reverse_1000000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(sorted_1000000, test);
   }
 
@@ -469,42 +471,42 @@ public class SortsTest {
   @Test
   public void test_duplicated_10000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.SKIENA);
     Assert.assertEquals(duplicated_10000, test);
   }
 
   @Test
   public void test_duplicated_10000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated_10000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(duplicated_10000, test);
   }
 
@@ -568,42 +570,42 @@ public class SortsTest {
   @Test
   public void test_duplicated2_10000_quicksort1()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 1);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_quicksort2()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 2);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_quicksort3()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 3);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_quicksort4()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 4);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_quicksort5()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 5);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.SKIENA);
     Assert.assertEquals(sorted2_10000, test);
   }
 
   @Test
   public void test_duplicated2_10000_quicksort6()  {
     List<Integer> test;
-    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, 6);
+    Sorts.quicksort(test = new ArrayList<Integer>(duplicated2_10000), comparator, METHOD.DIJKSTRA);
     Assert.assertEquals(sorted2_10000, test);
   }
 

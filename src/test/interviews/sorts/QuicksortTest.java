@@ -1,5 +1,7 @@
 package interviews.sorts;
 
+import interviews.sorts.Quicksort.METHOD;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,17 +20,17 @@ public class QuicksortTest {
   @Test
   public void test_10()  {
     List<Integer> actuals = Arrays.asList(7, 2, 1, 4, 5, 0, 3, 4, 7, 6);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 1);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.PIVOT_AS_FIRST);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 2);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.PIVOT_AS_LAST);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 3);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.PIVOT_AS_MIDDLE);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 4);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.PIVOT_AS_MEDIAN);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 5);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.SKIENA);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
-    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), 6);
+    Quicksort.f(actuals, Sorts.getComparatorOfIntegers(), METHOD.DIJKSTRA);
     Assert.assertEquals(Arrays.asList(0, 1, 2, 3, 4, 4, 5, 6, 7, 7), actuals);
   }
 
@@ -42,15 +44,15 @@ public class QuicksortTest {
     Assert.assertEquals(Arrays.asList(9, 0, 6, 1, 3, 2, 4, 7, 5, 8), list);
     int i = 0;
     Comparator<Integer> comparator = Sorts.getComparatorOfIntegers();
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));    
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
   }
 }
