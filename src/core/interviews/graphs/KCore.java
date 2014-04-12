@@ -3,7 +3,11 @@ package interviews.graphs;
 import interviews.arrays.UpdatableHeap;
 import interviews.lib.Pair;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,6 +21,8 @@ public class KCore {
   private final int V;
   private final int[] core;
   private final int[] effectiveDegree;  // degree of a vertex in the last core it belongs to
+  private Set<Integer> visited = new HashSet<Integer>();
+  private Set<Integer> ignore = new HashSet<Integer>();
 
   public KCore(Graph g) {
     this.g = g;
@@ -85,6 +91,8 @@ public class KCore {
         }
       }
     }  // deg[] now contains the core number of each vertex
+
+    computeEffectiveDegree();
   }
 
   /**
@@ -110,6 +118,8 @@ public class KCore {
         heap.decreaseKey(u, (int)e.weight);
       }
     }
+
+    computeEffectiveDegree();
   }
 
   /**
@@ -126,36 +136,49 @@ public class KCore {
     return core[v];
   }
 
-  public void computeEffectiveDegree() {
-    for(int v = 0; v < V; v++) {
-      effectiveDegree[v] = effectiveDegree(v);
-    }
-  }
-
   /**
    * Add the edge if it leaves the core number sequence unchanged.
    */
   public boolean addEdge(Edge e) {
+    g.addEdge(e);
     int v = e.v;
     int w = e.w;
     int core_v = core[v];
     int core_w = core[w];
     if(core_v < core_w) {
-      if(isAdditionValid(v, w, new HashSet<Integer>(), new HashSet<Integer>())) {
-        g.addEdge(e);
-        effectiveDegree[v]++;
+      effectiveDegree[v]++;
+      ignore = new HashSet<Integer>();
+      visited = new HashSet<Integer>();
+      if(isAdditionValid(new Node(v), new HashMap<Integer, Node>())) {
         return true;
       }
-      return false;
+      effectiveDegree[v]--;
     } else if(core_v > core_w) {
-      if(isAdditionValid(w, v, new HashSet<Integer>(), new HashSet<Integer>())) {
-        g.addEdge(e);
-        effectiveDegree[w]++;
+      effectiveDegree[w]++;
+      ignore = new HashSet<Integer>();
+      visited = new HashSet<Integer>();
+      if(isAdditionValid(new Node(w), new HashMap<Integer, Node>())) {
         return true;
       }
-      return false;
+      effectiveDegree[w]--;
+    } else {
+      effectiveDegree[v]++;
+      effectiveDegree[w]++;
+      ignore = new HashSet<Integer>();
+      visited = new HashSet<Integer>();
+      if(isAdditionValid(new Node(v), new HashMap<Integer, Node>())) {
+        return true;
+      }
+      ignore = new HashSet<Integer>();
+      visited = new HashSet<Integer>();
+      if(isAdditionValid(new Node(w), new HashMap<Integer, Node>())) {
+        return true;
+      }
+      effectiveDegree[v]--;
+      effectiveDegree[w]--;
     }
-    throw new UnsupportedOperationException();
+    g.removeEdge(e);
+    return false;
   }
 
   /**
@@ -164,78 +187,27 @@ public class KCore {
   public boolean removeEdge(Edge e) {
     int v = e.v;
     int w = e.w;
-    int core_v = core[v];
-    int core_w = core[w];
-    if(core_v < core_w) {
-      if(core[v] < effectiveDegree[v]) {
-        g.removeEdge(e);
-        effectiveDegree[v]--;
-        return true;
-      }
-      return false;
-    } else if(core_v > core_w) {
-      if(core[w] < effectiveDegree[w]) {
-        g.removeEdge(e);
-        effectiveDegree[w]--;
-        return true;
-      }
-      return false;
-    } else {
-      if(core[v] < effectiveDegree[v] && core[w] < effectiveDegree[w]) {
-        g.removeEdge(e);
-        effectiveDegree[v]--;
-        effectiveDegree[w]--;
-        return true;
-      }
-      return false;
-    }
-  }
-
-  /**
-   * 1. v is in the k-shell, i.e. k is the core number of v
-   * 2. we do NOT want v to be in the (k+1)-core
-   * 3. to be in the (k+1)-core, v needs at least k neighbors (in the k-core) with at least k other
-   *    neighbors (in the k-core).
-   */
-  private boolean isAdditionValid(int v, int parent, Set<Integer> visited, Set<Integer> invalid) {
-    visited.add(v);
-    int k = core[v];
-    int new_core_number = 1;  // incoming edge
-    Set<Integer> toVisit = new HashSet<Integer>();
-    for(int w : g.adjV(v)) {
-      if(w == parent) {  // incoming edge already counted
-        continue;
-      }
-      if(invalid.contains(w)) {  // previously discarded
-        continue;
-      }
-      if(visited.contains(w)) {  // visited and not discarded
-        new_core_number++;
-        continue;
-      }
-      if(core[w] < k) {  // not in k-shell, discard
-        continue;
-      }
-      if(core[w] > k) {  // already in (k+1)-core
-        new_core_number++;
-        continue;
-      }
-      if(effectiveDegree[w] < k + 1) {  // in k-shell but definitely not in (k+1)-core
-        invalid.add(w);
-        continue;
-      }
-      toVisit.add(w);
-    }
-    if(new_core_number + toVisit.size() < k + 1) {  // v does NOT meet 3. for sure
-      invalid.add(v);
+    if(core[v] < core[w] && core[v] < effectiveDegree[v]) {
+      g.removeEdge(e);
+      effectiveDegree[v]--;
+      return true;
+    } else if(core[v] > core[w] && core[w] < effectiveDegree[w]) {
+      g.removeEdge(e);
+      effectiveDegree[w]--;
+      return true;
+    } else if(core[v] < effectiveDegree[v] && core[w] < effectiveDegree[w]) {
+      g.removeEdge(e);
+      effectiveDegree[v]--;
+      effectiveDegree[w]--;
       return true;
     }
-    for(int w : toVisit) {
-      if(!isAdditionValid(w, v, visited, invalid)) {
-        new_core_number++;
-      }
+    return false;
+  }
+
+  private void computeEffectiveDegree() {
+    for(int v = 0; v < V; v++) {
+      effectiveDegree[v] = effectiveDegree(v);
     }
-    return k == new_core_number;
   }
 
   private int effectiveDegree(int v) {
@@ -247,5 +219,89 @@ public class KCore {
       }
     }
     return deg;
+  }
+
+  /**
+   * 1. v is in the k-shell, i.e. k is the core number of v
+   * 2. we do NOT want v to be in the (k+1)-core
+   * 3. to be in the (k+1)-core, v needs at least k neighbors (in the k-core) with at least k other
+   *    neighbors (in the k-core).
+   */
+  private boolean isAdditionValid(Node v, Map<Integer, Node> nodes) {
+    if(!nodes.containsKey(v.id)) {
+      nodes.put(v.id, v);
+    }
+    visited.add(v.id);
+    List<Node> toVisit = new ArrayList<Node>();
+    for(int w : g.adjV(v.id)) {
+      if(ignore.contains(w)) {  // previously ignored
+        continue;
+      }
+      if(core[w] < v.k) {  // not in k-shell, discard
+        continue;
+      }
+      if(core[w] > v.k) {  // already in (k+1)-core
+        v.sure++;
+        continue;
+      }
+      if(effectiveDegree[w] < v.k + 1) {  // in k-shell but definitely not in (k+1)-core
+        continue;
+      }
+      if(!nodes.containsKey(w)) {
+        nodes.put(w, new Node(w));
+      } else if(v.neighbors.contains(nodes.get(w))) {  // parent
+        continue;
+      }
+      v.neighbors.add(nodes.get(w));
+      nodes.get(w).neighbors.add(v);
+      toVisit.add(nodes.get(w));
+    }
+
+    if(!v.couldBeInNextCore()) {  // v does NOT meet 3. for sure
+      v.propagate();
+      return true;
+    }
+
+    for(Node w : toVisit) {
+      if(!visited.contains(w.id)) {
+        isAdditionValid(w, nodes);
+      }
+    }
+
+    return !v.couldBeInNextCore();
+  }
+
+  private class Node {
+    private final int id;
+    private final int k;
+    private int sure = 0;
+    private final List<Node> neighbors = new ArrayList<Node>();  // forward or backward
+
+    Node(int v) {
+      this.id = v;
+      this.k = core[v];
+    }
+
+    private boolean couldBeInNextCore() {
+      return sure + neighbors.size() > core[id];
+    }
+
+    private void propagate() {
+      ignore.add(id);
+      for(Node node : neighbors) {
+        node.neighbors.remove(this);
+      }
+      for(Node node : neighbors) {
+        if(visited.contains(node.id) && !node.couldBeInNextCore()) {
+          node.propagate();
+        }
+      }
+      neighbors.clear();
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%d %d %d\t%d+%s", id, k, effectiveDegree[id], sure, neighbors.size());
+    }
   }
 }
