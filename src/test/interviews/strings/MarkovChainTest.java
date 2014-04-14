@@ -1,5 +1,7 @@
 package interviews.strings;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.junit.Assert;
@@ -60,25 +62,31 @@ public class MarkovChainTest {
     mc.addWord("fisherman");
 
     b = 0; w = 0;
-    int bu = 0, gr = 0, fi = 0;
+    Map<String, Integer> counts = new HashMap<String, Integer>();
     for(int i = 0; i < 1000000; i++) {
       String next = mc.nextWord("the");
-      if(next.equals("best")) {
-        b++;
-      } else if(next.equals("worst")) {
-        w++;
-      } else if(next.equals("butcher")) {
-        bu++;
-      } else if(next.equals("grocer")) {
-        gr++;
-      } else if(next.equals("fisherman")) {
-        fi++;
+      if(counts.containsKey(next)) {
+        counts.put(next, counts.get(next) + 1);
+      } else {
+        counts.put(next, 1);
       }
     }
-    Assert.assertEquals(199967, b);
-    Assert.assertEquals(200403, w);
-    Assert.assertEquals(200144, bu);
-    Assert.assertEquals(199547, gr);
-    Assert.assertEquals(199939, fi);
+    Assert.assertEquals(199967, counts.get("best").intValue());
+    Assert.assertEquals(200403, counts.get("worst").intValue());
+    Assert.assertEquals(200144, counts.get("butcher").intValue());
+    Assert.assertEquals(199547, counts.get("grocer").intValue());
+    Assert.assertEquals(199939, counts.get("fisherman").intValue());
+
+    counts = new HashMap<String, Integer>();
+    for(int i = 0; i < 1000000; i++) {
+      String next = mc.nextWord("notInMarkovChain");
+      if(counts.containsKey(next)) {
+        counts.put(next, counts.get(next) + 1);
+      } else {
+        counts.put(next, 1);
+      }
+    }
+    Assert.assertEquals( 52999, counts.get("times").intValue());
+    Assert.assertEquals(261994, counts.get("the").intValue());
   }
 }

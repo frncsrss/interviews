@@ -12,9 +12,11 @@ import java.util.Random;
 public class MarkovChain {
   protected static Random r = new Random();
   private final Map<String, Node> map = new HashMap<String, Node>();
+  private final Node source = new Node();  // source node pointing to all other nodes
   private Node current = null;
 
   public void addWord(String word) {
+    source.addWord(word);
     if(current != null) {
       current.addWord(word);
     }
@@ -27,8 +29,8 @@ public class MarkovChain {
   }
 
   public String nextWord(String word) {
-    if(!map.containsKey(word)) {  // could be improved with a source node pointing to all the nodes
-      throw new NoSuchElementException();
+    if(!map.containsKey(word)) {
+      return source.nextWord();  // most frequent node
     }
     return map.get(word).nextWord();
   }
