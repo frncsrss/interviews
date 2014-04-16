@@ -1,5 +1,7 @@
 package interviews.arrays;
 
+import java.util.Stack;
+
 /**
  * Given an island represented as an array of integer heights, return the amount of rain it can
  * contain.
@@ -42,5 +44,27 @@ public class Rainforest {
       }
     }
     return max;
+  }
+
+  /**
+   * Let n = length(heights).
+   * Time complexity:  O(n), elements are pushed and popped at most once each
+   * Space complexity: O(n)
+   */
+  public static int stack(int[] heights) {
+    int rain = 0;
+    Stack<Integer> stack = new Stack<Integer>();
+    for(int i = 0; i < heights.length; i++) {
+      while(!stack.isEmpty() && heights[i] > heights[stack.peek()]) {
+        int pop = stack.pop();
+        if(stack.isEmpty()) {
+          break;
+        }
+        int height = Math.min(heights[stack.peek()], heights[i]) - heights[pop];
+        rain += (i - stack.peek() - 1) * height;
+      }
+      stack.push(i);
+    }
+    return rain;
   }
 }
