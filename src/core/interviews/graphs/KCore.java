@@ -6,8 +6,10 @@ import interviews.lib.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -21,8 +23,12 @@ public class KCore {
   private final int V;
   private final int[] core;
   private final int[] effectiveDegree;  // degree of a vertex in the last core it belongs to
-  private Set<Integer> visited = new HashSet<Integer>();
-  private Set<Integer> ignore = new HashSet<Integer>();
+
+  private Node source;
+  private Map<Integer, Node> nodes;
+  private Set<Integer> enqueued;
+  private Set<Integer> visited;
+  private Set<Integer> ignoring;
 
   public KCore(Graph g) {
     this.g = g;
@@ -147,31 +153,27 @@ public class KCore {
     int core_w = core[w];
     if(core_v < core_w) {
       effectiveDegree[v]++;
-      ignore = new HashSet<Integer>();
-      visited = new HashSet<Integer>();
-      if(isAdditionValid(new Node(v), new HashMap<Integer, Node>())) {
+      reset(v);
+      if(bfs()) {
         return true;
       }
       effectiveDegree[v]--;
     } else if(core_v > core_w) {
       effectiveDegree[w]++;
-      ignore = new HashSet<Integer>();
-      visited = new HashSet<Integer>();
-      if(isAdditionValid(new Node(w), new HashMap<Integer, Node>())) {
+      reset(w);
+      if(bfs()) {
         return true;
       }
       effectiveDegree[w]--;
     } else {
       effectiveDegree[v]++;
       effectiveDegree[w]++;
-      ignore = new HashSet<Integer>();
-      visited = new HashSet<Integer>();
-      if(isAdditionValid(new Node(v), new HashMap<Integer, Node>())) {
+      reset(v);
+      if(bfs()) {
         return true;
       }
-      ignore = new HashSet<Integer>();
-      visited = new HashSet<Integer>();
-      if(isAdditionValid(new Node(w), new HashMap<Integer, Node>())) {
+      reset(w);
+      if(bfs()) {
         return true;
       }
       effectiveDegree[v]--;
@@ -221,20 +223,34 @@ public class KCore {
     return deg;
   }
 
-  /**
-   * 1. v is in the k-shell, i.e. k is the core number of v
-   * 2. we do NOT want v to be in the (k+1)-core
-   * 3. to be in the (k+1)-core, v needs at least k neighbors (in the k-core) with at least k other
-   *    neighbors (in the k-core).
-   */
-  private boolean isAdditionValid(Node v, Map<Integer, Node> nodes) {
-    if(!nodes.containsKey(v.id)) {
-      nodes.put(v.id, v);
+  private void reset(int v) {
+    source = new Node(v);
+    nodes = new HashMap<Integer, Node>();
+    nodes.put(v, source);
+    enqueued = new HashSet<Integer>();
+    visited = new HashSet<Integer>();
+    ignoring = new HashSet<Integer>();
+  }
+
+  private boolean bfs() {
+    Queue<Node> queue = new LinkedList<Node>();
+    queue.add(source);
+    enqueued.add(source.id);
+    while(!queue.isEmpty()) {
+      visit(queue);
+      if(!source.couldBeInNextCore()) {
+        return true;
+      }
     }
+    return !source.couldBeInNextCore();
+  }
+
+  private void visit(Queue<Node> queue) {
+    Node v = queue.poll();
     visited.add(v.id);
     List<Node> toVisit = new ArrayList<Node>();
     for(int w : g.adjV(v.id)) {
-      if(ignore.contains(w)) {  // previously ignored
+      if(ignoring.contains(w)) {  // previously ignored
         continue;
       }
       if(core[w] < v.k) {  // not in k-shell, discard
@@ -259,16 +275,14 @@ public class KCore {
 
     if(!v.couldBeInNextCore()) {  // v does NOT meet 3. for sure
       v.propagate();
-      return true;
-    }
-
-    for(Node w : toVisit) {
-      if(!visited.contains(w.id)) {
-        isAdditionValid(w, nodes);
+    } else {
+      for(Node w : toVisit) {
+        if(!enqueued.contains(w.id)) {
+          enqueued.add(w.id);
+          queue.add(w);
+        }
       }
     }
-
-    return !v.couldBeInNextCore();
   }
 
   private class Node {
@@ -287,7 +301,7 @@ public class KCore {
     }
 
     private void propagate() {
-      ignore.add(id);
+      ignoring.add(id);
       for(Node node : neighbors) {
         node.neighbors.remove(this);
       }

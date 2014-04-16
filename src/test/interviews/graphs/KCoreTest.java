@@ -266,6 +266,49 @@ public class KCoreTest {
   }
 
   @Test
+  public void test_edge_case6() {
+    Graph g = new Graph(21);
+    g.addEdge(1, 7);
+    g.addEdge(2, 12);
+    g.addEdge(3, 17);
+    g.addEdge(3, 4);
+    g.addEdge(4, 1);
+    g.addEdge(4, 16);
+    g.addEdge(4, 5);
+    g.addEdge(4, 8);
+    g.addEdge(6, 7);
+    g.addEdge(7, 2);
+    g.addEdge(7, 4);
+    g.addEdge(7, 8);
+    g.addEdge(11, 3);
+    g.addEdge(11, 9);
+    g.addEdge(12, 10);
+    g.addEdge(12, 14);
+    g.addEdge(12, 15);
+    g.addEdge(12, 9);
+    g.addEdge(13, 10);
+    g.addEdge(13, 11);
+    g.addEdge(13, 14);
+    g.addEdge(13, 9);
+    g.addEdge(14, 11);
+    g.addEdge(15, 11);
+    g.addEdge(15, 13);
+    g.addEdge(16, 10);
+    g.addEdge(16, 13);
+    g.addEdge(16, 14);
+    g.addEdge(16, 15);
+    g.addEdge(17, 12);
+    g.addEdge(17, 20);
+    g.addEdge(17, 8);
+    g.addEdge(18, 10);
+    g.addEdge(18, 3);
+    g.addEdge(19, 17);
+    KCore kc = new KCore(g);
+    kc.computeUnweighted();
+    assertTrue(kc.addEdge(new Edge(13, 17)));
+  }
+
+  @Test
   public void test_addEdge() {
     Graph g = setUp();
     KCore kc = new KCore(g);
@@ -311,12 +354,13 @@ public class KCoreTest {
 
   @Test
   public void test_addAndRemoveEdge() {
+    Random r = new Random(1234);
     Graph g = setUp();
     KCore kc = new KCore(g);
     kc.computeUnweighted();
     int[] golden = Arrays.copyOf(kc.core(), g.V);
     for(int i = 0; i < 100000; i++) {
-      if(i % 2 == 0){
+      if(r.nextBoolean()) {
         Edge e = newRandomEdge(g);
         if(kc.addEdge(e)) {
           kc.computeUnweighted();
@@ -346,6 +390,7 @@ public class KCoreTest {
 
   @Test
   public void test_addAndRemoveEdge2() {
+    Random r = new Random(1234);
     Graph g = new Graph(1000);
     for(int i = 0; i < 10000; i++) {
       g.addEdge(newRandomEdge(g));
@@ -353,8 +398,8 @@ public class KCoreTest {
     KCore kc = new KCore(g);
     kc.computeUnweighted();
     int[] golden = Arrays.copyOf(kc.core(), g.V);
-    for(int i = 0; i < 1000; i++) {
-      if(i % 2 == 0){
+    for(int i = 0; i < 5000; i++) {
+      if(r.nextBoolean()) {
         Edge e = newRandomEdge(g);
         if(kc.addEdge(e)) {
           kc.computeUnweighted();
@@ -382,21 +427,21 @@ public class KCoreTest {
     }
   }
 
-  @Test
   public void test_addAndRemoveEdge_time() {
-    Graph g = new Graph(1000);
-    for(int i = 0; i < 10000; i++) {
+    Graph g = new Graph(10000);
+    for(int i = 0; i < 60000; i++) {
       g.addEdge(newRandomEdge(g));
     }
     KCore kc = new KCore(g);
     kc.computeUnweighted();
-    for(int i = 0; i < 10000; i++) {
-      if(i % 2 == 0){
-        kc.addEdge(newRandomEdge(g));
-      } else {
-        kc.removeEdge(alreadyExistingRandomEdge(g));
-      }
-    }
+    System.out.println("100\t500\t1000\t5,000\t10,000\t50,000\t100,000");
+    addAndRemove(g, kc, 100);
+    addAndRemove(g, kc, 500);
+    addAndRemove(g, kc, 1000);
+    addAndRemove(g, kc, 5000);
+    addAndRemove(g, kc, 10000);
+    addAndRemove(g, kc, 50000);
+    addAndRemove(g, kc, 100000);
   }
 
   private static Random r = new Random(1234);
@@ -420,5 +465,18 @@ public class KCoreTest {
       } while(v == w);
     } while(!g.containsEdge(v, w));
     return new Edge(v, w);
+  }
+
+  private static void addAndRemove(Graph g, KCore kc, int T) {
+    Random r = new Random();
+    long startTime = System.currentTimeMillis();
+    for(int i = 0; i < T; i++) {
+      if(r.nextBoolean()) {
+        kc.addEdge(newRandomEdge(g));
+      } else {
+        kc.removeEdge(alreadyExistingRandomEdge(g));
+      }
+    }
+    System.out.print(String.format("%.2f\t", (System.currentTimeMillis() - startTime)/1000.0f));
   }
 }
