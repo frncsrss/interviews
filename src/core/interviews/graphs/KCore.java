@@ -172,10 +172,6 @@ public class KCore {
       if(bfs()) {
         return true;
       }
-      reset(w);
-      if(bfs()) {
-        return true;
-      }
       effectiveDegree[v]--;
       effectiveDegree[w]--;
     }
@@ -233,8 +229,8 @@ public class KCore {
   }
 
   private boolean bfs() {
-    Queue<Node> queue = new LinkedList<Node>();
-    queue.add(source);
+    Queue<Integer> queue = new LinkedList<Integer>();
+    queue.add(source.id);
     enqueued.add(source.id);
     while(!queue.isEmpty()) {
       visit(queue);
@@ -245,10 +241,10 @@ public class KCore {
     return !source.couldBeInNextCore();
   }
 
-  private void visit(Queue<Node> queue) {
-    Node v = queue.poll();
+  private void visit(Queue<Integer> queue) {
+    Node v = nodes.get(queue.poll());
     visited.add(v.id);
-    List<Node> toVisit = new ArrayList<Node>();
+    List<Integer> toVisit = new ArrayList<Integer>();
     for(int w : g.adjV(v.id)) {
       if(ignoring.contains(w)) {  // previously ignored
         continue;
@@ -257,7 +253,7 @@ public class KCore {
         continue;
       }
       if(core[w] > v.k) {  // already in (k+1)-core
-        v.sure++;
+        v.upper++;
         continue;
       }
       if(effectiveDegree[w] < v.k + 1) {  // in k-shell but definitely not in (k+1)-core
@@ -265,20 +261,20 @@ public class KCore {
       }
       if(!nodes.containsKey(w)) {
         nodes.put(w, new Node(w));
-      } else if(v.neighbors.contains(nodes.get(w))) {  // parent
+      } else if(v.neighbors.contains(w)) {  // parent
         continue;
       }
-      v.neighbors.add(nodes.get(w));
-      nodes.get(w).neighbors.add(v);
-      toVisit.add(nodes.get(w));
+      v.neighbors.add(w);
+      nodes.get(w).neighbors.add(v.id);
+      toVisit.add(w);
     }
 
     if(!v.couldBeInNextCore()) {  // v does NOT meet 3. for sure
       v.propagate();
     } else {
-      for(Node w : toVisit) {
-        if(!enqueued.contains(w.id)) {
-          enqueued.add(w.id);
+      for(int w : toVisit) {
+        if(!enqueued.contains(w)) {
+          enqueued.add(w);
           queue.add(w);
         }
       }
@@ -288,8 +284,8 @@ public class KCore {
   private class Node {
     private final int id;
     private final int k;
-    private int sure = 0;
-    private final List<Node> neighbors = new ArrayList<Node>();  // forward or backward
+    private int upper = 0;  // number of neighbors in the (k+1)-core
+    private final Set<Integer> neighbors = new HashSet<Integer>();  // neighbors in the k-core
 
     Node(int v) {
       this.id = v;
@@ -297,17 +293,20 @@ public class KCore {
     }
 
     private boolean couldBeInNextCore() {
-      return sure + neighbors.size() > core[id];
+      return upper + neighbors.size() > k;
     }
 
     private void propagate() {
       ignoring.add(id);
-      for(Node node : neighbors) {
-        node.neighbors.remove(this);
+      for(int w : neighbors) {
+        nodes.get(w).neighbors.remove(id);
       }
-      for(Node node : neighbors) {
-        if(visited.contains(node.id) && !node.couldBeInNextCore()) {
-          node.propagate();
+      for(int w : neighbors) {
+        if(visited.contains(w)) {
+          Node node = nodes.get(w);
+          if(!node.couldBeInNextCore()) {
+            node.propagate();
+          }
         }
       }
       neighbors.clear();
@@ -315,7 +314,7 @@ public class KCore {
 
     @Override
     public String toString() {
-      return String.format("%d %d %d\t%d+%s", id, k, effectiveDegree[id], sure, neighbors.size());
+      return String.format("%d %d %d\t%d+%d", id, k, effectiveDegree[id], upper, neighbors.size());
     }
   }
 }
