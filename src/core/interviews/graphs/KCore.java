@@ -38,7 +38,11 @@ public class KCore {
   }
 
   /**
-   * Core number sequence of an unweighted undirected graph. Runs in O(max(|V|, |E|)).
+   * Core number sequence of an unweighted undirected graph.
+   *
+   * Let n be the number of nodes and m the number of edges.
+   * Time complexity:  O(n + m)
+   * Space complexity: O(n)
    */
   public void computeUnweighted() {
     int md, i, start;
@@ -102,7 +106,11 @@ public class KCore {
   }
 
   /**
-   * Core number sequence of a weighted undirected graph, aka p5-core or f-core. Runs in O(ElogV).
+   * Core number sequence of a weighted undirected graph.
+   *
+   * Let n be the number of nodes and m the number of edges.
+   * Time complexity:  O(nlogn + mlogn)
+   * Space complexity: O(n)
    */
   public void computeWeighted() {
     int k;
