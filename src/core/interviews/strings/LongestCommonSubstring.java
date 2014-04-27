@@ -99,4 +99,47 @@ public class LongestCommonSubstring {
     }
     return substring;
   }
+
+  /**
+   * Using suffix array.
+   *
+   * Let n = length(str1) and m = length(str2).
+   * Time complexity:  O(n + m)
+   * Space complexity: O(n + m) for Java 6
+   */
+  public static String f3(String str1, String str2) {
+    if (str1 == null || str1.isEmpty() || str2 == null || str2.isEmpty()) {
+      return "";
+    }
+
+    // ignore case
+    str1 = str1.toLowerCase();
+    str2 = str2.toLowerCase();
+
+    final int N1 = str1.length();
+
+    SuffixArray2 sa = new SuffixArray2(str1 + "\0" + str2);
+    final int N = sa.length();
+
+    String substring = "";  // longest common substring
+    for (int i = 0; i < N - 1; i++) {
+      // adjacent suffixes both from second text string
+      if (sa.index(i) >= N1 && sa.index(i + 1) >= N1) {
+        continue;
+      }
+
+      // adjacent suffixes both from first text string
+      if (sa.index(i) < N1 && sa.index(i + 1) < N1) {
+        continue;
+      }
+
+      // longest common substring between adjacent suffixes
+      int length = sa.lcp(i);
+      // check if it is longer than current longest common substring
+      if (length > substring.length()) {
+        substring = sa.select(i).substring(0, length);
+      }
+    }
+    return substring;
+  }
 }

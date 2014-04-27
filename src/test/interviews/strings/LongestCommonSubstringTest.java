@@ -29,4 +29,15 @@ public class LongestCommonSubstringTest {
         LongestCommonSubstring.f2("sajchsichsaoioooooivhsdoivhsdoivhsoachasiucbisachsiuhsaxjaaahaks",
             "sajchsichsaoioooooivhsdoivhsdoivhsoachasiucbisachsiuhsaxjaaahaks"));
   }
+
+  @Test
+  public void test_f3() {
+    Assert.assertEquals(
+        " peter go",
+        LongestCommonSubstring.f3("Please, peter go swimming!", "I'm peter goliswi"));
+    Assert.assertEquals(
+        "sajchsichsaoioooooivhsdoivhsdoivhsoachasiucbisachsiuhsaxjaaahaks",
+        LongestCommonSubstring.f3("sajchsichsaoioooooivhsdoivhsdoivhsoachasiucbisachsiuhsaxjaaahaks",
+            "sajchsichsaoioooooivhsdoivhsdoivhsoachasiucbisachsiuhsaxjaaahaks"));
+  }
 }
