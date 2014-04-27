@@ -4,13 +4,17 @@ import java.util.Arrays;
 
 /**
  * Suffix array of a string.
- * Linear construction in time and space for Java 6.
  * @author Francois Rousseau
  */
 public class SuffixArray {
   private final String[] suffixes;
   private final int N;
 
+  /**
+   * Let n = length(s).
+   * Time complexity:  O(nlogn)
+   * Space complexity: O(n) for Java 6, O(n^2) for Java 7
+   */
   public SuffixArray(String s) {
     N = s.length();
     suffixes = new String[N];
@@ -35,7 +39,7 @@ public class SuffixArray {
   }
 
   /**
-   * ith sorted suffix/
+   * ith sorted suffix.
    */
   public String select(int i) {
     return suffixes[i];
@@ -47,14 +51,34 @@ public class SuffixArray {
   public int rank(String query) {
     int lo = 0, hi = N - 1;
     while (lo <= hi) {
-      int mid = (lo + hi) >>> 1;
+      int mid = lo + hi >>> 1;
       int cmp = query.compareTo(suffixes[mid]);
-      if      (cmp < 0) hi = mid - 1;
-      else if (cmp > 0) lo = mid + 1;
-      else return mid;
+      if(cmp < 0) {
+        hi = mid - 1;
+      }
+      else if(cmp > 0) {
+        lo = mid + 1;
+      }
+      else {
+        return mid;
+      }
     }
     return lo;
-  } 
+  }
+
+  /**
+   * Length of longest common prefix of suffixes[i] and suffixes[i+1].
+   */
+  public int lcp(int i) {
+    return lcp(i, i + 1);
+  }
+
+  /**
+   * Length of longest common prefix of suffixes[i] and suffixes[j].
+   */
+  public int lcp(int i, int j) {
+    return lcp(suffixes[i], suffixes[j]);
+  }
 
   /**
    * Length of longest common prefix between a and b.
@@ -69,19 +93,5 @@ public class SuffixArray {
       }
     }
     return i;
-  }
-
-  /**
-   * Longest common prefix of suffixes(i) and suffixes(i+1).
-   */
-  public int lcp(int i) {
-      return lcp(suffixes[i], suffixes[i + 1]);
-  }
-
-  /**
-   * Longest common prefix of suffixes(i) and suffixes(j).
-   */
-  public int lcp(int i, int j) {
-      return lcp(suffixes[i], suffixes[j]);
   }
 }

@@ -6,7 +6,11 @@ package interviews.strings;
  */
 public class LongestCommonSubstring {
   /**
-   * USe dynamic programming.
+   * Using dynamic programming.
+   *
+   * Let n = length(str1) and m = length(str2).
+   * Time complexity:  O(nm)
+   * Space complexity: O(nm)
    */
   public static String f1(String str1, String str2) {
     if (str1 == null || str1.isEmpty() || str2 == null || str2.isEmpty()) {
@@ -29,9 +33,9 @@ public class LongestCommonSubstring {
         }
 
         if (i == 0 || j == 0) {
-           num[i][j] = 1;
+          num[i][j] = 1;
         } else {
-           num[i][j] = 1 + num[i - 1][j - 1];
+          num[i][j] = 1 + num[i - 1][j - 1];
         }
 
         if (num[i][j] > bestSoFar) {
@@ -39,13 +43,13 @@ public class LongestCommonSubstring {
           // generate substring from str1 => i
           int thisSubsBegin = i - num[i][j] + 1;
           if (lastSubsBegin == thisSubsBegin) {
-             //if the current LCS is the same as the last time this block ran
-             builder.append(str1.charAt(i));
+            //if the current LCS is the same as the last time this block ran
+            builder.append(str1.charAt(i));
           } else {
-             //this block resets the string builder if a different LCS is found
-             lastSubsBegin = thisSubsBegin;
-             builder = new StringBuilder();
-             builder.append(str1.substring(thisSubsBegin, i + 1));
+            //this block resets the string builder if a different LCS is found
+            lastSubsBegin = thisSubsBegin;
+            builder = new StringBuilder();
+            builder.append(str1.substring(thisSubsBegin, i + 1));
           }
         }
       }
@@ -54,7 +58,11 @@ public class LongestCommonSubstring {
   }
 
   /**
-   * Use suffix array.
+   * Using suffix array.
+   *
+   * Let n = length(str1) and m = length(str2).
+   * Time complexity:  O(nlogn + mlogm)
+   * Space complexity: O(n + m) for Java 6, O(n^2 + m^2) for Java 7
    */
   public static String f2(String str1, String str2) {
     if (str1 == null || str1.isEmpty() || str2 == null || str2.isEmpty()) {
@@ -65,21 +73,26 @@ public class LongestCommonSubstring {
     str1 = str1.toLowerCase();
     str2 = str2.toLowerCase();
 
-    int N2 = str2.length();
+    final int N1 = str1.length();
 
     SuffixArray sa = new SuffixArray(str1 + "\0" + str2);
-    int N = sa.length();
+    final int N = sa.length();
 
     String substring = "";  // longest common substring
     for (int i = 0; i < N - 1; i++) {
       // adjacent suffixes both from second text string
-      if (sa.select(i).length() <= N2 && sa.select(i + 1).length() <= N2) continue;
+      if (sa.index(i) >= N1 && sa.index(i + 1) >= N1) {
+        continue;
+      }
 
       // adjacent suffixes both from first text string
-      if (sa.select(i).length() > N2 + 1 && sa.select(i + 1).length() > N2 + 1) continue;
+      if (sa.index(i) < N1 && sa.index(i + 1) < N1) {
+        continue;
+      }
 
-      // check if adjacent suffixes longer common substring
+      // longest common substring between adjacent suffixes
       int length = sa.lcp(i);
+      // check if it is longer than current longest common substring
       if (length > substring.length()) {
         substring = sa.select(i).substring(0, length);
       }
