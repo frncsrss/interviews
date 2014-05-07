@@ -155,32 +155,23 @@ public class KCore {
    */
   public boolean addEdge(Edge e) {
     g.addEdge(e);
-    int v = e.v;
-    int w = e.w;
-    int core_v = core[v];
-    int core_w = core[w];
-    if(core_v < core_w) {
-      effectiveDegree[v]++;
-      reset(v);
-      if(bfs()) {
-        return true;
-      }
-      effectiveDegree[v]--;
-    } else if(core_v > core_w) {
-      effectiveDegree[w]++;
-      reset(w);
-      if(bfs()) {
-        return true;
-      }
-      effectiveDegree[w]--;
+    final int v, w;
+    if(core[e.v] < core[e.w]) {
+      v = e.v;
+      w = e.w;
     } else {
-      effectiveDegree[v]++;
+      v = e.w;
+      w = e.v;
+    }
+    effectiveDegree[v]++;
+    if(core[v] == core[w]) {
       effectiveDegree[w]++;
-      reset(v);
-      if(bfs()) {
-        return true;
-      }
-      effectiveDegree[v]--;
+    }
+    if(!isNodeInNextCore(v)) {
+      return true;
+    }
+    effectiveDegree[v]--;
+    if(core[v] == core[w]) {
       effectiveDegree[w]--;
     }
     g.removeEdge(e);
@@ -191,8 +182,8 @@ public class KCore {
    * Remove the edge if it leaves the core number sequence unchanged.
    */
   public boolean removeEdge(Edge e) {
-    int v = e.v;
-    int w = e.w;
+    final int v = e.v;
+    final int w = e.w;
     if(core[v] < core[w] && core[v] < effectiveDegree[v]) {
       g.removeEdge(e);
       effectiveDegree[v]--;
@@ -210,12 +201,19 @@ public class KCore {
     return false;
   }
 
+  /**
+   * Compute the effective degree of each node in the graph. This corresponds to the degree of a
+   * node in the last core it belongs to.
+   */
   private void computeEffectiveDegree() {
     for(int v = 0; v < V; v++) {
       effectiveDegree[v] = effectiveDegree(v);
     }
   }
 
+  /**
+   * @return the effective degree of node v, i.e. degree of v in the last core it belongs to.
+   */
   private int effectiveDegree(int v) {
     int deg = 0;
     int k = core[v];
@@ -227,6 +225,10 @@ public class KCore {
     return deg;
   }
 
+  /**
+   * Set the current source node to v, insert it into the map of nodes visited so far and reset the
+   * current enqueued, visited and ignoring sets of node ids.
+   */
   private void reset(int v) {
     source = new Node(v);
     nodes = new HashMap<Integer, Node>();
@@ -236,19 +238,33 @@ public class KCore {
     ignoring = new HashSet<Integer>();
   }
 
-  private boolean bfs() {
+  /**
+   * BFS traversal from the given node to estimate as fast as possible if it moves to the next core
+   * or not. Assumes a new edge has already been added. Potentially O(m).
+   */
+  private boolean isNodeInNextCore(int v) {
+    reset(v);
     Queue<Integer> queue = new LinkedList<Integer>();
     queue.add(source.id);
     enqueued.add(source.id);
     while(!queue.isEmpty()) {
       visit(queue);
       if(!source.couldBeInNextCore()) {
-        return true;
+        return false;
       }
     }
-    return !source.couldBeInNextCore();
+    return true;
   }
 
+  /**
+   * Visit the head of the queue. Propagate if we know for sure its shell index does not change.
+   * Otherwise, enqueue its neighbors that could potentially move to the next core.
+   *
+   * 1. v is in the k-shell, i.e. k is the core number of v
+   * 2. we do NOT want v to be in the (k+1)-core
+   * 3. to be in the (k+1)-core, v needs at least k neighbors (in the k-core) with at least k other
+   *    neighbors (in the k-core).
+   */
   private void visit(Queue<Integer> queue) {
     Node v = nodes.get(queue.poll());
     visited.add(v.id);
@@ -295,7 +311,7 @@ public class KCore {
     private int upper = 0;  // number of neighbors in the (k+1)-core
     private final Set<Integer> neighbors = new HashSet<Integer>();  // neighbors in the k-core
 
-    Node(int v) {
+    public Node(int v) {
       this.id = v;
       this.k = core[v];
     }
