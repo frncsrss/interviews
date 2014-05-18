@@ -26,8 +26,8 @@ public class WordCount extends Configured implements Tool {
     @Override
     public void map(Object key, Text value, Context context)
         throws IOException, InterruptedException {
-      String[] arr = value.toString().split("[ \t]+");
-      for(String word: arr) {
+      String[] words = value.toString().split("[\\s\\p{Punct}]+");
+      for(String word: words) {
         context.write(new Text(word), NullWritable.get());
       }
     }
