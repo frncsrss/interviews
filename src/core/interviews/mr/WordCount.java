@@ -21,6 +21,7 @@ import org.apache.hadoop.util.Tool;
  * @author Francois Rousseau
  */
 public class WordCount extends Configured implements Tool {
+  public enum Stats {TOTAL_NUMBER_OF_WORDS};
 
   public static class MyMapper extends Mapper<Object, Text, Text, NullWritable>{
     @Override
@@ -29,6 +30,7 @@ public class WordCount extends Configured implements Tool {
       String[] words = value.toString().split("[\\s\\p{Punct}]+");
       for(String word: words) {
         context.write(new Text(word), NullWritable.get());
+        context.getCounter(Stats.TOTAL_NUMBER_OF_WORDS).increment(1);
       }
     }
   }
