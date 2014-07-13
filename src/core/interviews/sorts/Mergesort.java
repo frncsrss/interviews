@@ -33,46 +33,52 @@ public class Mergesort {
   }
 
   private static <E> void sort1(List<E> list, Comparator<E> comparator, int lo, int hi) {
-    if (lo < hi) {
-      int mid = lo + hi >>> 1;  // prevent possible overflow
-      sort1(list, comparator, lo, mid);
-      sort1(list, comparator, mid + 1, hi);
-
-      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
-        return;
-      }  // no need to merge the two lists
-
-      merge1(list, comparator, lo, hi, mid);
+    if(lo == hi) {
+      return;
     }
+
+    int mid = lo + hi >>> 1;  // prevent possible overflow
+    sort1(list, comparator, lo, mid);
+    sort1(list, comparator, mid + 1, hi);
+
+    if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
+      return;
+    }  // no need to merge the two lists
+
+    merge1(list, comparator, lo, hi, mid);
   }
 
   private static <E> void sort2(List<E> list, Comparator<E> comparator, int lo, int hi) {
-    if (lo < hi) {
-      int mid = lo + hi >>> 1;  // prevent possible overflow
-      sort2(list, comparator, lo, mid);
-      sort2(list, comparator, mid + 1, hi);
-
-      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
-        return;
-      }  // no need to merge the two lists
-
-      merge2(list, comparator, lo, hi, mid);
+    if(lo == hi) {
+      return;
     }
+
+    int mid = lo + hi >>> 1;  // prevent possible overflow
+    sort2(list, comparator, lo, mid);
+    sort2(list, comparator, mid + 1, hi);
+
+    if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
+      return;
+    }  // no need to merge the two lists
+
+    merge2(list, comparator, lo, hi, mid);
   }
 
   private static <E> void sort3(
       List<E> list, Comparator<E> comparator, List<E> aux, int lo, int hi) {
-    if (lo < hi) {
-      int mid = lo + hi >>> 1;  // prevent possible overflow
-      sort3(list, comparator, aux, lo, mid);
-      sort3(list, comparator, aux, mid + 1, hi);
-
-      if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
-        return;
-      }  // no need to merge the two lists
-
-      merge3(list, comparator, aux, lo, hi, mid);
+    if(lo == hi) {
+      return;
     }
+
+    int mid = lo + hi >>> 1;  // prevent possible overflow
+    sort3(list, comparator, aux, lo, mid);
+    sort3(list, comparator, aux, mid + 1, hi);
+
+    if(comparator.compare(list.get(mid), list.get(mid + 1)) <= 0) {
+      return;
+    }  // no need to merge the two lists
+
+    merge3(list, comparator, aux, lo, hi, mid);
   }
 
   private static <E> void sort4(List<E> list, Comparator<E> comparator) {
