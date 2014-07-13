@@ -3,10 +3,13 @@ package interviews.arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Francois Rousseau
+ */
 public class MergeInPlace {
   /**
    * Given a listed in ascending order until index n - 1 and in ascending order from index n,
-   * sort in ascending order the entire list 
+   * sort in ascending order the entire list
    */
   public static void f(List<Integer> list, int n) {
     int start_a = 0;
@@ -43,11 +46,11 @@ public class MergeInPlace {
       if(a.get(n) <= b.get(m)) {
         a.set(current--, b.get(m--));
       } else {
-        a.set(current--, a.get(n--));        
+        a.set(current--, a.get(n--));
       }
     }
     while(m >= 0) {
-      a.set(current--, b.get(m--));      
+      a.set(current--, b.get(m--));
     } // no need to do the same for n >= 0 since the elements of a are already in place
   }
 
@@ -63,11 +66,11 @@ public class MergeInPlace {
       if(a[n] <= b[m]) {
         a[current--] = b[m--];
       } else {
-        a[current--] = a[n--];        
+        a[current--] = a[n--];
       }
     }
     while(m >= 0) {
-      a[current--] = b[m--];      
+      a[current--] = b[m--];
     } // no need to do the same for n >= 0 since the elements of a are already in place
   }
 }

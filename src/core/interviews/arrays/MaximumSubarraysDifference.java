@@ -2,6 +2,7 @@ package interviews.arrays;
 
 /**
  * Given an array of integers, return the two subarrays with maximum difference in terms of sum.
+ *
  * @author Francois Rousseau
  */
 public class MaximumSubarraysDifference {

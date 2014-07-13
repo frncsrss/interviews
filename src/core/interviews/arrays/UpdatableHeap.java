@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 /**
  * Heap of keys with integer values. Allow in logarithmic time the update (increase or decrease) of
  * values for keys inside the heap.
+ *
  * @author Francois Rousseau
  */
 public class UpdatableHeap<K> {

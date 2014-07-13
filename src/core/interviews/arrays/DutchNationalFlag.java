@@ -11,6 +11,7 @@ package interviews.arrays;
  *  At most N calls to color().
  *  At most N calls to swap().
  *  Constant extra space.
+ *
  * @author Francois Rousseau
  */
 public class DutchNationalFlag {

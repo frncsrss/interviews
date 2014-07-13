@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * Print all continuous subsequences of an array that sum to 0.
+ *
  * @author Francois Rousseau
  */
 public class ConsecutiveSubsequenceSummingToZero {

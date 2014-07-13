@@ -2,6 +2,7 @@ package interviews.arrays;
 
 /**
  * Binary search in a sorted array.
+ *
  * @author Francois Rousseau
  */
 public class BinarySearch {

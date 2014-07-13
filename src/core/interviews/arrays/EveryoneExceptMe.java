@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * New array where A[i] = product (j­i) A[j]
+ *
  * @author Francois Rousseau
  */
 public class EveryoneExceptMe {

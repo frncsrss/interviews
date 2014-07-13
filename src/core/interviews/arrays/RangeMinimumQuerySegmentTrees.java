@@ -4,8 +4,10 @@ package interviews.arrays;
 /**
  * Given a fixed array A of n integers, design a way to handle a lot of queries asking for the
  * minimum element inside a range. The array does not change between queries.
+ *
  * This implementation uses segment trees. Pre-processing in O(n) in time.
  * Query time in O(logn) in time.
+ *
  * @author Francois Rousseau
  */
 public class RangeMinimumQuerySegmentTrees {

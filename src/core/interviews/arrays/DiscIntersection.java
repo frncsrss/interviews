@@ -10,13 +10,13 @@ import java.util.List;
  * i-th disc is centered on (0,i) and has a radius of A[i].
  * We say that the j-th disc and k-th disc intersect if j ­ k and j-th and k-th
  * discs have at least one common point.
- * 
+ *
  * Write a function that, given an array A describing N discs as explained above,
  * returns the number of pairs of intersecting discs.
- * 
+ *
  * For example, given N=6 and:
- * A[0] = 1  A[1] = 5  A[2] = 2 
- * A[3] = 1  A[4] = 4  A[5] = 0  
+ * A[0] = 1  A[1] = 5  A[2] = 2
+ * A[3] = 1  A[4] = 4  A[5] = 0
  * intersecting discs appear in eleven pairs of elements:
  * 0 and 1,
  * 0 and 2,
@@ -30,13 +30,14 @@ import java.util.List;
  * 3 and 4,
  * 4 and 5.
  * so the function should return 11.
+ *
  * @author Francois Rousseau
  */
 public class DiscIntersection {
   public static int f(int[] A) {
     return f1(A);
   }
-  
+
   public static int f1(int[] A) {
     int count = 0, N=A.length;
     List<Interval> list = new ArrayList<Interval>();
@@ -51,7 +52,7 @@ public class DiscIntersection {
         } else if(i1.min < i2.min) {
           return -1;
         }
-        return (new Integer(i2.max).compareTo(i1.max));
+        return new Integer(i2.max).compareTo(i1.max);
       }
     });
 
@@ -108,7 +109,7 @@ public class DiscIntersection {
     Collections.sort(list, new Comparator<Boundary>() {
       @Override
       public int compare(Boundary b1, Boundary b2) {
-        return (new Integer(b1.value).compareTo(b2.value));
+        return new Integer(b1.value).compareTo(b2.value);
       }
     });
     int count = 0, ret = 0;
@@ -130,6 +131,7 @@ class Interval {
     this.min = min;
     this.max = max;
   }
+  @Override
   public String toString() {
     return "("+min+", "+max+")";
   }

@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Find the min element in an rotated sorted array of elements.
+ *
  * @author Francois Rousseau
  */
 public class MinInRotatedSortedArray {
@@ -35,11 +36,11 @@ public class MinInRotatedSortedArray {
     int hi = arr.length - 1;
     while(arr[lo] >= arr[hi] && lo < hi) {
       int mid = lo + hi >>> 1;
-      if(arr[mid] >= arr[hi]) {
-        lo = mid + 1;
-      } else {
-        hi = mid;
-      }
+    if(arr[mid] >= arr[hi]) {
+      lo = mid + 1;
+    } else {
+      hi = mid;
+    }
     }
     return arr[lo];
   }

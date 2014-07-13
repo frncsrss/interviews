@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Heap.
+ *
  * @author Francois Rousseau
  */
 public class Heap<E> implements Iterable<E> {

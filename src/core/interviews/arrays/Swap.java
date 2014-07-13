@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Swap integer-value elements of a list without temporary variable.
  * Swap values of a char array.
+ *
  * @author Francois Rousseau
  */
 public class Swap {

@@ -7,6 +7,7 @@ import java.util.Stack;
  * Find the maximum rectangular area under a given histogram.
  * The histogram is considered as a succession of bars (vertical rectangle) of width 1. Hence, we
  * only need to store the heights of each bar and the histogram as an array of integers.
+ *
  * @author Francois Rousseau
  */
 public class MaximumRectangularAreaUnderHistogram {

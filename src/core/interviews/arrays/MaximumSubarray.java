@@ -3,6 +3,7 @@ package interviews.arrays;
 /**
  * Given an array of integers, return the subarray with maximum sum (start and end indexes).
  * Known as the maximum subarray problem.
+ *
  * @author Francois Rousseau
  */
 public class MaximumSubarray {

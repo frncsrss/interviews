@@ -5,6 +5,8 @@ import java.util.Stack;
 /**
  * Given an island represented as an array of integer heights, return the amount of rain it can
  * contain.
+ * 
+ * For instance, given that island, the amount of rain is 12 (3 missing X).
  *        _       _   _
  *       | |X X X| |_| |
  *      _| |X X X|     |_   _

@@ -3,8 +3,10 @@ package interviews.arrays;
 /**
  * Given a fixed array A of n integers, design a way to handle a lot of queries asking for the
  * minimum element inside a range. The array does not change between queries.
+ *
  * This implementation uses log2-based intervals. Pre-processing in O(nlogn) in time and space.
  * Query time in O(1) in time and O(nlogn) in space.
+ *
  * @author Francois Rousseau
  */
 public class RangeMinimumQuerySparseTable {

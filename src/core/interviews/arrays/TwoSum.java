@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 2-sum. Find pairs of elements of an array summing to a given value.
+ *
  * @author Francois Rousseau
  */
 public class TwoSum {
@@ -42,7 +43,7 @@ public class TwoSum {
           while(nb_total-- > 0) {
             pairs.add(new Pair<Integer, Integer>(array[lower], array[higher]));
           }
-        } 
+        }
         lower++;
         higher--;
       } else if(s < sum) {

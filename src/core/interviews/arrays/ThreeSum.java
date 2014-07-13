@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 3-sum. Find triples of elements of an array summing to 0.
+ *
  * @author Francois Rousseau
  */
 public class ThreeSum {
@@ -76,11 +77,11 @@ public class ThreeSum {
           } else {
             int nb_total = nb_lower*nb_higher;
             while(nb_total-- > 0) {
-              triples.add(new int[]{arr[i], arr[lower], arr[higher]});              
+              triples.add(new int[]{arr[i], arr[lower], arr[higher]});
             }
           }
           lower++;
-          higher--;          
+          higher--;
         } else if(sum > 0) {
           higher--;
         } else {
@@ -120,7 +121,7 @@ public class ThreeSum {
             count += nb_lower*nb_higher;
           }
           lower++;
-          higher--;          
+          higher--;
         } else if(sum > 0) {
           higher--;
         } else {

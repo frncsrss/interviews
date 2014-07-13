@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Circular permutation of a list/array.
+ *
  * @author Francois Rousseau
  */
 public class Rotation {
@@ -74,12 +75,12 @@ public class Rotation {
     }
     // Finally, block swap A and B
     Swap.f(arr, d - i, d, i);
-    return arr;  // for testing purposes    
+    return arr;  // for testing purposes
   }
 
 
   private static <E> void reverse(List<E> list, int start, int end) {
-    final int middle = (start + end) >>> 1;
+    final int middle = start + end >>> 1;
     for(int i = start; i < middle + 1; i++) {
       Swap.f(list, i, start + end - i);
     }
