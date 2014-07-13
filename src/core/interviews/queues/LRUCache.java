@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * LRUCache class.
+ * LRUCache implementation.
+ *
  * @author Francois Rousseau
  */
 public class LRUCache<K, V> {

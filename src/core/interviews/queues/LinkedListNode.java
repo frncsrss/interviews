@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 /**
  * LinkedListNode class.
+ *
  * @author Francois Rousseau
  */
 public class LinkedListNode<E> {

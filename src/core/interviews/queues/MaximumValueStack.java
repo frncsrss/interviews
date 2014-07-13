@@ -4,10 +4,11 @@ import java.util.Comparator;
 
 /**
  * Stack with a pointer to the maximum value.
+ *
  * @author Francois Rousseau
  */
 public class MaximumValueStack<E> {
-  private Comparator<E> comparator;
+  private final Comparator<E> comparator;
   private LinkedListNode<E> head;
   private LinkedListNode<E> max;
 
@@ -28,9 +29,9 @@ public class MaximumValueStack<E> {
     }
     E value = head.getValue();
     if(comparator.compare(value, max.getValue()) == 0) {
-      max = (max.hasNext()) ? max.next() : null;      
+      max = max.hasNext() ? max.next() : null;
     }
-    head = (head.hasNext()) ? head.next() : null;
+    head = head.hasNext() ? head.next() : null;
     return value;
   }
 

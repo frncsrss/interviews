@@ -6,20 +6,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * LinkedListQueue class (FIFO).
+ *
  * @author Francois Rousseau
  */
 public class LinkedListQueue<E> {
   private LinkedListNode<E> head;
   private LinkedListNode<E> tail;
   private int size;
-  private Lock lock;
+  private final Lock lock;
 
   public LinkedListQueue() {
     head = tail = null;
     size = 0;
     lock = new ReentrantLock();
   }
-  
+
   public LinkedListQueue<E> add(Collection<E> collection) throws InterruptedException {
     for(E e : collection) {
       add(e);
@@ -43,7 +44,7 @@ public class LinkedListQueue<E> {
   public boolean isEmpty() {
     return head == null;
   }
-  
+
   public E dequeue() throws InterruptedException {
     lock.lock();
     if(isEmpty()) {
@@ -59,11 +60,12 @@ public class LinkedListQueue<E> {
     lock.unlock();
     return e;
   }
-  
+
   public int size() {
     return size;
   }
 
+  @Override
   public String toString() {
     if(head == null) {
       return "";
@@ -73,7 +75,7 @@ public class LinkedListQueue<E> {
 }
 
 class LinkedListQueueModifier<E> extends Thread {
-  private LinkedListQueue<E> fifo;
+  private final LinkedListQueue<E> fifo;
   private final E e;
 
   public LinkedListQueueModifier(LinkedListQueue<E> fifo, E e) {
@@ -81,6 +83,7 @@ class LinkedListQueueModifier<E> extends Thread {
     this.e = e;
   }
 
+  @Override
   public void run() {
     try {
       Thread.sleep(Math.round(1 + Math.random()*2));

@@ -2,6 +2,7 @@ package interviews.queues;
 
 /**
  * LnikedListStack class (LIFO).
+ *
  * @author Francois Rousseau
  */
 public class LinkedListStack<E> {
