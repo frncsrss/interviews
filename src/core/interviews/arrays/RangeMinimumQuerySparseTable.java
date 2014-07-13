@@ -8,16 +8,16 @@ package interviews.arrays;
  * @author Francois Rousseau
  */
 public class RangeMinimumQuerySparseTable {
-  protected int[] A;
-  protected int[][] M;
+  protected int[] arr;
+  protected int[][] mat;
 
-  public RangeMinimumQuerySparseTable(int[] A) {
-    this.A = A;
-    this.M = process(A);
+  public RangeMinimumQuerySparseTable(int[] arr) {
+    this.arr = arr;
+    this.mat = process(arr);
   }
 
   public int query(int i, int j) {
-    if(i < 0 || i >= A.length || j < 0 || j >= A.length) {
+    if(i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
       throw new IndexOutOfBoundsException();
     }
     if(i > j) {  // swap i and j
@@ -25,26 +25,26 @@ public class RangeMinimumQuerySparseTable {
       j = i^j;
       i = i^j;
     } else if(i == j) {
-      return A[i];
+      return arr[i];
     }
     final int k = log2(j - i);  // k = E(log2(j - i)) <= log2(j - i)
     // the minimum for the interval [i, j] corresponds to the minimum between the
     // minimum of [i, i+2^k] and the minimum of [j-2^k, j]
     // since 2^k < j-i < 2^(k+1), the intervals are overlapping
-    return Math.min(M[i][k], M[j - (1<<k)][k]);
+    return Math.min(mat[i][k], mat[j - (1<<k)][k]);
   }
 
   private static int[][] process(int[] A) {
     // index ranges from 0 to n-1
     final int n = A.length;
-    
+
     // i ranges from 0 to n-2 (n-1 values)
-    // j ranges from 1 to n-1, i.e. k ranges from 0 to log(n-1) (log2(n-1) + 1 values)
-    final int[][] M = new int[n-1][log2(n-1)+1];
+    // j ranges from 1 to n-1, i.e. k ranges from 0 to log2(n-1) (log2(n-1) + 1 values)
+    final int[][] mat = new int[n - 1][log2(n - 1) + 1];
 
     // initialize M for the intervals with length 1 (i to i+1)
     for (int i = 0; i < n-1; i++) {
-        M[i][0] = Math.min(A[i], A[i+1]);
+      mat[i][0] = Math.min(A[i], A[i + 1]);
     }
 
     // compute values from smaller to bigger intervals
@@ -53,14 +53,14 @@ public class RangeMinimumQuerySparseTable {
         // the minimum for the interval [i, i+2^k] corresponds to the minimum between the
         // minimum of [i, i+2^(k-1)] and the minimum of [i+2^k-2^(k-1), i+2^k]
         // note that i+2^k-2^(k-1) == i+2^(k-1)
-        M[i][k] = Math.min(M[i][k - 1], M[i + (1 << (k - 1))][k - 1]);
+        mat[i][k] = Math.min(mat[i][k - 1], mat[i + (1 << k - 1)][k - 1]);
       }
     }
-    return M;
+    return mat;
   }
 
-   private static int log2(int n) {
-     if(n <= 0) throw new IllegalArgumentException();
-     return 31 - Integer.numberOfLeadingZeros(n);
-   }
+  private static int log2(int n) {
+    if(n <= 0) throw new IllegalArgumentException();
+    return 31 - Integer.numberOfLeadingZeros(n);
+  }
 }
