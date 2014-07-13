@@ -2,6 +2,7 @@ package interviews.numbers;
 
 /**
  * Sum function without the + operator.
+ *
  * @author Francois Rousseau
  */
 public class Sum {

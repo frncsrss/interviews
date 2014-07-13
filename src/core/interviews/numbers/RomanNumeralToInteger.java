@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Roman numerals to integer converter.
+ *
  * @author Francois Rousseau
  */
 public class RomanNumeralToInteger {

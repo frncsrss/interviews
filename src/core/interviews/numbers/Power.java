@@ -1,10 +1,14 @@
 package interviews.numbers;
 
 /**
- * Power function in O(logb). Exponentiation by squaring.
+ * Power function implementation.
+ *
  * @author Francois Rousseau
  */
 public class Power {
+  /**
+   * Compute a^b using exponentiation by squaring. O(logb) time.
+   */
   public static long f(int a, int b) {
     if(b == 0) {
       return 1;

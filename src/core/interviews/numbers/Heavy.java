@@ -5,10 +5,11 @@ package interviews.numbers;
  * decimal representation exceeds 7.
  * For example the number 8698 is heavy, because the average value of its digits
  * equal to (8+6+9+8)/4 = 7.75
- * 
+ *
  * Given two non-negative integers A and B find the number of heavy integers in
  * the interval [A..B] (A and B included)
  * A and B are integers within the range [0..200,000,000].
+ *
  * @author Francois Rousseau
  */
 public class Heavy {
@@ -29,7 +30,7 @@ public class Heavy {
       num=a;
       offset=0;
       while(num > 0) {
-        offset += (num % 10) - 7;
+        offset += num % 10 - 7;
         num /= 10;
       }
       if(offset > 0) {
@@ -76,9 +77,9 @@ public class Heavy {
 
   protected static boolean is_heavy(int A) {
     // this operation costs O(log(A)) in time.
-    return (average_value_digits(A) > 7);
+    return average_value_digits(A) > 7;
   }
-  
+
   protected static double average_value_digits(int A) {
     // there is log(A) digits in A. this operation costs O(log(A)) in time.
     if(A == 0) {
@@ -90,6 +91,6 @@ public class Heavy {
       A /= 10;
       count++;
     }
-    return (sum*1.0)/count;
+    return sum*1.0/count;
   }
 }

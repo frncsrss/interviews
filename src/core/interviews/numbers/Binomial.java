@@ -1,7 +1,8 @@
 package interviews.numbers;
 
 /**
- * n choose k in O(n^2), O(nk) and O(k).
+ * Various n choose k or (k..n) implementations.
+ *
  * @author Francois Rousseau
  */
 public class Binomial {
@@ -31,7 +32,7 @@ public class Binomial {
         b_n[j] += b_n[j-1];  // (k..n) = (k-1..n-1) + (k..n-1)
       }
       b_n[1] = i;
-    }    
+    }
     for(int j = n - 1; j >= n - k; j--) {  // for the last line, we can stop once we have b_n[n-k]
       b_n[j] += b_n[j - 1];
     }

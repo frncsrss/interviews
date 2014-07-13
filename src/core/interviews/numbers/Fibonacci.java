@@ -1,7 +1,8 @@
 package interviews.numbers;
 
 /**
- * Fibonacci sequence from recursion to dynamic programming.
+ * Various Fibonacci sequence implementations.
+ *
  * @author Francois Rousseau
  */
 public class Fibonacci {

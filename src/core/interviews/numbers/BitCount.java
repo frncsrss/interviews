@@ -1,7 +1,8 @@
 package interviews.numbers;
 
 /**
- * Number of bits set to 1.
+ * Number of bits set to 1 in an integer.
+ *
  * @author Francois Rousseau
  */
 public class BitCount {
