@@ -2,6 +2,7 @@ package interviews.strings;
 
 /**
  * Compress string with multiple same consecutive characters, referred as run-length encoding.
+ *
  * @author Francois Rousseau
  */
 public class Compresser {

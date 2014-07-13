@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Verbalize numbers.
+ *
  * @author Francois Rousseau
  */
 public class Verbalizer {
@@ -17,7 +18,7 @@ public class Verbalizer {
     }
     return toString(String.valueOf(n));
   }
-  
+
   public static String toString(String s) {
     List<String> list = new ArrayList<String>();
     char[] arr = s.toCharArray();
@@ -49,7 +50,7 @@ public class Verbalizer {
             case '1':
               if(arr[i+1] != '0') {
                 list.remove(list.size()-1);
-                list.add(teen(arr[i+1]));                
+                list.add(teen(arr[i+1]));
                 break;
               }
             default:

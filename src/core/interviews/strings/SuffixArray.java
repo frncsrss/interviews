@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Suffix array of a string.
+ *
  * @author Francois Rousseau
  */
 public class SuffixArray {
@@ -52,16 +53,16 @@ public class SuffixArray {
     int lo = 0, hi = N - 1;
     while (lo <= hi) {
       int mid = lo + hi >>> 1;
-      int cmp = query.compareTo(suffixes[mid]);
-      if(cmp < 0) {
-        hi = mid - 1;
-      }
-      else if(cmp > 0) {
-        lo = mid + 1;
-      }
-      else {
-        return mid;
-      }
+    int cmp = query.compareTo(suffixes[mid]);
+    if(cmp < 0) {
+      hi = mid - 1;
+    }
+    else if(cmp > 0) {
+      lo = mid + 1;
+    }
+    else {
+      return mid;
+    }
     }
     return lo;
   }

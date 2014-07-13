@@ -2,6 +2,7 @@ package interviews.strings;
 
 /**
  * Suffix array of a string.
+ *
  * @author Francois Rousseau
  */
 public class SuffixArray2 {

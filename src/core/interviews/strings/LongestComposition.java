@@ -5,13 +5,14 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Returns the longest string consisting of a composition of the other strings
- * in the list.
+ * Returns the longest string consisting of a composition of the other strings in the list.
+ *
  * @author Francois Rousseau
  */
 public class LongestComposition {
   public static String f(List<String> list) {
     Collections.sort(list, new Comparator<String>() {
+      @Override
       public int compare(String s1, String s2) {
         return new Integer(s2.length()).compareTo(s1.length());
       }
@@ -23,7 +24,7 @@ public class LongestComposition {
     }
     return null;
   }
-  
+
   public static int numberOfWords(List<String> list, String s, int start) {
     for(int i = start + 1; i <= s.length(); i++) {
       final String current = s.substring(start, i);

@@ -1,7 +1,8 @@
 package interviews.strings;
 
 /**
- * Perform ROT13 on a string (replace a character by the one 13 letters after).
+ * Perform ROT13 on a string (replace a character by the one 13 letters after in the alphabet).
+ *
  * @author Francois Rousseau
  */
 public class ROT13 {

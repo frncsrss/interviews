@@ -7,6 +7,36 @@ import java.util.Random;
 
 /**
  * Markov chain to predict the next word based on a training corpus.
+ * 
+ * For example, based on the text "it was the best of times it was the worst of times",
+ * then we would have the following model:
+ * it -> was (100%)
+ * was -> the (100%)
+ * the -> best (50%), worst (50%)
+ * best -> of (100%)
+ * etc.
+ *
+ * The public API should look like:
+ * class MarkovChain
+ *   void addWord(String word);
+ *   String nextWord(String word);
+ *
+ * And will be used in training as follows:
+ *   mc = new MarkovChain();
+ *   mc.addWord("it");
+ *   mc.addWord("was");
+ *   mc.addWord("the");
+ *   mc.addWord("best");
+ *   mc.addWord("of");
+ *   mc.addWord("times");
+ *   mc.addWord("it");
+ *   mc.addWord("was");
+ *   ...
+ *
+ * And at run time as follows:
+ * mc.nextWord("it") -> "was"  // always
+ * mc.nextWord("the") -> "best" OR "worst"  // distributed evenly
+ *
  * @author Francois Rousseau
  */
 public class MarkovChain {

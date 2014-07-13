@@ -7,6 +7,7 @@ import java.util.Random;
 
 /**
  * Returns the first index where a pattern p appears in a string s.
+ *
  * @author Francois Rousseau
  */
 public class Substring {

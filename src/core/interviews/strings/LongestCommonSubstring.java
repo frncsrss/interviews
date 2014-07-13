@@ -2,6 +2,7 @@ package interviews.strings;
 
 /**
  * Longest common substring between two strings.
+ *
  * @author Francois Rousseau
  */
 public class LongestCommonSubstring {

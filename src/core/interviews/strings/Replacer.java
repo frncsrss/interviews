@@ -3,6 +3,7 @@ package interviews.strings;
 /**
  * Replace and resize a substring in a string.
  * For example, replace whitespaces with %20.
+ *
  * @author Francois Rousseau
  */
 public class Replacer {
@@ -27,7 +28,7 @@ public class Replacer {
       } else {
         str[index--] = '0';
         str[index--] = '2';
-        str[index--] = '%';        
+        str[index--] = '%';
       }
     }
     return new String(str);

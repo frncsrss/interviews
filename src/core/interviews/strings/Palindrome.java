@@ -2,6 +2,7 @@ package interviews.strings;
 
 /**
  * Is this string a palindrome?
+ *
  * @author Francois Rousseau
  */
 public class Palindrome {

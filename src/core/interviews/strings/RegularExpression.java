@@ -1,22 +1,23 @@
 package interviews.strings;
 
+import interviews.graphs.Digraph;
+import interviews.graphs.Traversal;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-import interviews.graphs.Digraph;
-import interviews.graphs.Traversal;
-
 /**
  * Regular expression matching.
  * Base on a Nondeterministic Finite state Automaton (NFA).
+ *
  * @author Francois Rousseau
  */
 public class RegularExpression {
-  private char[] re;  // match transitions
-  private Digraph g;  // epsilon-transition digraph
-  private int M;      // number of states
+  private final char[] re;  // match transitions
+  private final Digraph g;  // epsilon-transition digraph
+  private final int M;      // number of states
 
   public RegularExpression(String regex) {
     M = regex.length();
@@ -36,16 +37,16 @@ public class RegularExpression {
    * Build a digraph from the epsilon-transitions.
    */
   private Digraph buildEpsilonTransitionsDigraph() {
-    Digraph g = new Digraph(M + 1); 
-    Deque<Integer> stack = new ArrayDeque<Integer>(); 
-    for(int i = 0; i < M; i++) { 
-      int lp = i; 
+    Digraph g = new Digraph(M + 1);
+    Deque<Integer> stack = new ArrayDeque<Integer>();
+    for(int i = 0; i < M; i++) {
+      int lp = i;
 
       // left parentheses or OR symbol
       if(re[i] == '(' || re[i] == '|') stack.push(i);
 
       else if(re[i] == ')') {
-        int op = stack.pop(); 
+        int op = stack.pop();
         if(re[op] == '|') {  // the popped operation is an OR
           lp = stack.pop();
           g.addEdge(lp, op + 1);
@@ -54,7 +55,7 @@ public class RegularExpression {
         else {  // the popped operation was a left parenthese
           lp = op;
         }
-      } 
+      }
 
       // closure, needs 1-character lookahead
       if(i < M-1 && re[i + 1] == '*') {
@@ -71,7 +72,7 @@ public class RegularExpression {
       if(re[i] == '(' || re[i] == '*' || re[i] == ')' || re[i] == '+') {
         g.addEdge(i, i + 1);
       }
-    } 
+    }
     return g;
   }
 
@@ -97,8 +98,8 @@ public class RegularExpression {
         if(v == M) {
           return true;  // prefix matching
         }
-        if((re[v] == s[i]) || re[v] == '.')
-          match.add(v+1); 
+        if(re[v] == s[i] || re[v] == '.')
+          match.add(v+1);
       }
 
       // states reachable from match by epsilon-transitions

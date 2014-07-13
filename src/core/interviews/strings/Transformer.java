@@ -1,5 +1,7 @@
 package interviews.strings;
 
+import interviews.trees.Trie;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,11 +11,10 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
-import interviews.trees.Trie;
-
 /**
  * Returns the path from one string to another if possible. The path consists of
  * valid words differing from each other with only one letter at a time.
+ *
  * @author Francois Rousseau
  */
 public class Transformer {

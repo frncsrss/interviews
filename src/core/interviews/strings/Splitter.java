@@ -8,7 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Split a string without whitespace if possible. Highlight EXLs.
+ * Split a string with missing whitespace if possible. Highlight EXLs (words not in dictionary).
+ * A dictionary of valid words is given as input.
+ *
  * @author Francois Rousseau
  */
 public class Splitter {
@@ -25,7 +27,7 @@ public class Splitter {
     }
     return null;
   }
-  
+
   private static boolean f(String s, Trie dict, int start, List<String> result) {
     if(start == s.length()) {
       return true;
@@ -50,13 +52,13 @@ public class Splitter {
       // we have a current valid word, we try to split the rest of the string
       if(f(s, dict, i, result)) {  // the rest of the string can be split
         result.add(current);  // we add the current valid word
-        if(exl.length() > 0) {  // we add the possible EXLs preceding the word 
+        if(exl.length() > 0) {  // we add the possible EXLs preceding the word
           result.add(exl.toString().toUpperCase());
         }
         return true;
       }
     }
-    if(exl.length() > 0) {  // the substring [start, end] is an EXL 
+    if(exl.length() > 0) {  // the substring [start, end] is an EXL
       result.add(exl.toString().toUpperCase());
       return true;
     }

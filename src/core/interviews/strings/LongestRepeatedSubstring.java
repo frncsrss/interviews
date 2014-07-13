@@ -2,10 +2,13 @@ package interviews.strings;
 
 /**
  * Find the longest repeated substring in a string.
- * O(D x N x log N) with D length of the lrs and N the length of the string.
+ *
  * @author Francois Rousseau
  */
 public class LongestRepeatedSubstring {
+  /**
+   * O(D x N x log N) time with D length of the lrs and N the length of the string.
+   */
   public static String f(String s) {
     int N = s.length();
 

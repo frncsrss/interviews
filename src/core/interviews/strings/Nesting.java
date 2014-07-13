@@ -1,7 +1,8 @@
 package interviews.strings;
 
 /**
- * Are the parentheses ok?
+ * Are the parentheses ok, i.e. for each open paretheses there is a closing one?
+ *
  * @author Francois Rousseau
  */
 public class Nesting {
@@ -14,10 +15,10 @@ public class Nesting {
       } else if(arr[i] == ')') {
         count--;
       }
-      if(count < 0) {
+      if(count < 0) {  // closing parentheses before an open one
         return false;
       }
     }
-    return (count==0) ? true : false;
+    return count == 0 ? true : false;
   }
 }
