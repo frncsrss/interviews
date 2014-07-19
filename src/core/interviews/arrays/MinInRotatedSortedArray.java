@@ -9,8 +9,9 @@ import java.util.NoSuchElementException;
  */
 public class MinInRotatedSortedArray {
   /**
-   * O(n) time.
-   * @return
+   * Let n = length(arr).
+   * Time complexity:  O(n)
+   * Space complexity: O(1)
    */
   public static int f(int[] arr) {
     if(arr == null || arr.length == 0) {
@@ -25,8 +26,9 @@ public class MinInRotatedSortedArray {
   }
 
   /**
-   * O(logn) time.
-   * @return
+   * Let n = length(arr).
+   * Time complexity:  O(logn)
+   * Space complexity: O(1)
    */
   public static int f2(int[] arr) {
     if(arr == null || arr.length == 0) {
@@ -36,11 +38,11 @@ public class MinInRotatedSortedArray {
     int hi = arr.length - 1;
     while(arr[lo] >= arr[hi] && lo < hi) {
       int mid = lo + hi >>> 1;
-    if(arr[mid] >= arr[hi]) {
-      lo = mid + 1;
-    } else {
-      hi = mid;
-    }
+      if(arr[mid] >= arr[hi]) {
+        lo = mid + 1;
+      } else {
+        hi = mid;
+      }
     }
     return arr[lo];
   }
