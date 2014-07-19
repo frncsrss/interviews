@@ -21,11 +21,11 @@ public class SignSort {
       return arr;
     }
 
-    int pos = 0;
-    for(int i = 0; i < arr.length; i++) {  // partition routine of quicksort
+    int positive = 0;
+    for(int i = 0; i < arr.length; i++) {    // partition routine of quicksort
       if(arr[i] < 0) {
-        swap(arr, i, pos++);
-        for(int j = i; j > pos; j--) {  // bubbling down the newly swapped positive number
+        swap(arr, i, positive++);
+        for(int j = i; j > positive; j--) {  // bubbling down the newly swapped positive number
           swap(arr, j, j - 1);
         }
       }
