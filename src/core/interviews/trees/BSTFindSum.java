@@ -42,18 +42,18 @@ public class BSTFindSum {
     return node;
   }
 
-  private void addLeft(Node node, Stack<Node> ll) {
+  private void addLeft(Node node, Stack<Node> stack) {
     Node curr = node;
     while(curr != null) {
-      ll.add(curr);
+      stack.push(curr);
       curr = curr.left;
     }
   }
 
-  private void addRight(Node node, Stack<Node> ll) {
+  private void addRight(Node node, Stack<Node> stack) {
     Node curr = node;
     while(curr != null) {
-      ll.add(curr);
+      stack.push(curr);
       curr = curr.right;
     }
   }
@@ -62,7 +62,7 @@ public class BSTFindSum {
     if(node == null) {
       return null;
     }
-    if(s < node.v) {  // speed-up
+    if(s < node.v) {  // speed-up, the solution can only be-built from the left tree
       return sum(node.left, s);
     }
     if(node.v * 2 < s && node.right == null) {  // no solution, you need at least one right element
