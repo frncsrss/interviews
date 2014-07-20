@@ -1,9 +1,9 @@
 package interviews.arrays;
 
+import static interviews.arrays.TwoSum.findAll;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import static interviews.arrays.TwoSum.findAll;
 
 /**
  * Test class.
@@ -12,39 +12,49 @@ import static interviews.arrays.TwoSum.findAll;
 public class TwoSumTest {
   @Test
   public void test_basic() {
-    int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Assert.assertEquals(findAll(array, 10).toString(), "[(1,9), (2,8), (3,7), (4,6)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1, 9}, new int[]{2, 8}, new int[]{3, 7}, new int[]{4, 6}},
+        findAll(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, 10).toArray());
   }
   @Test
   public void test_duplicatesBoth() {
-    int[] array = {1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9};
-    Assert.assertEquals(findAll(array, 10).toString(), "[(1,9), (1,9), (1,9), (1,9), (1,9), (1,9), (2,8), (3,7), (4,6)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,9}, new int[]{1,9}, new int[]{1,9}, new int[]{1,9}, new int[]{1,9},
+            new int[]{1,9}, new int[]{2,8}, new int[]{3,7}, new int[]{4,6}},
+            findAll(new int[]{1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9}, 10).toArray());
   }
   @Test
   public void test_duplicatesLeft() {
-    int[] array = {1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Assert.assertEquals(findAll(array, 10).toString(), "[(1,9), (1,9), (1,9), (2,8), (3,7), (4,6)]");
-    int[] array2 = {1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9};
-    Assert.assertEquals(findAll(array2, 10).toString(), "[(1,9), (2,8), (2,8), (3,7), (3,7), (4,6)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,9}, new int[]{1,9}, new int[]{1,9}, new int[]{2,8}, new int[]{3,7},
+            new int[]{4,6}},
+            findAll(new int[]{1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10).toArray());
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,9}, new int[]{2,8}, new int[]{2,8}, new int[]{3,7}, new int[]{3,7},
+            new int[]{4,6}},
+            findAll(new int[]{1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9}, 10).toArray());
   }
   @Test
   public void test_duplicatesRight() {
-    int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9};
-    Assert.assertEquals(findAll(array, 10).toString(), "[(1,9), (1,9), (1,9), (2,8), (3,7), (4,6)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,9}, new int[]{1,9}, new int[]{1,9}, new int[]{2,8}, new int[]{3,7},
+            new int[]{4,6}},
+            findAll(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9}, 10).toArray());
   }
   @Test
   public void test_duplicatesUnique() {
-    int[] array = {1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9};
-    Assert.assertEquals(findAll(array, 10, true).toString(), "[(1,9), (2,8), (3,7), (4,6)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,9}, new int[]{2,8}, new int[]{3,7}, new int[]{4,6}},
+        findAll(new int[]{1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9}, 10, true).toArray());
   }
   @Test
   public void test_same() {
-    int[] array = {1, 1, 1, 1, 1};
-    Assert.assertEquals(findAll(array, 2).toString(), "[(1,1), (1,1), (1,1), (1,1), (1,1)]");
+    Assert.assertArrayEquals(
+        new int[][]{new int[]{1,1}, new int[]{1,1}, new int[]{1,1}, new int[]{1,1}, new int[]{1,1}},
+        findAll(new int[]{1, 1, 1, 1, 1}, 2).toArray());
   }
   @Test
   public void test_null() {
-    int[] array = {};
-    Assert.assertEquals(findAll(array, 10).toString(), "[]");
+    Assert.assertArrayEquals(new int[][]{}, findAll(new int[]{}, 10).toArray());
   }
 }
