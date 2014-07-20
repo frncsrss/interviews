@@ -20,19 +20,19 @@ public class AggregatedNumber {
   private static boolean f(String s, int i) {
     // we try to sum s[i...j[ with s[j...k[
     for(int j = i + 1; j - i <= s.length() / 2; j++) {
+      int first = Integer.parseInt(s.substring(i, j));
       for(int k = j + 1; k - j <= s.length() / 2; k++) {
-        String sum = Integer.toString(
-            Integer.parseInt(s.substring(i, j)) + Integer.parseInt(s.substring(j, k)));
+        String sum = Integer.toString(first + Integer.parseInt(s.substring(j, k)));
         if(k + sum.length() > s.length()) {  // the sum goes beyond the rest of the string
           break;
         }
         String next = s.substring(k, k + sum.length());
-        if(k + sum.length() <= s.length() && sum.equals(next)) {
+        if(sum.equals(next)) {
           if(k + sum.length() == s.length()) {
             return true;
           }
           boolean ret = f(s, j);  // s[i...j[ + s[j...k[ = s[k...], we start again at j
-          if(ret) {
+          if(ret) {  // the rest works
             return true;
           }
         }
