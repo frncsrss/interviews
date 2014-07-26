@@ -1,5 +1,6 @@
 package interviews.arrays;
 
+
 /**
  * Given an array of unsorted negative and positive integers, sort the array so that negative
  * numbers stand at the front and positive at the back. Note that this should be a stable sort.
@@ -58,40 +59,45 @@ public class SignSort {
     return arr;
   }
 
-  private static void f2(int[] arr, int lo, int hi) {
+  /**
+   * Divide and conquer arr[lo..hi].
+   *
+   * @return: index of the first positive element in the range [lo, hi], -1 if only negatives
+   */
+  private static int f2(int[] arr, int lo, int hi) {
     if(lo == hi) {
-      return;
+      return arr[lo] < 0 ? -1 : lo;
     }
     int mid = lo + hi >>> 1;
-    f2(arr, lo, mid);
-    f2(arr, mid + 1, hi);
-    if(arr[mid] > 0) {  // otherwise the first block contains only negative elements
-      merge(arr, lo, hi, mid);
+    int p1 = f2(arr, lo, mid);
+    int p2 = f2(arr, mid + 1, hi);
+    if(p1 < 0) {  // first block contains no negative numbers
+      return p2;
     }
+    if(p2 < 0) {  // second block contains only negative numbers
+      return merge(arr, p1, hi + 1, mid);
+    }
+    if(p2 == mid + 1) {  // second block contains only positive numbers
+      return p1;
+    }
+    return merge(arr, p1, p2, mid);
   }
 
   /**
-   * In-place merge of the array between the inclusive indices lo and hi. arr[lo..mid] and
-   * arr[mid+1..hi] are of the form NP. The merge corresponds to N1P1N2P2 --> N1N2P1P2.
+   * In-place merge of the array arr[p1..p2[; arr[p1..mid] contains only positive elements and
+   * arr[mid+1..p2[ only negative elements.
    *
-   * Let n = hi - lo + 1.
+   * Let n = p2 - p1 + 1.
    * Time complexity:  O(n)
    * Space complexity: O(1)
+   *
+   * @return: index of the first positive element in the range [p1, p2] after merging
    */
-  private static void merge(int[] arr, int lo, int hi, int mid) {
-    int p1 = lo;
-    while(p1 <= mid && arr[p1] < 0) {
-      p1++;
-    }  // p1, index of first positive
-
-    int p2 = mid + 1;
-    while(p2 <= hi && arr[p2] < 0) {
-      p2++;
-    }  // p2, index of second positive
-
+  private static int merge(int[] arr, int p1, int p2, int mid) {
     reverse(arr, p1, mid);
     reverse(arr, mid + 1, p2 - 1);
     reverse(arr, p1, p2 - 1);
+    return p1 + p2 - mid - 1;  // there are (p2 - (mid + 1)) elements in arr[mid+1..p2[
   }
 
   /**
