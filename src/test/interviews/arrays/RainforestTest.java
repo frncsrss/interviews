@@ -22,6 +22,10 @@ public class RainforestTest {
     Assert.assertEquals( 0, bruteforce(new int[]{1, 2, 3, 4, 5}));
     Assert.assertEquals( 0, bruteforce(new int[]{5, 4, 3, 2, 1}));
     Assert.assertEquals( 7, bruteforce(new int[]{5, 4, 3, 2, 4, 6}));
+    Assert.assertEquals(21,
+        bruteforce(new int[]{1, 2, 3, 5, 1, 0, 2, 5, 4, 5, 3, 2, 3, 2, 1, 0, 0, 0, 2}));
+    Assert.assertEquals(22,
+        bruteforce(new int[]{1, 2, 3, 5, 4, 1, 0, 2, 5, 4, 5, 3, 2, 3, 2, 1, 0, 0, 0, 2}));
   }
 
   @Test
@@ -35,5 +39,9 @@ public class RainforestTest {
     Assert.assertEquals( 0, stack(new int[]{1, 2, 3, 4, 5}));
     Assert.assertEquals( 0, stack(new int[]{5, 4, 3, 2, 1}));
     Assert.assertEquals( 7, stack(new int[]{5, 4, 3, 2, 4, 6}));
+    Assert.assertEquals(21,
+        stack(new int[]{1, 2, 3, 5, 1, 0, 2, 5, 4, 5, 3, 2, 3, 2, 1, 0, 0, 0, 2}));
+    Assert.assertEquals(22,
+        stack(new int[]{1, 2, 3, 5, 4, 1, 0, 2, 5, 4, 5, 3, 2, 3, 2, 1, 0, 0, 0, 2}));
   }
 }

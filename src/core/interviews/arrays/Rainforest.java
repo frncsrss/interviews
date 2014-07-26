@@ -5,15 +5,15 @@ import java.util.Stack;
 /**
  * Given an island represented as an array of integer heights, return the amount of rain it can
  * contain.
- * 
- * For instance, given that island, the amount of rain is 12 (3 missing X).
+ *
+ * For instance, given the island below, the amount of rain is 21 (number of X).
  *        _       _   _
- *       | |X X X| |_| |
+ *       | |X X X| |X| |
  *      _| |X X X|     |_   _
- *    _|   |X X _|       |_| |_
- *  _|     |_ X|               |_
- * |         |_|                 |
- * [1 2 3 5 1 0 2 5 4 5 3 2 3 2 1]
+ *    _|   |X X X|       |X| |_         _
+ *  _|     |X X|               |X X X X| |
+ * |         |X|                 |X X X| |
+ * [1 2 3 5 1 0 2 5 4 5 3 2 3 2 1 0 0 0 2]
  *
  * @author Francois Rousseau
  */
@@ -56,7 +56,7 @@ public class Rainforest {
     int rain = 0;
     Stack<Integer> stack = new Stack<Integer>();
     for(int i = 0; i < heights.length; i++) {
-      while(!stack.isEmpty() && heights[i] > heights[stack.peek()]) {
+      while(!stack.isEmpty() && heights[i] >= heights[stack.peek()]) {
         int pop = stack.pop();
         if(stack.isEmpty()) {
           break;
