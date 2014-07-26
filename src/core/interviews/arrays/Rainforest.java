@@ -13,7 +13,7 @@ import java.util.Stack;
  *    _|   |X X _|       |_| |_
  *  _|     |_ X|               |_
  * |         |_|                 |
- * [0 1 2 4 1 0 2 4 3 4 2 1 2 1 0]
+ * [1 2 3 5 1 0 2 5 4 5 3 2 3 2 1]
  *
  * @author Francois Rousseau
  */
@@ -25,7 +25,7 @@ public class Rainforest {
    */
   public static int bruteforce(int[] heights) {
     int rain = 0;
-    for(int i = 0; i < heights.length; i++) {
+    for(int i = 1; i < heights.length - 1; i++) {  // no need to check the extreme values
       int left = max(heights, 0, i - 1);
       int right = max(heights, i + 1, heights.length - 1);
       if(left > heights[i] && right > heights[i]) {
@@ -36,14 +36,13 @@ public class Rainforest {
   }
 
   /**
-   * Find the maximum element in heights[lo...hi] in O(hi - lo) time.
+   * Find the maximum element in arr[lo...hi] in O(hi - lo) time.
    */
-  private static int max(int[] heights, int lo, int hi) {
-    int max = 0;
-    for(int i = lo; i <= hi; i++) {
-      if(heights[i] > max) {
-        max = heights[i];
-      }
+  private static int max(int[] arr, int lo, int hi) {
+    int max = Integer.MIN_VALUE;
+    while(lo <= hi) {
+      max = Math.max(max, arr[lo]);
+      lo++;
     }
     return max;
   }
