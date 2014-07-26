@@ -18,6 +18,7 @@ public class NextNumberSameDigits {
    */
   public static int f(int n) {
     char[] digits = Integer.toString(n).toCharArray();
+    // will hold the rightmost index for which the digit is less than the next one
     int ii = digits.length - 2;
     for(; ii >= 0; ii--) {
       if(digits[ii] < digits[ii + 1]) {
@@ -29,13 +30,14 @@ public class NextNumberSameDigits {
       return n;
     }
 
-    int jj = ii + 1;
-    for(; jj < digits.length; jj ++) {
-      if(digits[jj] <= digits[ii]) {
+    // will hold the leftmost index for which the digit is less than the one in ii
+    int jj = ii;
+    for(; jj < digits.length - 1; jj++) {
+      if(digits[jj + 1] <= digits[ii]) {
         break;
       }
     }
-    swap(digits, ii, jj - 1);
+    swap(digits, ii, jj);
     reverse(digits, ii + 1, digits.length - 1);
     return Integer.parseInt(new String(digits));
   }

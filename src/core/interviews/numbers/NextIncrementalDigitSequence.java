@@ -17,9 +17,9 @@ public class NextIncrementalDigitSequence {
   private static int MAX_VALUE = first(9);  // 123456789
 
   /**
-   * Let n be the number of digits.
-   * Time complexity:  O(n)
-   * Space complexity: O(n)
+   * Let d be the number of digits.
+   * Time complexity:  O(d)
+   * Space complexity: O(d)
    */
   public static int f(int n) {
     if(n <= 0) {
