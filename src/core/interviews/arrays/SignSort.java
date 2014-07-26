@@ -65,42 +65,32 @@ public class SignSort {
     int mid = lo + hi >>> 1;
     f2(arr, lo, mid);
     f2(arr, mid + 1, hi);
-    merge(arr, lo, hi);
+    if(arr[mid] > 0) {  // otherwise the first block contains only negative elements
+      merge(arr, lo, hi, mid);
+    }
   }
 
   /**
-   * In-place merge of the array between the inclusive indices lo and hi. From N1P1N2P2 to N1N2P1P2.
+   * In-place merge of the array between the inclusive indices lo and hi. arr[lo..mid] and
+   * arr[mid+1..hi] are of the form NP. The merge corresponds to N1P1N2P2 --> N1N2P1P2.
    *
    * Let n = hi - lo + 1.
    * Time complexity:  O(n)
    * Space complexity: O(1)
    */
-  private static void merge(int[] arr, int lo, int hi) {
+  private static void merge(int[] arr, int lo, int hi, int mid) {
     int p1 = lo;
-    while(p1 <= hi && arr[p1] < 0) {
+    while(p1 <= mid && arr[p1] < 0) {
       p1++;
     }  // p1, index of first positive
 
-    if(p1 > hi) {  // only negative elements
-      return;
-    }
-
-    int n2 = p1 + 1;
-    while(n2 <= hi && arr[n2] > 0) {
-      n2++;
-    }  // n2, index of second negative
-
-    if(n2 > hi) {  // no second negative block remaining
-      return;
-    }
-
-    int p2 = n2 + 1;
+    int p2 = mid + 1;
     while(p2 <= hi && arr[p2] < 0) {
       p2++;
-    }  // n2, index of second positive
+    }  // p2, index of second positive
 
-    reverse(arr, p1, n2 - 1);
-    reverse(arr, n2, p2 - 1);
+    reverse(arr, p1, mid);
+    reverse(arr, mid + 1, p2 - 1);
     reverse(arr, p1, p2 - 1);
   }
 
@@ -114,6 +104,9 @@ public class SignSort {
     }
   }
 
+  /**
+   * Swap the array elements at indices i and j, no additional space.
+   */
   private static void swap(int[] arr, int i, int j) {
     if(i == j) {
       return;
