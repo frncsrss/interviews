@@ -1,5 +1,6 @@
 package interviews.numbers;
 
+import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -12,9 +13,10 @@ import java.util.TreeSet;
  */
 public class UglyNumbers {
   private static final int[] COEFFICIENTS = new int[]{2, 3, 5, 7};
+
   /**
    * Time complexity:  O(klogk)
-   * Space complexity: O(k)
+   * Space complexity: O(k)  // not counting the returned array
    */
   public static int[] f(int k) {
     int[] numbers = new int[k];
@@ -30,5 +32,39 @@ public class UglyNumbers {
       }
     }
     return numbers;
+  }
+
+  /**
+   * Time complexity:  O(k)
+   * Space complexity: O(1)  // not counting the returned array,
+   *                         // assuming COEFFICIENTS.length constant
+   */
+  public static int[] f2(int k) {
+    int[] numbers = new int[k];
+    numbers[0] = 1;
+
+    final int n = COEFFICIENTS.length;
+    int[] next_multiples = Arrays.copyOf(COEFFICIENTS, n);
+    int[] indices = new int[n];
+
+    for(int i = 1; i < k; i++) {
+      numbers[i] = min(next_multiples);
+      for(int j = 0; j < n; j++) {
+        if(next_multiples[j] == numbers[i]) {
+          indices[j]++;
+          next_multiples[j] = numbers[indices[j]] * COEFFICIENTS[j];
+        }
+      }
+    }
+
+    return numbers;
+  }
+
+  private static int min(int[] arr) {
+    int min = Integer.MAX_VALUE;
+    for(int i : arr) {
+      min = Math.min(min, i);
+    }
+    return min;
   }
 }
