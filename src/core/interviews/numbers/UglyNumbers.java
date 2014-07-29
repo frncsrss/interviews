@@ -12,22 +12,22 @@ import java.util.TreeSet;
  * @author Francois Rousseau
  */
 public class UglyNumbers {
-  private static final int[] COEFFICIENTS = new int[]{2, 3, 5, 7};
+  private static final long[] COEFFICIENTS = new long[]{2, 3, 5, 7};
 
   /**
    * Time complexity:  O(klogk)
    * Space complexity: O(k)  // not counting the returned array
    */
-  public static int[] f(int k) {
-    int[] numbers = new int[k];
-    SortedSet<Integer> set = new TreeSet<Integer>();
-    set.add(1); // all exponents to 0
+  public static long[] f(int k) {
+    long[] numbers = new long[k];
+    SortedSet<Long> set = new TreeSet<Long>();
+    set.add(1L);  // all exponents to 0
     while(k > 0) {
-      int head = set.first();
+      long head = set.first();
       set.remove(head);
       numbers[numbers.length - k] = head;
       k--;
-      for(int coefficient : COEFFICIENTS) {
+      for(long coefficient : COEFFICIENTS) {
         set.add(coefficient * head);
       }
     }
@@ -39,12 +39,12 @@ public class UglyNumbers {
    * Space complexity: O(1)  // not counting the returned array,
    *                         // assuming COEFFICIENTS.length constant
    */
-  public static int[] f2(int k) {
-    int[] numbers = new int[k];
+  public static long[] f2(int k) {
+    long[] numbers = new long[k];
     numbers[0] = 1;
 
     final int n = COEFFICIENTS.length;
-    int[] next_multiples = Arrays.copyOf(COEFFICIENTS, n);
+    long[] next_multiples = Arrays.copyOf(COEFFICIENTS, n);
     int[] indices = new int[n];
 
     for(int i = 1; i < k; i++) {
@@ -60,9 +60,9 @@ public class UglyNumbers {
     return numbers;
   }
 
-  private static int min(int[] arr) {
-    int min = Integer.MAX_VALUE;
-    for(int i : arr) {
+  private static long min(long[] arr) {
+    long min = Long.MAX_VALUE;
+    for(long i : arr) {
       min = Math.min(min, i);
     }
     return min;
