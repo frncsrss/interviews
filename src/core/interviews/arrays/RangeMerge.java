@@ -27,7 +27,7 @@ public class RangeMerge {
 
   /**
    * Let n = length(ranges).
-   * Time complexity:  O(nogn)
+   * Time complexity:  O(nlogn)
    * Space complexity: O(n)
    */
   public static List<int[]> f(int[][] ranges) {
