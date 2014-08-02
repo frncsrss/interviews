@@ -40,17 +40,16 @@ public class SmallestRangeInCommon {
 
     while(!pq.isEmpty()) {
       Node node = pq.poll();  // current minimum
-      if(node.j < arrays[node.i].length - 1) {  // if there is a next element in the array
-        pq.add(new Node(arrays[node.i][node.j + 1], node.i, node.j + 1));
-        min = pq.peek().v;
-        max = Math.max(max, arrays[node.i][node.j + 1]);
-        if(max - min < best) { // strictly less. if ties, first range will be returned.
-          best_min = min;
-          best_max = max;
-          best = max - min;
-        }
-      } else {  // we can stop as the range is bound to increase from now
+      if(node.j >= arrays[node.i].length - 1) {  // there is no next element in the array
         break;
+      }
+      pq.add(new Node(arrays[node.i][node.j + 1], node.i, node.j + 1));
+      min = pq.peek().v;
+      max = Math.max(max, arrays[node.i][node.j + 1]);
+      if(max - min < best) { // strictly less. if ties, first range will be returned.
+        best_min = min;
+        best_max = max;
+        best = max - min;
       }
     }
 
