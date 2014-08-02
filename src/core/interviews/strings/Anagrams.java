@@ -45,7 +45,7 @@ public class Anagrams {
       String getKey(String s) {
         int p = 1;
         for(char c : s.toCharArray()) {
-          p *= PRIMES[c - 97];
+          p *= PRIMES[c - 'a'];
         }
         return Integer.toString(p);  // for consistency with the other method
       }
