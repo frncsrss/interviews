@@ -16,11 +16,8 @@ public class MaximumValueStack<E> {
     this.comparator = comparator;
   }
 
-  public E peek() {
-    if(max == null) {
-      return null;
-    }
-    return max.getValue();
+  public E max() {
+    return max == null ? null : max.getValue();
   }
 
   public E pop() {
@@ -28,27 +25,26 @@ public class MaximumValueStack<E> {
       return null;
     }
     E value = head.getValue();
-    if(comparator.compare(value, max.getValue()) == 0) {
-      max = max.hasNext() ? max.next() : null;
+    if(comparator.compare(value, max.getValue()) == 0) {  // the head is the current max
+      max = max.next();
     }
-    head = head.hasNext() ? head.next() : null;
+    head = head.next();
     return value;
   }
 
   public MaximumValueStack<E> push(E e) {
     if(head == null) {
       head = new LinkedListNode<E>(e);
+      max = new LinkedListNode<E>(e);
     } else {
       LinkedListNode<E> node = new LinkedListNode<E>(e);
       node.setNext(head);
       head = node;
-    }
-    if(max == null) {
-      max = new LinkedListNode<E>(e);
-    } else if(comparator.compare(e, max.getValue()) >= 0) {
-      LinkedListNode<E> node = new LinkedListNode<E>(e);
-      node.setNext(max);
-      max = node;
+      if(comparator.compare(e, max.getValue()) >= 0) {
+        node = new LinkedListNode<E>(e);
+        node.setNext(max);
+        max = node;
+      }
     }
     return this;
   }
