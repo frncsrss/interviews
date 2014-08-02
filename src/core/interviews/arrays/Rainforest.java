@@ -49,8 +49,8 @@ public class Rainforest {
 
   /**
    * Let n = length(heights).
-   * Time complexity:  O(n), elements are pushed and popped at most once each
-   * Space complexity: O(n)
+   * Time complexity:  O(n), elements are visited at most twice
+   * Space complexity: O(n), elements are pushed and popped at most once each
    */
   public static int stack(int[] heights) {
     int rain = 0;
