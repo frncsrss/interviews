@@ -55,7 +55,7 @@ public class Transformer {
     Set<String> words = new TreeSet<String>();
     for(int i = 0; i < word.length(); i++) {
       char[] arr = word.toCharArray();
-      for(char c='a'; c<='z'; c++) {
+      for(char c = 'a'; c <= 'z'; c++) {
         if(c != word.charAt(i)) {
           arr[i] = c;
           words.add(new String(arr));
