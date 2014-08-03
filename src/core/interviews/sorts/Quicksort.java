@@ -179,20 +179,21 @@ public class Quicksort {
    * @return the kth smallest element of the list in linear time.
    */
   public static <E> E select(List<E> list, Comparator<E> comparator, int k) {
-    if(k < 0 || k > list.size() - 1) {
+    if(k < 0 || k > list.size()) {
       throw new IndexOutOfBoundsException();
     }
-    Collections.shuffle(list);
+    k--;  // 0-index array
     int lo = 0;
     int hi = list.size() - 1;
     while(lo < hi) {
       final int p = METHOD.SKIENA.partition(list, comparator, lo, hi);
-      if(k < p) {
-        hi = p - 1;
-      } else if (k > p) {
-        lo = p + 1;
-      } else {
+      if(p == k) {
         break;
+      }
+      if(p > k) {
+        hi = p - 1;
+      } else {
+        lo = p + 1;
       }
     }
     return list.get(k);

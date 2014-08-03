@@ -42,17 +42,16 @@ public class QuicksortTest {
     }
     Collections.shuffle(list, new Random(1234));
     Assert.assertEquals(Arrays.asList(9, 0, 6, 1, 3, 2, 4, 7, 5, 8), list);
-    int i = 0;
     Comparator<Integer> comparator = Sorts.getComparatorOfIntegers();
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
-    Assert.assertEquals(new Integer(i), Quicksort.select(list, comparator, i++));
+    Assert.assertEquals(new Integer(0), Quicksort.select(list, comparator, 1));
+    Assert.assertEquals(new Integer(1), Quicksort.select(list, comparator, 2));
+    Assert.assertEquals(new Integer(2), Quicksort.select(list, comparator, 3));
+    Assert.assertEquals(new Integer(3), Quicksort.select(list, comparator, 4));
+    Assert.assertEquals(new Integer(4), Quicksort.select(list, comparator, 5));
+    Assert.assertEquals(new Integer(5), Quicksort.select(list, comparator, 6));
+    Assert.assertEquals(new Integer(6), Quicksort.select(list, comparator, 7));
+    Assert.assertEquals(new Integer(7), Quicksort.select(list, comparator, 8));
+    Assert.assertEquals(new Integer(8), Quicksort.select(list, comparator, 9));
+    Assert.assertEquals(new Integer(9), Quicksort.select(list, comparator, 10));
   }
 }
