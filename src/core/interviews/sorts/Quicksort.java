@@ -158,11 +158,12 @@ public class Quicksort {
 
 
     public <E> void sort(List<E> list, Comparator<E> comparator, int lo, int hi) {
-      if (lo < hi) {
-        int p = partition(list, comparator, lo, hi);
-        sort(list, comparator, lo, p - 1);
-        sort(list, comparator, p + 1, hi);
+      if (lo >= hi) {
+        return;
       }
+      int p = partition(list, comparator, lo, hi);
+      sort(list, comparator, lo, p - 1);
+      sort(list, comparator, p + 1, hi);
     }
     protected abstract <E> int partition(List<E> list, Comparator<E> comparator, int lo, int hi);
   }
