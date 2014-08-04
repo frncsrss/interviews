@@ -71,10 +71,10 @@ public class SignSort {
     int mid = lo + hi >>> 1;
     int p1 = f2(arr, lo, mid);
     int p2 = f2(arr, mid + 1, hi);
-    if(p1 < 0) {  // first block contains no negative numbers
+    if(p1 == -1) {  // first block contains no negative numbers
       return p2;
     }
-    if(p2 < 0) {  // second block contains only negative numbers
+    if(p2 == -1) {  // second block contains only negative numbers
       return merge(arr, p1, hi + 1, mid);
     }
     if(p2 == mid + 1) {  // second block contains only positive numbers
@@ -104,9 +104,8 @@ public class SignSort {
    * Reverse the array between the inclusive indices lo and hi.
    */
   private static void reverse(int[] arr, int lo, int hi) {
-    int mid = lo + hi >>> 1;
-    for(int i = lo; i <= mid; i++) {
-      swap(arr, i, hi + lo - i);
+    while(lo < hi) {
+      swap(arr, lo++, hi--);
     }
   }
 
