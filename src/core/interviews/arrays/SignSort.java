@@ -17,22 +17,30 @@ public class SignSort {
    * Time complexity:  O(n^2)
    * Space complexity: O(1)
    */
-  public static int[] f(int [] arr) {
+  public static int[] f(int[] arr) {
     if(arr == null || arr.length < 2) {
       return arr;
     }
 
     for(int i = 1; i < arr.length; i++) {
       if(arr[i] < 0) {
-        int j = i - 1;
-        while(j >= 0 && arr[j] > 0) {  // bubbling down the negative number
-          swap(arr, j, j + 1);
-          j--;
-        }
+        bubbleDown(arr, i);
       }
     }
 
     return arr;
+  }
+
+  /**
+   * Bubble down the negative number at index i.
+   */
+  private static void bubbleDown(int[] arr, int i) {
+    assert arr[i] < 0;
+    int j = i - 1;
+    while(j >= 0 && arr[j] > 0) {
+      swap(arr, j, j + 1);
+      j--;
+    }
   }
 
   /**
