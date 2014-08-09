@@ -1,4 +1,4 @@
-package interviews.arrays;
+package interviews.matrix;
 
 /**
  * Given a matrix, print it out diagonally.
