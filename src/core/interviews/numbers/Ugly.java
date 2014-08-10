@@ -11,7 +11,7 @@ import java.util.TreeSet;
  *
  * @author Francois Rousseau
  */
-public class UglyNumbers {
+public class Ugly {
   private static final long[] COEFFICIENTS = new long[]{2, 3, 5, 7};
 
   /**

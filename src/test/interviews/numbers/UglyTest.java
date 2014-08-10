@@ -1,7 +1,7 @@
 package interviews.numbers;
 
-import static interviews.numbers.UglyNumbers.f;
-import static interviews.numbers.UglyNumbers.f2;
+import static interviews.numbers.Ugly.f;
+import static interviews.numbers.Ugly.f2;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class UglyNumbersTest {
+public class UglyTest {
   @Test
   public void test_f() {
     Assert.assertArrayEquals(new long[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21,
