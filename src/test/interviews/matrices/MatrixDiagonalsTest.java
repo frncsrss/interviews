@@ -1,7 +1,7 @@
-package interviews.matrix;
+package interviews.matrices;
 
-import static interviews.matrix.MatrixDiagonals.f;
-import static interviews.matrix.MatrixDiagonals.f2;
+import static interviews.matrices.MatrixDiagonals.f;
+import static interviews.matrices.MatrixDiagonals.f2;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

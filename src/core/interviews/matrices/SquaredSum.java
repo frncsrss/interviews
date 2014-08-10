@@ -1,4 +1,4 @@
-package interviews.matrix;
+package interviews.matrices;
 
 /**
  * Given a matrix A, return a matrix S such that S[i][j] = sum_{0 <= k,l <= i,j}{A[k][l]}.

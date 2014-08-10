@@ -1,6 +1,6 @@
-package interviews.matrix;
+package interviews.matrices;
 
-import static interviews.matrix.ZeroRowsAndColumns.f;
+import static interviews.matrices.ZeroRowsAndColumns.f;
 
 import org.junit.Assert;
 import org.junit.Test;

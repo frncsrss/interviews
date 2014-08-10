@@ -1,6 +1,6 @@
-package interviews.matrix;
+package interviews.matrices;
 
-import static interviews.matrix.SquaredSum.f;
+import static interviews.matrices.SquaredSum.f;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,5 +1,4 @@
-package interviews.matrix;
-
+package interviews.matrices;
 
 /**
  * Given a matrix A, set to 0 any cell for which there is a 0 in its row or column. The operation
