@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class ZeroRowsAndColumnsTest {
   @Test
-  public void test_f() {
+  public void test() {
     Assert.assertArrayEquals(new int[][]{new int[]{0}}, f(new int[][]{new int[]{0}}));
     Assert.assertArrayEquals(new int[][]{new int[]{1}}, f(new int[][]{new int[]{1}}));
     Assert.assertArrayEquals(new int[][]{new int[]{2}}, f(new int[][]{new int[]{2}}));
