@@ -5,7 +5,7 @@ package interviews.matrices;
  *
  * @author Francois Rousseau
  */
-public class MatrixDiagonals {
+public class PrintDiagonals {
   /**
    * Let mat be a n by n matrix.
    * Time complexity:  O(n^2)

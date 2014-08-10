@@ -1,7 +1,7 @@
 package interviews.matrices;
 
-import static interviews.matrices.MatrixDiagonals.f;
-import static interviews.matrices.MatrixDiagonals.f2;
+import static interviews.matrices.PrintDiagonals.f;
+import static interviews.matrices.PrintDiagonals.f2;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,7 +13,7 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class MatrixDiagonalsTest {
+public class PrintDiagonalsTest {
   @Test
   public void test_f() {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
