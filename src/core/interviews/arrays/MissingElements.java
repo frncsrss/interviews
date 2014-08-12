@@ -6,7 +6,13 @@ package interviews.arrays;
  * @author Francois Rousseau
  */
 public class MissingElements {
-  public static int f(int[] arr, int n) {
+  /**
+   * Every element appears once except one that is missing.
+   *
+   * Time complexity:  O(n)
+   * Space complexity: O(1)
+   */
+  public static int f1(int[] arr, int n) {
     assert arr.length == n - 1;
     long sum = 0;
     for(int i : arr) {
@@ -15,6 +21,12 @@ public class MissingElements {
     return (int) (n * (n + 1) / 2 - sum);
   }
 
+  /**
+   * Every element appears once except for two that are missing.
+   *
+   * Time complexity:  O(n)
+   * Space complexity: O(1)
+   */
   public static int[] f2(int[] arr, int n) {
     assert arr.length == n - 2;
     long sum = 0;
