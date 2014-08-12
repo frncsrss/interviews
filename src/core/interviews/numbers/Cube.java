@@ -4,7 +4,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Write a program that the first k integers of the form a^3 + b^3 where a and b are integers.
+ * Returns the first k integers of the form a^3 + b^3 where a and b are integers.
  *
  * @author Francois Rousseau
  */
