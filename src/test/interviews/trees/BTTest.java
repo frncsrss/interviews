@@ -12,6 +12,18 @@ import org.junit.Test;
 public class BTTest {
 
   @Test
+  public void test_diameter() {
+    final String s = "1(2(4(7()(8))())())(3(5)(6(9)(10)))";
+    Assert.assertEquals(7, BT.diameter(BT.deserialize(s)));
+  }
+
+  @Test
+  public void test_height() {
+    final String s = "1(2(4(7()(8))())())(3(5)(6(9)(10)))";
+    Assert.assertEquals(5, BT.height(BT.deserialize(s)));
+  }
+
+  @Test
   public void test_isBST1_true() {
     final String s = "5(3()(4))(7)";
     Assert.assertEquals(true, BT.isBST(

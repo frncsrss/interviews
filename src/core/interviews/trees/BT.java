@@ -9,6 +9,35 @@ import java.util.Comparator;
 public class BT<E> {
 
   /**
+   * The diameter of a tree is the maximum value between:
+   *   - the longest path that passes through the root
+   *   - the diameter of the left subtree
+   *   - the diameter of the right subtree
+   */
+  public static <E> int diameter(Node<E> root) {
+    if (root == null) {
+      return 0;
+    }
+
+    int rootDiameter = height(root.left) + height(root.right);
+    int leftDiameter = diameter(root.left);
+    int rightDiameter = diameter(root.right);
+
+    return Math.max(rootDiameter, Math.max(leftDiameter, rightDiameter));
+  }
+
+  /**
+   * The height of a tree is the maximum height between its subtrees' heights.
+   */
+  public static <E> int height(Node<E> root) {
+    if (root == null) {
+      return 0;
+    }
+
+    return Math.max(height(root.left), height(root.right)) + 1;
+  }
+
+  /**
    * Check is a given tree (through its root node) is a valid BST or not.
    * O(n) time, O(1) space.
    */
