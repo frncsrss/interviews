@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Heap of keys with integer values. Allow in logarithmic time the update (increase or decrease) of
@@ -35,6 +36,13 @@ public class UpdatableHeap<K> {
     pos.put(key, size() - 1);
     bubbleUp(size() - 1);  // we "bubble it up" until it reaches its position in the heap
     return true;
+  }
+
+  /**
+   * Does the heap contains the given key?
+   */
+  public boolean containsKey(K key) {
+    return pos.containsKey(key);
   }
 
   /**
@@ -70,6 +78,13 @@ public class UpdatableHeap<K> {
    */
   public boolean isEmpty() {
     return heap.size() == 0;
+  }
+
+  /**
+   * Return the keys.
+   */
+  public Set<K> keySet() {
+    return pos.keySet();
   }
 
   /**
@@ -119,23 +134,21 @@ public class UpdatableHeap<K> {
   }
 
   private int bubbleDown(int index) {
-    try {
-      int parent = index;
-      final int left = left(index);
-      if(get(parent).compareTo(get(left)) > 0) {
-        parent = left;  // we should at least swap with the left child
+    int child = index;
+    final int left = left(index);
+    if(left < size()) {  // there is a left child
+      if(get(child).compareTo(get(left)) > 0) {
+        child = left;  // we should at least swap with the left child
       }
-      try {
-        final int right = right(index);
-        if(get(parent).compareTo(get(right)) > 0) {
-          parent = right;  // we should swap with the right child
-        }
-      } catch(NoSuchElementException exc) {}  // no right child
-      if(parent != index) {  // there is one child with a bigger value
-        swap(index, parent);
-        return bubbleDown(parent);
+      final int right = left + 1;
+      if(right < size() && get(child).compareTo(get(right)) > 0) {
+        child = right;  // we should swap with the right child
       }
-    } catch(NoSuchElementException exc) {}  // no child
+    }
+    if(child != index) {  // there is one child with a bigger value
+      swap(index, child);
+      return bubbleDown(child);
+    }
     return index;
   }
 
@@ -143,25 +156,12 @@ public class UpdatableHeap<K> {
     return heap.get(index);
   }
 
-  private int left(int index) throws NoSuchElementException {
-    if(2*index + 1 > size()-1) {  // if its a node without left child
-      throw new NoSuchElementException();
-    }
-    return 2*index + 1;
+  private int left(int index) {
+    return 2 * index + 1;
   }
 
-  private int parent(int index) throws NoSuchElementException {
-    if(index == 0) {  // the root has no parent
-      throw new NoSuchElementException();
-    }
-    return (index - 1) / 2;  // there is a formula for the rest of the indices
-  }
-
-  private int right(int index) throws NoSuchElementException {
-    if(2*index + 2 > size()-1) {  // if its a node without right child
-      throw new NoSuchElementException();
-    }
-    return 2*index + 2;
+  private int parent(int index) {
+    return (index - 1) / 2;  // if index == 0 (root), return 0
   }
 
   private void swap(int from, int with) {
