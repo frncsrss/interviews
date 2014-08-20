@@ -21,13 +21,9 @@ public class Cube {
       Node node = set.first();
       set.remove(node);
       numbers[numbers.length - k] = node.v;
-      if(node.a == node.b) {
-        set.add(new Node(node.a, node.b + 1));
-      } else if(node.b - node.a == 1) {
+      set.add(new Node(node.a, node.b + 1));
+      if(node.b - node.a == 1) {
         set.add(new Node(node.a + 1, node.b));
-        set.add(new Node(node.a, node.b + 1));
-      } else {
-        set.add(new Node(node.a, node.b + 1));
       }
       k--;
     }
