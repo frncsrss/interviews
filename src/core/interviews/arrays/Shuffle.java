@@ -1,6 +1,5 @@
 package interviews.arrays;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -9,23 +8,21 @@ import java.util.Random;
  * @author Francois Rousseau
  */
 public class Shuffle {
-  public static long seed = -1;
-
-  public static void f(List<Integer> list) {
-    final int n = list.size();
-    Random rnd = seed == -1 ? new Random() : new Random(seed);
-    for(int i = 0; i < n; i++) {
-      int j = rnd.nextInt(n - i) + i;  // we pick a random index between i and n-1
-      Swap.f(list, i, j);
-    }
+  public static int[] f(int[] arr) {
+    return f(arr, new Random());
   }
 
-  public static void f(int[] arr) {
+  /**
+   * Known as FisherÐYates shuffle or Knuth shuffle.
+   *
+   * Each of the n! permutations as equal chance of happening.
+   */
+  public static int[] f(int[] arr, Random rnd) {
     final int n = arr.length;
-    Random rnd = seed == -1 ? new Random() : new Random(seed);
-    for(int i = 0; i < n; i++) {
-      int j = rnd.nextInt(n - i) + i;  // we pick a random index between i and n-1
+    for(int i = n - 1; i >= 0; i--) {
+      int j = rnd.nextInt(i + 1);  // we pick a random index between 0 and i
       Swap.f(arr, i, j);
     }
+    return arr;  // for ease of testing
   }
 }
