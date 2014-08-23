@@ -1,6 +1,7 @@
 package interviews.strings;
 
-import interviews.strings.Anagrams.METHOD;
+import static interviews.strings.Anagrams.f;
+import interviews.strings.Anagrams.Method;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,21 +13,21 @@ import org.junit.Test;
 public class AnagramsTest {
   @Test
   public void test_sort() {
-    Assert.assertEquals(null,  Anagrams.f(null, METHOD.SORT));
-    Assert.assertEquals(null,  Anagrams.f(new String[]{}, METHOD.SORT));
+    Assert.assertEquals(null,  f(null, Method.SORT));
+    Assert.assertEquals(null,  f(new String[]{}, Method.SORT));
     Assert.assertEquals("[[none], [kile, like], [man], [car, arc]]",
-        Anagrams.f(new String[]{"man", "car", "kile", "arc", "none", "like"}, METHOD.SORT).toString());
+        f(new String[]{"man", "car", "kile", "arc", "none", "like"}, Method.SORT).toString());
     Assert.assertEquals("[[dog, god], [cat, tac, act]]",
-        Anagrams.f(new String[]{"cat", "dog", "tac", "god", "act"}, METHOD.SORT).toString());
+        f(new String[]{"cat", "dog", "tac", "god", "act"}, Method.SORT).toString());
   }
 
   @Test
   public void test_prime() {
-    Assert.assertEquals(null,  Anagrams.f(null, METHOD.PRIME));
-    Assert.assertEquals(null,  Anagrams.f(new String[]{}, METHOD.PRIME));
-    Assert.assertEquals("[[car, arc], [man], [none], [kile, like]]",
-        Anagrams.f(new String[]{"man", "car", "kile", "arc", "none", "like"}, METHOD.PRIME).toString());
-    Assert.assertEquals("[[cat, tac, act], [dog, god]]",
-        Anagrams.f(new String[]{"cat", "dog", "tac", "god", "act"}, METHOD.PRIME).toString());
+    Assert.assertEquals(null,  f(null, Method.PRIME));
+    Assert.assertEquals(null,  f(new String[]{}, Method.PRIME));
+    Assert.assertEquals("[[none], [kile, like], [man], [car, arc]]",
+        f(new String[]{"man", "car", "kile", "arc", "none", "like"}, Method.PRIME).toString());
+    Assert.assertEquals("[[dog, god], [cat, tac, act]]",
+        f(new String[]{"cat", "dog", "tac", "god", "act"}, Method.PRIME).toString());
   }
 }

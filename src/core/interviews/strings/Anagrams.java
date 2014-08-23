@@ -20,12 +20,14 @@ import java.util.Map;
  * @author Francois Rousseau
  */
 public class Anagrams {
-  // prime numbers chosen based on English letter frequency. The more frequent, the lower prime number
+  // Mapping ASCII letter to prime number based on English letter frequency.
+  // The more frequent, the lower prime number.
   // http://www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
   private static int[] PRIMES = new int[] {
-    2, 41, 37, 47, 3, 67, 71, 23, 5, 101, 61, 17, 19, 13, 31, 43, 97, 29, 11, 7, 73, 83, 79, 89, 59, 53};
+    5, 71, 41, 29, 2, 47, 61, 23, 11, 97, 79, 31, 43, 13, 7, 67, 89, 19, 17, 3, 37, 73, 59, 83, 53,
+    101};
 
-  public enum METHOD {
+  public enum Method {
     SORT() {
       /**
        * O(mlogm) time, O(m) if bin sort.
@@ -61,7 +63,7 @@ public class Anagrams {
    * Uses an hashmap with keys computed using the specified method and values the list of words
    * sharing the same key, i.e. begin anagrams.
    */
-  public static Collection<List<String>> f(String[] words, METHOD m) {
+  public static Collection<List<String>> f(String[] words, Method m) {
     if(words == null || words.length == 0) {
       return null;
     }
