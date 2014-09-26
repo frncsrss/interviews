@@ -102,19 +102,21 @@ public class Mergesort {
     int right = mid + 1;
     int current = lo;
 
-    while (left <= mid && right <= hi) {
+    while(left <= mid && right <= hi) {
       if(comparator.compare(aux.get(left - lo), aux.get(right - lo)) <= 0) {
-        list.set(current++, aux.get(left - lo));
+        list.set(current, aux.get(left - lo));
         left++;
       } else {
-        list.set(current++, aux.get(right - lo));
+        list.set(current, aux.get(right - lo));
         right++;
       }
+      current++;
     }
 
-    for(;left <= mid;) {
-      list.set(current++, aux.get(left - lo));
+    while(left <= mid) {
+      list.set(current, aux.get(left - lo));
       left++;
+      current++;
     }  // no need to do the same for the right since they are already in place.
 
     assert Sorts.isSorted(list, comparator, lo, hi);
