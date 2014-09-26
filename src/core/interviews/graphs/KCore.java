@@ -270,17 +270,17 @@ public class KCore {
     visited.add(v.id);
     List<Integer> toVisit = new ArrayList<Integer>();
     for(int w : g.adjV(v.id)) {
-      if(ignoring.contains(w)) {  // previously ignored
+      if(ignoring.contains(w)) {  // previously discarded
         continue;
       }
-      if(core[w] < v.k) {  // not in k-shell, discard
+      if(core[w] < v.k) {  // not in k-core, skip
         continue;
       }
-      if(core[w] > v.k) {  // already in (k+1)-core
+      if(core[w] > v.k) {  // already in (k+1)-core, increase estimate
         v.upper++;
         continue;
       }
-      if(effectiveDegree[w] < v.k + 1) {  // in k-shell but definitely not in (k+1)-core
+      if(effectiveDegree[w] == v.k) {  // in k-corona, lower estimate
         continue;
       }
       if(!nodes.containsKey(w)) {
@@ -290,17 +290,17 @@ public class KCore {
       }
       v.neighbors.add(w);
       nodes.get(w).neighbors.add(v.id);
-      toVisit.add(w);
+      if(!enqueued.contains(w)) {
+        toVisit.add(w);
+      }
     }
 
     if(!v.couldBeInNextCore()) {  // v does NOT meet 3. for sure
       v.propagate();
     } else {
       for(int w : toVisit) {
-        if(!enqueued.contains(w)) {
-          enqueued.add(w);
-          queue.add(w);
-        }
+        enqueued.add(w);
+        queue.add(w);
       }
     }
   }

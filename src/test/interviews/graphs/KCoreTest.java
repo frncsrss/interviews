@@ -108,11 +108,9 @@ public class KCoreTest {
     g.addEdge(2, 17);
     g.addEdge(2, 18);
     g.addEdge(3, 18);
-    g.addEdge(4, 5);
     g.addEdge(4, 8);
     g.addEdge(4, 10);
     g.addEdge(4, 17);
-    g.addEdge(6, 7);
     g.addEdge(7, 8);
     g.addEdge(7, 11);
     g.addEdge(8, 16);
@@ -130,8 +128,6 @@ public class KCoreTest {
     g.addEdge(12, 13);
     g.addEdge(12, 14);
     g.addEdge(14, 16);
-    g.addEdge(17, 19);
-    g.addEdge(17, 20);
     KCore kc = new KCore(g);
     kc.computeUnweighted();
     assertTrue(kc.addEdge(new Edge(7, 16)));
