@@ -1,6 +1,7 @@
 package interviews.numbers;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -22,6 +23,23 @@ public class Polynomial {
     return p;
   }
 
+  public static Polynomial[] divide(Polynomial p1, Polynomial p2) {
+    // p1 = p2 x q + r;
+    // at the end, the new value for p1 will be r
+    Polynomial q = new Polynomial();
+
+    while(p1.degree() >= p2.degree()) {
+      Polynomial d = new Polynomial();
+      d.putAll(p2);
+      d.shift(p1.degree() - p2.degree());
+      q.put(p1.degree() - p2.degree(), p1.highestCoefficient() / d.highestCoefficient());
+      d.multiply(q.get(p1.degree() - p2.degree()));
+      p1 = subtract(p1, d);
+    }
+
+    return new Polynomial[]{q, p1};
+  }
+
   public static Polynomial multiply(Polynomial p1, Polynomial p2) {
     Polynomial p = new Polynomial();
 
@@ -41,11 +59,14 @@ public class Polynomial {
     return p;
   }
 
+
   public Polynomial() {}
 
   public Polynomial(double[] coefficients) {
     for(int i = 0; i < coefficients.length; i++) {
-      this.coefficients.put(i, coefficients[i]);
+      if(coefficients[i] != 0) {
+        this.coefficients.put(i, coefficients[i]);
+      }
     }
   }
 
@@ -98,12 +119,25 @@ public class Polynomial {
     return coefficients.containsKey(power);
   }
 
+  private Set<Entry<Integer, Double>> entrySet() {
+    return coefficients.entrySet();
+  }
+
   private Double get(Integer power) {
     return coefficients.get(power);
   }
 
-  private Set<Entry<Integer, Double>> entrySet() {
-    return coefficients.entrySet();
+  private double highestCoefficient() {
+    if(coefficients.isEmpty()) {
+      return 0;
+    }
+    return coefficients.get(degree());
+  }
+
+  private void multiply(double by) {
+    for(Integer power : coefficients.keySet()) {
+      coefficients.put(power, coefficients.get(power) * by);
+    }
   }
 
   private Double put(Integer power, Double coefficient) {
@@ -120,6 +154,15 @@ public class Polynomial {
 
   private Double remove(Integer power) {
     return coefficients.remove(power);
+  }
+
+  private void shift(int by) {
+    Set<Map.Entry<Integer, Double>> entries =
+        new HashSet<Map.Entry<Integer, Double>>(coefficients.entrySet());
+    coefficients.clear();
+    for(Map.Entry<Integer, Double> e : entries) {
+      coefficients.put(e.getKey() + by, e.getValue());
+    }
   }
 
   private Double subtract(Integer power, Double coefficient) {

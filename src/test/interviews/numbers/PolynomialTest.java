@@ -1,5 +1,7 @@
 package interviews.numbers;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,6 +26,14 @@ public class PolynomialTest {
         Polynomial.add(
             new Polynomial(new double[]{1, 0, 2}),
             new Polynomial(new double[]{-1, 0, -2})).toString());
+  }
+
+  @Test
+  public void test_divide() {
+    Assert.assertEquals("[ +1.00 x^2 -9.00 x^1 -27.00 x^0,  -123.00 x^0]",
+        Arrays.deepToString(Polynomial.divide(
+            new Polynomial(new double[]{-42, 0, -12, 1}),
+            new Polynomial(new double[]{-3, 1}))));
   }
 
   @Test
