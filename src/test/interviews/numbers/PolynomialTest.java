@@ -9,6 +9,12 @@ import org.junit.Test;
  */
 public class PolynomialTest {
   @Test
+  public void test_degree() {
+    Assert.assertEquals(0, new Polynomial().degree());
+    Assert.assertEquals(4, new Polynomial(new double[]{1, 0, 1, 2, 3}).degree());
+  }
+
+  @Test
   public void test_add() {
     Assert.assertEquals(" +5.00 x^2 +1.00 x^1 +1.00 x^0",
         Polynomial.add(

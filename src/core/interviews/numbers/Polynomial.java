@@ -15,14 +15,6 @@ public class Polynomial {
   private final Map<Integer, Double> coefficients =
       new TreeMap<Integer, Double>(Collections.reverseOrder());
 
-  public Polynomial() {}
-
-  public Polynomial(double[] coefficients) {
-    for(int i = 0; i < coefficients.length; i++) {
-      this.coefficients.put(i, coefficients[i]);
-    }
-  }
-
   public static Polynomial add(Polynomial p1, Polynomial p2) {
     Polynomial p = new Polynomial();
     p.putAll(p1);
@@ -47,6 +39,21 @@ public class Polynomial {
     p.putAll(p1);
     p.subtractAll(p2);
     return p;
+  }
+
+  public Polynomial() {}
+
+  public Polynomial(double[] coefficients) {
+    for(int i = 0; i < coefficients.length; i++) {
+      this.coefficients.put(i, coefficients[i]);
+    }
+  }
+
+  public int degree() {
+    if(coefficients.isEmpty()) {
+      return 0;
+    }
+    return coefficients.keySet().iterator().next();
   }
 
   @Override
