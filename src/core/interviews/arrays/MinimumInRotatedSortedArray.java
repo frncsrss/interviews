@@ -3,11 +3,11 @@ package interviews.arrays;
 import java.util.NoSuchElementException;
 
 /**
- * Find the min element in an rotated sorted array of elements.
+ * Find the minimum element in a rotated sorted array of elements.
  *
  * @author Francois Rousseau
  */
-public class MinInRotatedSortedArray {
+public class MinimumInRotatedSortedArray {
   /**
    * Let n = length(arr).
    * Time complexity:  O(n)

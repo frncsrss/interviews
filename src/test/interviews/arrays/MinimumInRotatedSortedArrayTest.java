@@ -1,7 +1,7 @@
 package interviews.arrays;
 
-import static interviews.arrays.MinInRotatedSortedArray.f;
-import static interviews.arrays.MinInRotatedSortedArray.f2;
+import static interviews.arrays.MinimumInRotatedSortedArray.f;
+import static interviews.arrays.MinimumInRotatedSortedArray.f2;
 
 import java.util.NoSuchElementException;
 
@@ -12,7 +12,7 @@ import org.junit.Test;
  * Test class.
  * @author Francois Rousseau
  */
-public class MinInRotatedSortedArrayTest {
+public class MinimumInRotatedSortedArrayTest {
   @Test(expected = NoSuchElementException.class)
   public void test_null() {
     Assert.assertEquals(-1, f(null));
