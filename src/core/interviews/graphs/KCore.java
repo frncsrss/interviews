@@ -273,14 +273,14 @@ public class KCore {
       if(ignoring.contains(w)) {  // previously discarded
         continue;
       }
-      if(core[w] < v.k) {  // not in k-core, skip
+      if(core[w] < core[v.id]) {  // not in k-core, skip
         continue;
       }
-      if(core[w] > v.k) {  // already in (k+1)-core, increase estimate
+      if(core[w] > core[v.id]) {  // already in (k+1)-core, increase estimate
         v.upper++;
         continue;
       }
-      if(effectiveDegree[w] == v.k) {  // in k-corona, lower estimate
+      if(effectiveDegree[w] == core[v.id]) {  // in k-corona, lower estimate
         continue;
       }
       if(!nodes.containsKey(w)) {
@@ -307,17 +307,15 @@ public class KCore {
 
   private class Node {
     private final int id;
-    private final int k;
     private int upper = 0;  // number of neighbors in the (k+1)-core
     private final Set<Integer> neighbors = new HashSet<Integer>();  // neighbors in the k-core
 
     public Node(int v) {
       this.id = v;
-      this.k = core[v];
     }
 
     private boolean couldBeInNextCore() {
-      return upper + neighbors.size() > k;
+      return upper + neighbors.size() > core[this.id];
     }
 
     private void propagate() {
@@ -338,7 +336,8 @@ public class KCore {
 
     @Override
     public String toString() {
-      return String.format("%d %d %d\t%d+%d", id, k, effectiveDegree[id], upper, neighbors.size());
+      return String.format("%d %d %d\t%d+%d",
+          id, core[this.id], effectiveDegree[id], upper, neighbors.size());
     }
   }
 }
