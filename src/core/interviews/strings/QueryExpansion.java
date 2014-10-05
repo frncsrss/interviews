@@ -40,14 +40,14 @@ public class QueryExpansion {
    */
   public List<String> expansions(String original, int k) {
     String[] words = original.split(" ");
-    List<String> list = new ArrayList<String>();
-    PriorityQueue<Node> pq = new PriorityQueue<Node>(k);
-    expansions(words, 0, new String[words.length], pq, 1, k);
-    while(!pq.isEmpty()) {
-      list.add(pq.poll().string);
+    List<String> expansions = new ArrayList<String>();
+    PriorityQueue<Node> top_k = new PriorityQueue<Node>(k);
+    expansions(words, 0, new String[words.length], top_k, 1, k);
+    while(!top_k.isEmpty()) {
+      expansions.add(top_k.poll().string);
     }
-    Collections.reverse(list);
-    return list;
+    Collections.reverse(expansions);
+    return expansions;
   }
 
   /**
@@ -56,24 +56,24 @@ public class QueryExpansion {
    * Use DFS (recursion stack) to traverse the tree of all possible expansions.
    */
   private void expansions(
-      String[] words, int index, String[] string, PriorityQueue<Node> pq, double weight, int k) {
+      String[] words, int index, String[] query, PriorityQueue<Node> top_k, double weight, int k) {
     String word = words[index];
     for(Node node: dict.get(word)) {
-      string[index] = node.string;
-      double new_weight = weight * node.weight;
-      if(pq.size() == k) {
-        Node head = pq.peek();
+      query[index] = node.string;
+      final double new_weight = weight * node.weight;
+      if(top_k.size() == k) {
+        Node head = top_k.peek();
         if(head.weight >= new_weight) {         // early pruning of a node or a leaf
           continue;
         } else if(index == words.length - 1) {  // leaf node in the tree
-          pq.poll();                            // remove head
+          top_k.poll();                         // remove head
         }
       }
-      if(index == words.length - 1) {           // leaf node in the tree
-        pq.add(new Node(string, new_weight));   // adding leaf since the size of pq < k
+      if(index == words.length - 1) {            // leaf node in the tree
+        top_k.add(new Node(query, new_weight));  // adding leaf since the size of pq < k
         continue;
       }
-      expansions(words, index + 1, string, pq, new_weight, k);
+      expansions(words, index + 1, query, top_k, new_weight, k);
     }
   }
 
@@ -105,9 +105,9 @@ public class QueryExpansion {
       this.weight = weight;
     }
 
-    public Node(String[] string, double weight) {
+    public Node(String[] query, double weight) {
       StringBuilder builder = new StringBuilder();
-      for(String s : string) {
+      for(String s : query) {
         builder.append(s + " ");
       }
       this.string = builder.deleteCharAt(builder.length() - 1).toString();
