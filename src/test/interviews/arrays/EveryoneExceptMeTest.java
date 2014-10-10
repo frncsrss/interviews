@@ -1,11 +1,10 @@
 package interviews.arrays;
 
-import java.util.Arrays;
+import static interviews.arrays.EveryoneExceptMe.f;
+import static interviews.arrays.EveryoneExceptMe.f_division;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static interviews.arrays.EveryoneExceptMe.*;
 
 /**
  * Test class.
@@ -13,22 +12,14 @@ import static interviews.arrays.EveryoneExceptMe.*;
  */
 public class EveryoneExceptMeTest {
   @Test
-  public void test_f1() {
-    Assert.assertEquals(
-        Arrays.asList(240, 144, 360, 180, 120, 720), f1(Arrays.asList(3, 5, 2, 4, 6, 1)));
-  }
-
-  @Test
-  public void test_f2() {
+  public void test_f() {
     Assert.assertArrayEquals(
-        new int[]{240, 144, 360, 180, 120, 720}, f2(new int[]{3, 5, 2, 4, 6, 1}));
+        new int[]{240, 144, 360, 180, 120, 720}, f(new int[]{3, 5, 2, 4, 6, 1}));
   }
 
   @Test
-  public void test_f3() {
-    int[] arr = {3, 5, 2, 4, 6, 1};
-    int[] expecteds = {240, 144, 360, 180, 120, 720};
-    f3(arr);
-    Assert.assertArrayEquals(expecteds, arr);
+  public void test_f_division() {
+    Assert.assertArrayEquals(
+        new int[]{240, 144, 360, 180, 120, 720}, f_division(new int[]{3, 5, 2, 4, 6, 1}));
   }
 }
