@@ -1,5 +1,8 @@
 package interviews.arrays;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Find the first covering prefix of a given array.
  * The first covering prefix of an array is the smallest index from which all
@@ -8,31 +11,24 @@ package interviews.arrays;
  * @author Francois Rousseau
  */
 public class CoveringPrefix {
+  /**
+   * Let n = length(arr).
+   * Time complexity:  O(n)
+   * Space complexity: O(n)
+   */
   public static int f(int arr[]) {
-    final int N = arr.length;
-    final int[] counts = new int[N];
-
-    int count = 0;
-    for(int i = 0; i < N; i++) {
-      if(counts[arr[i]] == 0) {  // only increment count if we have never encountered this element
-        count++;
-      }
-      counts[arr[i]] = 1;
+    if(arr.length == 0) {
+      return -1;
     }
 
-    if(count == N) {  // all elements are unique
-      return N - 1;
-    }
-
-    for(int i = 0; i < N; i++) {
-      if(counts[arr[i]] == 1) {  // only decrement count if is the first time we see that element
-        count--;
-      }
-      counts[arr[i]] = 2;  // prevent decrementing count the next time we see that element
-      if(count == 0) {  // we have seen all the elements at least once
-        return i;
+    Set<Integer> seen = new HashSet<Integer>();
+    int last_first = 0;
+    for(int i = 0; i < arr.length; i++) {
+      if(!seen.contains(arr[i])) {
+        seen.add(arr[i]);
+        last_first = i;
       }
     }
-    return N;
+    return last_first;
   }
 }
