@@ -29,28 +29,19 @@ public class Mayor {
   /**
    * The idea is: starting from index i=1, check if i knows j with j=i+1, i+2, ..., n.
    * 1) If i doesn't know j then we know j cannot be mayor
-   * 2) If i knows j then we know i cannot be mayor and the next potential mayor is j
-   * 3) If for a given i, we reach j=n+1 then i is the only potential mayor and we do the full check
+   * 2) If i knows j then we know i cannot be mayor and the next candidate is j
+   * 3) If for a given i, we reach j=n+1 then i is the only candidate and we do the full check
    *
    * @return the mayor in O(n) time if he exists (-1 otherwise)
    */
   public int mayor() {
-    int i = 1;  // index of the current potential mayor
-    while(i <= n) {
-      int j = i + 1;  // index of the current next person
-      for(; j <= n; j++) {
-        if(knows(i, j)) {  // i cannot be mayor and none of the people until j can be mayor
-          break;
-        }
+    int candidate = 1;  // index of the current candidate for mayor
+    for(int j = 2; j <= n; j++) {
+      if(knows(candidate, j)) {  // candidate cannot be mayor
+        candidate = j;
       }
-      if(j == n + 1) {  // none of the people after i can be mayor
-        if(check(i)) {
-          return i;
-        }
-      }
-      i = j;  // j is the new potential mayor
     }
-    return -1;
+    return check(candidate) ? candidate : -1;
   }
 
   /**
