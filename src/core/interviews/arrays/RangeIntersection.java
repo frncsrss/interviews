@@ -20,7 +20,7 @@ public class RangeIntersection {
   public static int[] f(int[][] ranges) {
     final int n = ranges.length;
 
-    // expand the n ranges in 2*n endpoints and sort them by values
+    // expand the n ranges in 2n endpoints and sort them by values
     Endpoint[] endpoints = new Endpoint[2 * n];
     for(int i = 0; i < n; i++) {
       endpoints[i] = new Endpoint(Endpoint.Type.START, i, ranges[i][0]);
@@ -30,19 +30,21 @@ public class RangeIntersection {
 
     // compute the number of intersections for each range
     int[] intersections = new int[n];
-    int s = 0;
-    int t = 0;
+    Arrays.fill(intersections, -1);  // offset the fact that a range intersects with itself
+    int start = 0;
+    int end = 0;
     for(Endpoint endpoint : endpoints) {
       if(Endpoint.Type.START.equals(endpoint.type)) {
-        s++;
-        intersections[endpoint.i] = -(t + 1);
+        start++;
+        intersections[endpoint.i] -= end;
       } else {
-        t++;
-        intersections[endpoint.i] += s;
+        end++;
+        intersections[endpoint.i] += start;
       }
     }
 
-    // find the range with the most intersections. ties
+    // find the range with the most intersections.
+    // in case of tie, take the one of lowest starting endpoint then lowest ending endpoint.
     int max = Integer.MIN_VALUE;
     int max_index = -1;
     for(int i = 0; i < intersections.length; i++) {
@@ -59,13 +61,7 @@ public class RangeIntersection {
   }
 
   private static class Endpoint implements Comparable<Endpoint> {
-    public static enum Type {
-      START("s"), END("e");
-      private final String symbol;
-      private Type(String symbol) {
-        this.symbol = symbol;
-      }
-    };
+    public static enum Type {START, END};
 
     private final Type type;  // start or end endpoint
     private final int i;      // range index
@@ -78,18 +74,13 @@ public class RangeIntersection {
     }
 
     @Override
-    public int compareTo(Endpoint o) {
-      if(this.v < o.v) return -1;
-      if(this.v > o.v) return +1;
+    public int compareTo(Endpoint that) {
+      if(this.v < that.v) return -1;
+      if(this.v > that.v) return +1;
       // switch sign if exclusive ending range endpoint
-      if(Type.START.equals(this.type) && Type.END.equals(o.type)) return -1;
-      if(Type.END.equals(this.type) && Type.START.equals(o.type)) return +1;
+      if(Type.START.equals(this.type) && Type.END.equals(that.type)) return -1;
+      if(Type.END.equals(this.type) && Type.START.equals(that.type)) return +1;
       return 0;
-    }
-
-    @Override
-    public String toString() {
-      return String.format("%s%s(%d)", v, type.symbol, i);
     }
   }
 }
