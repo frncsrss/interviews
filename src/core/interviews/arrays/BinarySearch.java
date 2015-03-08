@@ -6,14 +6,21 @@ package interviews.arrays;
  * @author Francois Rousseau
  */
 public class BinarySearch {
-  public static int f(int[] arr, int i) {
+  /**
+   * Binary search in a sorted array in increasing order.
+   *
+   * Let n = length(arr).
+   * Time complexity:  O(logn)
+   * Space complexity: O(1)
+   */
+  public static int f(int[] arr, int x) {
     int lo = 0;
     int hi = arr.length - 1;
     while(lo <= hi) {
       int mid = lo + hi >>> 1;  // prevent possible overflow
-      if(arr[mid] < i) {
+      if(arr[mid] < x) {
         lo = mid + 1;
-      } else if(arr[mid] > i) {
+      } else if(arr[mid] > x) {
         hi = mid - 1;
       } else {
         return mid;  // key found
