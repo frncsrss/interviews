@@ -38,7 +38,7 @@ public class SplitterTest {
     dict.add("some");
     Assert.assertEquals("this is awesome !", f(s, dict));
     dict.add("a");
-    Assert.assertEquals("this is a we some !", f(s, dict));
+    Assert.assertEquals("this is awesome !", f(s, dict));
   }
 
   @Test
@@ -64,5 +64,23 @@ public class SplitterTest {
     dict.add("brother");
     String s = "jesslookedjustlikeherbrothertim";
     Assert.assertEquals("JESS looked just like her brother TIM", f(s, dict));
+  }
+
+  @Test
+  public void test_exl_first_match_not_optimal() {
+    Trie dict = new Trie();
+    dict.add("is");
+    dict.add("island");
+    Assert.assertEquals("island", f("island", dict));
+    dict.add("slow");
+    Assert.assertEquals("I slow", f("islow", dict));
+  }
+
+  @Test
+  public void test_exl_equality_exl() {
+    Trie dict = new Trie();
+    dict.add("is");
+    dict.add("so");
+    Assert.assertEquals("is O", f("iso", dict));
   }
 }

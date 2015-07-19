@@ -9,42 +9,76 @@ import interviews.trees.Trie;
  * @author Francois Rousseau
  */
 public class Splitter {
+  private static final String SEPARATOR = " ";
+
   public static String f(String s, Trie dict) {
-    if(s == null || s.isEmpty()) {
-      return s;
+    return f(s, dict, 0, 1).s;
+  }
+
+  /**
+   * Do we put a whitespace after the word s[start, end) or do we include another character,
+   * i.e. do we break or do we continue?
+   */
+  private static Result f(String s, Trie dict, int start, int end) {
+    if(end > s.length()) {
+      String current = s.substring(start);
+      return new Result(current.toUpperCase(), current.length(), true);
     }
 
-    final StringBuffer exl = new StringBuffer();
-    int start = 0;
-    for(int i = start + 1; i <= s.length(); i++) {
-      final String prefix = s.substring(start, i);
-      if(!dict.contains(prefix)) {  // potentially an EXL
-        if(prefix.length() > 1) {   // don't mark the last character as EXLs if more than one character
-          exl.append(prefix.substring(0, prefix.length() - 1));
-        } else {
-          exl.append(prefix);
-        }
-        start++;
-        continue;
-      } else if(!dict.isValid(prefix)) {  // a valid prefix but not a valid word, we continue
-        continue;
-      }
+    String current = s.substring(start, end);
 
-      // we have a current valid word, we split the rest of the string
-      String suffix = s.substring(i);
-      String splitSuffix = f(suffix, dict);
-      String ret;
-      if(exl.length() > 0) {  // we add the possible EXLs preceding the word
-        ret = exl.toString().toUpperCase() + " " + prefix;
+    // what if we put a whitespace after the current word
+    Result withBreak = f(s, dict, end, end + 1);
+    if(!dict.contains(current)) {  // if the current word is not a valid prefix, let's bail out
+      withBreak.prependWithEXL(current.toUpperCase());
+      return withBreak;
+    } else if (dict.isValid(current)) {
+      withBreak.prependWithWord(current);
+    } else {
+      withBreak.prependWithEXL(current.toUpperCase());
+    }
+
+    // what if we consider another character in the current word
+    Result withContinue = f(s, dict, start, end + 1);
+
+    // we favor continuation over break (e.g., 'awesome' over 'a we some')
+    return Result.min(withContinue, withBreak);
+  }
+
+  private static class Result {
+    private String s;
+    private int exl;
+    private boolean startsWithEXL;
+
+    public Result(String s, int exl, boolean startsWithEXL) {
+      this.s = s;
+      this.exl = exl;
+      this.startsWithEXL = startsWithEXL;
+    }
+
+    public void prependWithEXL(String s) {
+      if(this.s.isEmpty()) {
+        this.s = s;
+      } else if(startsWithEXL) {
+        this.s = s + this.s;
       } else {
-        ret = prefix;
+        this.s = s + SEPARATOR + this.s;
       }
-      if(!splitSuffix.isEmpty()) {
-        ret += " " + splitSuffix;
-      }
-      return ret;
+      this.exl += s.length();
+      this.startsWithEXL = true;
     }
 
-    return s.toUpperCase();
+    public void prependWithWord(String s) {
+      if(this.s.isEmpty()) {
+        this.s = s;
+      } else {
+        this.s = s + SEPARATOR + this.s;
+      }
+      this.startsWithEXL = false;
+    }
+
+    public static Result min(Result r1, Result r2) {
+      return r1.exl <= r2.exl ? r1 : r2;
+    }
   }
 }
