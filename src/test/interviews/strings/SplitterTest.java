@@ -1,11 +1,10 @@
 package interviews.strings;
 
+import static interviews.strings.Splitter.f;
 import interviews.trees.Trie;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static interviews.strings.Splitter.f;
 
 /**
  * Test class.
@@ -13,7 +12,20 @@ import static interviews.strings.Splitter.f;
  */
 public class SplitterTest {
   @Test
-  public void test_split() {
+  public void test_exl_empty_dict() {
+    Trie dict = new Trie();
+    Assert.assertEquals("EXL", f("exl", dict));
+  }
+
+  @Test
+  public void test_exl_dict_with_longer_word_with_matching_prefix() {
+    Trie dict = new Trie();
+    dict.add("is");
+    Assert.assertEquals("I", f("i", dict));
+  }
+
+  @Test
+  public void test_exl_split() {
     Trie dict = new Trie();
     dict.add("is");
     dict.add("awesome");
@@ -30,7 +42,7 @@ public class SplitterTest {
   }
 
   @Test
-  public void test_remove() {
+  public void test_exl_remove() {
     Trie dict = new Trie();
     dict.add("this");
     dict.add("is");
@@ -43,19 +55,7 @@ public class SplitterTest {
   }
 
   @Test
-  public void test_exl() {
-    Trie dict = new Trie();
-    dict.add("look");
-    dict.add("just");
-    dict.add("like");
-    dict.add("her");
-    dict.add("brother");
-    String s = "jesslooksjustlikeherbrothertim";
-    Assert.assertEquals("JESS look S just like her brother TIM", f(s, dict));
-  }
-
-  @Test
-  public void test_interview() {
+  public void test_exl_interview() {
     Trie dict = new Trie();
     dict.add("looked");
     dict.add("just");
