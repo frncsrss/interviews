@@ -1,10 +1,11 @@
 package interviews.numbers;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.PriorityQueue;
 
 /**
- * Returns the first k integers of the form a^3 + b^3 where a and b are integers.
+ * Returns the first unique k integers of the form a^3 + b^3 where a and b are integers.
+ *
+ * Note: 1729 can be written as 9^3 + 10^3 and as 1^3 + 12^3, but should only be returned once.
  *
  * @author Francois Rousseau
  */
@@ -15,17 +16,25 @@ public class Cube {
    */
   public static long[] f(int k) {
     long[] numbers = new long[k];
-    SortedSet<Node> set = new TreeSet<Node>();
-    set.add(new Node(0, 0));
+    PriorityQueue<Node> pq = new PriorityQueue<Node>();
+    // We start at (0, 0).
+    pq.add(new Node(0, 0));
+    // We make sure we only consider the first unique k integers.
     while(k > 0) {
-      Node node = set.first();
-      set.remove(node);
-      numbers[numbers.length - k] = node.v;
-      set.add(new Node(node.a, node.b + 1));
-      if(node.b - node.a == 1) {
-        set.add(new Node(node.a + 1, node.b));
+      Node node = pq.poll();
+      // We consider next (a, b + 1).
+      pq.add(new Node(node.a, node.b + 1));
+      // In parallel, we also start considering (a + 1, b), incrementing a to a + 1 only once and
+      // as soon as possible, i. e. a = b - 1.
+      if(node.a == node.b - 1) {
+        pq.add(new Node(node.a + 1, node.b));
       }
-      k--;
+      // Add to the returned array if not already present, e.g., 1729 can be written as 9^3 + 10^3
+      // and as 1^3 + 12^3. Note that we still want to continue the search from (1, 12).
+      if (k == numbers.length || numbers[numbers.length - k - 1] < node.v) {
+        numbers[numbers.length - k] = node.v;
+        k--;
+      }
     }
     return numbers;
   }
@@ -46,6 +55,11 @@ public class Cube {
       if(this.v < that.v) return -1;
       if(this.v > that.v) return +1;
       return 0;
+    }
+
+    @Override
+    public String toString() {
+      return v +  " = " + a + "^3 + " + b + "^3";
     }
   }
 }
