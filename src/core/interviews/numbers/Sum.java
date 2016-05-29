@@ -7,9 +7,14 @@ package interviews.numbers;
  */
 public class Sum {
   public static int f(int a, int b) {
-    if((a&b) == 0) {  // no carry
-      return a^b;
+    while(true) {
+      final int carry = a&b;
+      if(carry == 0) {
+        break;
+      }
+      a = a^b;  // the sum.
+      b = carry << 1;  // the carry shifted to the left.
     }
-    return f(a^b, (a&b) << 1);  // add the carry that corresponds to (a & b) << 1
+    return a^b;
   }
 }
